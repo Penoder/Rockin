@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- 仿开眼首页广告位，不支持轮播. -->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager_homeBanner"
+        android:layout_width="match_parent"
+        android:layout_height="240dp" />
+
+    <!-- 添加广告位的标题和指示器. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_12" />
+
+</FrameLayout>

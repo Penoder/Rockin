@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 圆形ImageView. -->
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+
+    <!-- 圆角ImageView. -->
+    <declare-styleable name="RoundImageView">
+        <attr name="roundWidth" format="dimension" />
+        <attr name="roundHeight" format="dimension" />
+    </declare-styleable>
+
+    <!-- 实现了 ListView 的上拉加载的 SwipeRefreshLayouot. -->
+    <declare-styleable name="SwipeFlushView">
+        <!-- 是否允许 下拉刷新. -->
+        <attr name="flushingEnable" format="boolean" />
+        <!-- 是否允许 上拉加载. -->
+        <attr name="loadingEnable" format="boolean" />
+        <!-- 是否需要 自动刷新. -->
+        <attr name="autoFlushing" format="boolean" />
+        <!-- 上拉加载的模式，上滑到底部后 是否 直接加载. -->
+        <attr name="autoLoading" format="boolean" />
+        <!-- 设置刷新圈的颜色. -->
+        <attr name="refreshColor" format="color" />
+    </declare-styleable>
+</resources>

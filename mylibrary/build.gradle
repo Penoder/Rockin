@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled true
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    testCompile 'junit:junit:4.12'
+
+    // 图片框架 原先用的是Fresco,现替换成Glide
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    // 原版本为 1.3.0
+    compile 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0'
+    compile 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0'
+
+    compile 'io.reactivex:rxandroid:1.1.0'
+
+    // 要将 RxJava1 换成 RxJava2 就好
+//    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+//    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+}

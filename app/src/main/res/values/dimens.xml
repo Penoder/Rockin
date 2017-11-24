@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 小字提示. -->
+    <dimen name="small_size">12sp</dimen>
+    <!-- 正文/按钮文字. -->
+    <dimen name="common_size">14sp</dimen>
+    <!-- 小标题. -->
+    <dimen name="small_title_size">16sp</dimen>
+    <!-- Appbar文字. -->
+    <dimen name="appbar_title_size">16sp</dimen>
+    <!-- 大标题. -->
+    <dimen name="large_title_size">16sp</dimen>
+    <!-- 超大号文字. -->
+    <dimen name="super_large_title_size">16sp</dimen>
+
+    <!-- 顶部状态栏高度. -->
+    <dimen name="status_bar_size">24dp</dimen>
+    <!-- Appbar最小高度. -->
+    <dimen name="appbar_size">56dp</dimen>
+    <!-- 底部导航栏高度. -->
+    <dimen name="bottom_bar_size">48dp</dimen>
+    <!-- 悬浮按钮小尺寸. -->
+    <dimen name="float_btn_small_size">40dp</dimen>
+    <!-- 悬浮按钮尺寸. -->
+    <dimen name="float_btn_size">56dp</dimen>
+    <!-- 用户头像小尺寸. -->
+    <dimen name="head_img_small_size">40dp</dimen>
+    <!-- 用户头像尺寸. -->
+    <dimen name="head_img_size">64dp</dimen>
+    <!-- 小图标点击区域. -->
+    <dimen name="small_icon_click_size">48dp</dimen>
+    <!-- 侧边抽屉到屏幕右边的距离. -->
+    <dimen name="slide_margin_size">56dp</dimen>
+    <!-- 卡片间距. -->
+    <dimen name="card_space_size">8dp</dimen>
+    <!-- 分隔线上下留白. -->
+    <dimen name="divider_size">8dp</dimen>
+    <!-- 大多元素的留白距离. -->
+    <dimen name="blank_space_size">16dp</dimen>
+    <!-- 屏幕左右对齐基线. -->
+    <dimen name="two_sides_margin_size">16dp</dimen>
+    <!-- 文字左侧对齐基线. -->
+    <dimen name="txt_margin_left_size">16dp</dimen>
+
+    <dimen name="dimen_12">12dp</dimen>
+    <dimen name="dimen_14">14dp</dimen>
+    <dimen name="dimen_16">16dp</dimen>
+    <dimen name="dimen_18">18dp</dimen>
+    <dimen name="dimen_20">20dp</dimen>
+    <dimen name="dimen_24">24dp</dimen>
+    <dimen name="dimen_28">28dp</dimen>
+    <dimen name="dimen_30">30dp</dimen>
+    <dimen name="dimen_32">32dp</dimen>
+    <dimen name="dimen_36">36dp</dimen>
+    <dimen name="dimen_40">40dp</dimen>
+    <dimen name="dimen_44">44dp</dimen>
+    <dimen name="dimen_48">48dp</dimen>
+    <dimen name="dimen_56">56dp</dimen>
+    <dimen name="dimen_64">64dp</dimen>
+    <dimen name="dimen_72">72dp</dimen>
+    <dimen name="dimen_240">240dp</dimen>
+</resources>
