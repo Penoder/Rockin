@@ -4,7 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
 import com.rockin.adapter.CommonFragmentAdapter;
-import com.rockin.rockin.databinding.ActivityMainBinding;
+import com.rockin.databinding.ActivityMainBinding;
 import com.rockin.view.base.BaseFragment;
 import com.rockin.view.base.BaseFragmentActivity;
 import com.rockin.view.concern.ConcernFragment;

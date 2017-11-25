@@ -1,4 +1,4 @@
-package com.rockin.entity;
+package com.penoder.mylibrary.okhttp;
 
 /**
  * 用于前后台的json数据传递

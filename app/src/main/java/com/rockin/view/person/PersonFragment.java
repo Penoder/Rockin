@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rockin.R;
-import com.rockin.rockin.databinding.FragmentPersonBinding;
+import com.rockin.databinding.FragmentPersonBinding;
 import com.rockin.view.base.BaseFragment;
 
 /**

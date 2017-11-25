@@ -35,7 +35,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
 
     // 图片框架 原先用的是Fresco,现替换成Glide
@@ -46,6 +46,13 @@ dependencies {
     compile 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0'
 
     compile 'io.reactivex:rxandroid:1.1.0'
+
+    // OkHttp 依赖
+    compile 'com.squareup.okhttp3:okhttp:3.7.0'
+//    compile 'com.squareup.okio:okio:1.12.0'
+
+    // Gson 对 Json 数据解析框架
+    compile 'com.google.code.gson:gson:2.3'
 
     // 要将 RxJava1 换成 RxJava2 就好
 //    compile 'io.reactivex.rxjava2:rxjava:2.0.1'

@@ -21,7 +21,7 @@ import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.rockin.rockin.R;
+import com.rockin.R;
 
 /**
  * @author asus

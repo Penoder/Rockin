@@ -15,7 +15,7 @@ import android.widget.ListView;
 import com.bumptech.glide.Glide;
 import com.rockin.R;
 import com.rockin.adapter.CommonViewAdapter;
-import com.rockin.rockin.databinding.FragmentHomePageBinding;
+import com.rockin.databinding.FragmentHomePageBinding;
 import com.rockin.view.base.BaseFragment;
 
 import java.util.ArrayList;

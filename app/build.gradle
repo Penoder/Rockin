@@ -50,9 +50,6 @@ dependencies {
     //
     compile project(':mylibrary')
 
-    // OkHttp 依赖
-    compile 'com.squareup.okhttp3:okhttp:3.7.0'
-
     // EventBus 依赖
     compile 'org.greenrobot:eventbus:3.0.0'
 

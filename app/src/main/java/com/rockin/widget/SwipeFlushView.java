@@ -12,7 +12,7 @@ import android.view.ViewConfiguration;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-import com.rockin.rockin.R;
+import com.rockin.R;
 
 /**
  * 自定义View继承SwipeRefreshLayout，添加上拉加载更多的布局属性

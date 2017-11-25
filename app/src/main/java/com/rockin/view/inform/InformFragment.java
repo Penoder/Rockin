@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rockin.R;
-import com.rockin.rockin.databinding.FragmentInformBinding;
+import com.rockin.databinding.FragmentInformBinding;
 import com.rockin.view.base.BaseFragment;
 
 /**
