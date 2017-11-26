@@ -1,13 +1,19 @@
 package com.penoder.mylibrary.okhttp;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.penoder.mylibrary.R;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 
 import okhttp3.Call;
@@ -24,6 +30,8 @@ import okhttp3.Response;
  * @date 2017/11/25
  */
 public class OkHttpManager {
+
+    private static WeakReference<Context> mWeakReference;
 
     /**
      * 定义该类的实例，方便其他方法的链式调用
@@ -42,12 +50,18 @@ public class OkHttpManager {
      */
     private Handler mHandler;
 
+    /**
+     * 网络请求加载中显示的 Dialog
+     */
+    private AlertDialog loadDialog;
+
     private OkHttpManager() {
         okHttpClient = new OkHttpClient();
         mHandler = new Handler(Looper.getMainLooper());
     }
 
-    public static OkHttpManager create() {
+    public static OkHttpManager create(Context mContext) {
+        mWeakReference = new WeakReference<>(mContext);
         if (mInstance == null) {
             synchronized (OkHttpManager.class) {
                 if (mInstance == null) {
@@ -91,6 +105,86 @@ public class OkHttpManager {
             bodyBuilder.add(key, value);
         }
         return this;
+    }
+
+    /**
+     * 用于执行网络请求的时候 弹出一个 加载中
+     *
+     * @return
+     */
+    public OkHttpManager addProgress() {
+        // 为了每次重新创建
+        destroyDialog();
+
+        loadDialog = new AlertDialog.Builder(mWeakReference.get())
+                .setIcon(R.drawable.loading)
+                .setMessage("内容加载中，请稍后!")
+                .show();
+        return this;
+    }
+
+    /**
+     * 网络请求加载中的提示文字由自个定
+     *
+     * @param msg
+     * @return
+     */
+    public OkHttpManager addProgress(String msg) {
+        destroyDialog();
+
+
+        if (TextUtils.isEmpty(msg)) {
+            msg = "内容加载中，请稍后!";
+        }
+        loadDialog = new AlertDialog.Builder(mWeakReference.get())
+                .setIcon(R.drawable.loading)
+                .setMessage(msg)
+                .show();
+        return this;
+    }
+
+    /**
+     * 是否可以取消掉显示的加载中 Dialog
+     *
+     * @param msg
+     * @param cancelable
+     * @return
+     */
+    public OkHttpManager addProgress(String msg, boolean cancelable) {
+        // 为了每次重新创建
+        destroyDialog();
+
+        if (TextUtils.isEmpty(msg)) {
+            msg = "内容加载中，请稍后!";
+        }
+        loadDialog = new AlertDialog.Builder(mWeakReference.get())
+                .setIcon(R.drawable.loading)
+                .setMessage(msg)
+                .setCancelable(cancelable)
+                .create();
+        loadDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                // 设置返回键可以取消
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    dialog.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        loadDialog.show();
+        return this;
+    }
+
+    /**
+     * 为了每次重新创建 Dialog,调用时先将其销毁掉
+     */
+    private void destroyDialog() {
+        if (loadDialog != null) {
+            loadDialog.dismiss();
+            loadDialog = null;
+        }
     }
 
     /**
@@ -153,6 +247,10 @@ public class OkHttpManager {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
+                if (loadDialog != null && loadDialog.isShowing()) {
+                    loadDialog.dismiss();
+                    loadDialog = null;
+                }
                 okCallBack.failure(call, e);
             }
         });
@@ -162,10 +260,13 @@ public class OkHttpManager {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
+                if (loadDialog != null && loadDialog.isShowing()) {
+                    loadDialog.dismiss();
+                    loadDialog = null;
+                }
                 okCallBack.onResponse(isSuccess, response, obj);
             }
         });
     }
-
 
 }

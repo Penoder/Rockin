@@ -33,8 +33,9 @@ public class TestActivity extends BaseActivity {
     }
 
     public ReplyCommand onGetStringCommand = new ReplyCommand(() -> {
-        OkHttpManager.create()
+        OkHttpManager.create(this)
                 .addUrl(RocApi.TEST_SERVLET + "?tag=1")
+                .addProgress()
                 .execute(new OkCallBack<String>() {
                     @Override
                     public void failure(Call call, Exception e) {
@@ -51,8 +52,9 @@ public class TestActivity extends BaseActivity {
     });
 
     public ReplyCommand onGetListCommand = new ReplyCommand(() -> {
-        OkHttpManager.create()
+        OkHttpManager.create(this)
                 .addUrl(RocApi.TEST_SERVLET + "?tag=2")
+                .addProgress("2333333333333")
                 .execute(new OkCallBack<List<String>>() {
                     @Override
                     public void failure(Call call, Exception e) {
@@ -71,8 +73,9 @@ public class TestActivity extends BaseActivity {
     });
 
     public ReplyCommand onPostStringCommand = new ReplyCommand(() -> {
-        OkHttpManager.create()
+        OkHttpManager.create(this)
                 .addUrl(RocApi.TEST_SERVLET)
+                .addProgress("66666666", false)
                 .post()
                 .addParam("tag", "1")
                 .execute(new OkCallBack<String>() {
@@ -91,10 +94,11 @@ public class TestActivity extends BaseActivity {
     });
 
     public ReplyCommand onPostListCommand = new ReplyCommand(() -> {
-        OkHttpManager.create()
+        OkHttpManager.create(this)
                 .addUrl(RocApi.TEST_SERVLET)
                 .post()
                 .addParam("tag", "2")
+                .addProgress("5555555", true)
                 .execute(new OkCallBack<List<String>>() {
                     @Override
                     public void failure(Call call, Exception e) {
