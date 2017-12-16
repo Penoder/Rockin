@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -7,14 +8,51 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager_homeBanner"
         android:layout_width="match_parent"
-        android:layout_height="240dp" />
+        android:layout_height="@dimen/dimen_240" />
 
-    <!-- 添加广告位的标题和指示器. -->
-    <LinearLayout
+    <!-- 主标题. -->
+    <TextView
+        android:id="@+id/tv_mainTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dimen_56"
+        android:gravity="center"
+        android:textColor="@color/commonTextWhite"
+        android:textSize="@dimen/small_title_size"
+        android:textStyle="bold"
+        tools:text="艺术展览馆里的[马桶艺术]" />
+
+    <!-- 副标题. -->
+    <TextView
+        android:id="@+id/tv_subTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_24"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dimen_32"
+        android:gravity="center"
+        android:textColor="@color/secondTextWhite"
+        android:textSize="@dimen/small_size"
+        tools:text="致敬马塞尔~杜尚，现代艺术的守护神" />
+
+    <!-- 添加广告位的标题和指示器. -->
+    <LinearLayout
+        android:id="@+id/linear_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_32"
+        android:layout_gravity="bottom"
+        android:gravity="center"
         android:orientation="horizontal"
         android:padding="@dimen/dimen_12" />
+
+    <ImageView
+        android:id="@+id/imgView_search"
+        android:layout_width="@dimen/dimen_32"
+        android:layout_height="@dimen/dimen_32"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/dimen_12"
+        android:layout_marginTop="@dimen/dimen_12"
+        android:padding="@dimen/dimen_4"
+        android:src="@drawable/icon_search" />
 
 </FrameLayout>

@@ -10,12 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.rockin.R;
 import com.rockin.adapter.CommonViewAdapter;
 import com.rockin.databinding.FragmentHomePageBinding;
+import com.rockin.utils.LogUtil;
 import com.rockin.view.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -52,6 +56,26 @@ public class HomePageFragment extends BaseFragment {
      */
     private ViewPager viewParentBanner;
 
+    /**
+     * 显示 ViewPager 的指示器
+     */
+    private LinearLayout linearIndicator;
+
+    /**
+     * 首页广告位的主标题
+     */
+    private TextView tvMainTitle;
+
+    /**
+     * 首页广告位的副标题
+     */
+    private TextView tvSubTitle;
+
+    /**
+     * 搜索按钮，跳转到 SearchActivity
+     */
+    private ImageView imgViewSearch;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +97,14 @@ public class HomePageFragment extends BaseFragment {
      * 初始化广告位
      */
     private void initBanner() {
+        View bannerView = LayoutInflater.from(mContext).inflate(R.layout.layout_home_page_banner, null);
+        viewParentBanner = (ViewPager) bannerView.findViewById(R.id.viewPager_homeBanner);
+        linearIndicator = (LinearLayout) bannerView.findViewById(R.id.linear_indicator);
+        tvMainTitle = (TextView) bannerView.findViewById(R.id.tv_mainTitle);
+        tvSubTitle = (TextView) bannerView.findViewById(R.id.tv_subTitle);
+        imgViewSearch = (ImageView) bannerView.findViewById(R.id.imgView_search);
+        imgViewSearch.setOnClickListener(v -> Toast.makeText(mContext, "跳转到查询界面", Toast.LENGTH_SHORT).show());
+
         // 首先初始化 Banner 适配器,里面的值还是 0;所以在获取网络请求之后需要重新更新
         bannerAdapter = new CommonViewAdapter(bannerImgs) {
             @Override
@@ -82,22 +114,29 @@ public class HomePageFragment extends BaseFragment {
             }
         };
 
-        bannerImgUrls.add("http://pic.jj20.com/up/allimg/911/021616153629/160216153629-1.jpg");
-        bannerImgUrls.add("http://www.zhlzw.com/UploadFiles/Article_UploadFiles/201204/20120422013453408.JPG");
-        bannerImgUrls.add("http://img.hb.aicdn.com/fe24b20f87398270e2b86096cc655e0978ae9d5f4d3cf-52xyz4_fw658");
-        bannerImgUrls.add("http://img1.3lian.com/2015/a1/105/d/40.jpg");
-        bannerImgUrls.add("http://img.hb.aicdn.com/743ade18bec55e29e8264344ffeabbb13ebd27481262ad-YvhQWR_fw658");
+        bannerImgUrls.add("https://cdn.dribbble.com/users/674925/screenshots/2858845/___1x.jpg");
+        bannerImgUrls.add("https://cdn.dribbble.com/users/674925/screenshots/2920975/like_1x.jpg");
+        bannerImgUrls.add("https://cdn.dribbble.com/users/674925/screenshots/2949037/image_1x.png");
+        bannerImgUrls.add("https://cdn.dribbble.com/users/674925/screenshots/2940938/dabian_1x.jpg");
+        bannerImgUrls.add("https://cdn.dribbble.com/users/674925/screenshots/3359811/img_7970_1x.jpg");
+
         for (int i = 0; i < bannerImgUrls.size(); i++) {
             ImageView imgView = new ImageView(mContext);
             imgView.setScaleType(ImageView.ScaleType.FIT_XY);
             imgView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             bannerImgs.add(imgView);
+
+            ImageView imgViewIndicator = (ImageView) LayoutInflater.from(mContext)
+                    .inflate(R.layout.img_banner_indicator, null).findViewById(R.id.imgView_indicator);
+            imgViewIndicator.setSelected(false);
+            linearIndicator.addView(imgViewIndicator);
         }
 
-        View bannerView = LayoutInflater.from(mContext).inflate(R.layout.layout_home_page_banner, null);
-        viewParentBanner = (ViewPager) bannerView.findViewById(R.id.viewPager_homeBanner);
         viewParentBanner.getParent().requestDisallowInterceptTouchEvent(true);
         viewParentBanner.setAdapter(bannerAdapter);
+        // 设置默认选中项
+        viewParentBanner.setCurrentItem(0);
+        linearIndicator.getChildAt(0).setSelected(true);
         viewParentBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -106,7 +145,15 @@ public class HomePageFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-
+                LogUtil.i("当前的 position 为 " + position);
+                for (int i = 0; i < bannerImgUrls.size(); i++) {
+                    if (i == position)
+                        linearIndicator.getChildAt(position).setSelected(true);
+                    else
+                        linearIndicator.getChildAt(i).setSelected(false);
+                }
+                tvMainTitle.setText("这是主标题 " + (position + 1));
+                tvSubTitle.setText("这是一个副标题 " + (position + 1));
             }
 
             @Override
@@ -114,6 +161,7 @@ public class HomePageFragment extends BaseFragment {
 
             }
         });
+
         ListView listView = (ListView) homePageBinding.getRoot().findViewById(R.id.listView_homePage);
         listView.addHeaderView(bannerView);
         List<String> listData = new ArrayList<>();

@@ -18,7 +18,7 @@
     <!-- Appbar最小高度. -->
     <dimen name="appbar_size">56dp</dimen>
     <!-- 底部导航栏高度. -->
-    <dimen name="bottom_bar_size">48dp</dimen>
+    <dimen name="bottom_bar_size">40dp</dimen>
     <!-- 悬浮按钮小尺寸. -->
     <dimen name="float_btn_small_size">40dp</dimen>
     <!-- 悬浮按钮尺寸. -->
@@ -42,6 +42,11 @@
     <!-- 文字左侧对齐基线. -->
     <dimen name="txt_margin_left_size">16dp</dimen>
 
+    <dimen name="dimen_2">2dp</dimen>
+    <dimen name="dimen_4">4dp</dimen>
+    <dimen name="dimen_6">6dp</dimen>
+    <dimen name="dimen_8">8dp</dimen>
+    <dimen name="dimen_10">10dp</dimen>
     <dimen name="dimen_12">12dp</dimen>
     <dimen name="dimen_14">14dp</dimen>
     <dimen name="dimen_16">16dp</dimen>
