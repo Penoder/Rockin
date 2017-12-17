@@ -20,6 +20,10 @@
         android:gravity="center"
         android:textColor="@color/commonTextWhite"
         android:textSize="@dimen/small_title_size"
+        android:layout_marginLeft="@dimen/dimen_64"
+        android:layout_marginRight="@dimen/dimen_64"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textStyle="bold"
         tools:text="艺术展览馆里的[马桶艺术]" />
 
@@ -29,6 +33,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_24"
         android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/dimen_48"
+        android:layout_marginRight="@dimen/dimen_48"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:layout_marginBottom="@dimen/dimen_32"
         android:gravity="center"
         android:textColor="@color/secondTextWhite"

@@ -21,6 +21,8 @@
     <!-- 背景色. -->
     <color name="backgroundColor">#CCCCCC</color>
 
+    <color name="transparent">#0000</color>
+
     <!-- 颜色库. -->
     <color name="white">#FFFFFF</color>
     <!--白色. -->

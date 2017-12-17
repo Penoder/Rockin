@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -110,7 +109,7 @@ public class HomePageFragment extends BaseFragment {
             @Override
             public void onBindView(ViewGroup container, View itemView, int position) {
                 super.onBindView(container, itemView, position);
-                Glide.with(mContext).load(bannerImgUrls.get(position)).into((ImageView) itemView);
+                Glide.with(mContext).load(bannerImgUrls.get(position)).placeholder(R.drawable.img_default_banner).into((ImageView) itemView);
             }
         };
 
@@ -131,12 +130,13 @@ public class HomePageFragment extends BaseFragment {
             imgViewIndicator.setSelected(false);
             linearIndicator.addView(imgViewIndicator);
         }
-
-        viewParentBanner.getParent().requestDisallowInterceptTouchEvent(true);
         viewParentBanner.setAdapter(bannerAdapter);
         // 设置默认选中项
         viewParentBanner.setCurrentItem(0);
         linearIndicator.getChildAt(0).setSelected(true);
+        tvMainTitle.setText("这是主标题 1");
+        tvSubTitle.setText("这是一个副标题 1");
+
         viewParentBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -147,10 +147,11 @@ public class HomePageFragment extends BaseFragment {
             public void onPageSelected(int position) {
                 LogUtil.i("当前的 position 为 " + position);
                 for (int i = 0; i < bannerImgUrls.size(); i++) {
-                    if (i == position)
+                    if (i == position) {
                         linearIndicator.getChildAt(position).setSelected(true);
-                    else
+                    } else {
                         linearIndicator.getChildAt(i).setSelected(false);
+                    }
                 }
                 tvMainTitle.setText("这是主标题 " + (position + 1));
                 tvSubTitle.setText("这是一个副标题 " + (position + 1));
@@ -162,12 +163,16 @@ public class HomePageFragment extends BaseFragment {
             }
         });
 
-        ListView listView = (ListView) homePageBinding.getRoot().findViewById(R.id.listView_homePage);
-        listView.addHeaderView(bannerView);
+        homePageBinding.listViewHomePage.addHeaderView(bannerView);
         List<String> listData = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             listData.addAll(bannerImgUrls);
         }
-        listView.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_expandable_list_item_1, android.R.id.text1, listData));
+        homePageBinding.listViewHomePage.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_expandable_list_item_1, android.R.id.text1, listData));
+    }
+
+
+    public void backToTop() {
+        homePageBinding.listViewHomePage.setSelection(0);
     }
 }

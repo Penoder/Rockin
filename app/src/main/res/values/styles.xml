@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="FullScreenTheme" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!-- 启动页 主题，windowBackground 属性设置 启动背景图片可以避免 白屏或黑屏问题. -->
+    <style name="SplashTheme" parent="FullScreenTheme">
+        <item name="android:windowBackground">@drawable/img_splash</item>
+    </style>
+
 </resources>
