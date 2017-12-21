@@ -9,12 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.MediaController;
+import android.widget.Toast;
 
 import com.rockin.R;
 import com.rockin.adapter.CommonViewAdapter;
@@ -60,6 +61,17 @@ public class GuideActivity extends BaseActivity {
      */
     private int currentPosition;
 
+    /**
+     * 记录用户按在屏幕上时的坐标（downX, downY）
+     * 以及离开屏幕上时的坐标（upX, upY）
+     */
+    private float downX, downY, upX, upY;
+
+    /**
+     * 设备能识别到的最小滑动距离
+     */
+    private int minSlidePace;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +79,7 @@ public class GuideActivity extends BaseActivity {
         // 设置屏幕常亮，不会变暗也不会锁屏(http://blog.csdn.net/mrzhang628/article/details/50752392)
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         initVideoView();
+        minSlidePace = ViewConfiguration.get(this).getScaledTouchSlop();
         initBanner();
     }
 
@@ -191,13 +204,31 @@ public class GuideActivity extends BaseActivity {
 
         guideBinding.ivArrowUpTwo.startAnimation(upArrow2);
 
-    }
+        /*
+         * 监听界面的 滑动事件， 上滑和左滑 需要跳转到 MainActivity，
+         * 并且不同方向的滑动， MainActivity 的启动动画还不一样
+         */
+        guideBinding.viewPagerGuide.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                //当手指按下的时候
+                downX = event.getX();
+                downY = event.getY();
+            }
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                //当手指离开的时候
+                upX = event.getX();
+                upY = event.getY();
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
-
-
+                // 表示上滑操作，并且 y轴 滑动距离 大于 2倍 x轴 滑动距离
+                if (downY - upY > 6 * minSlidePace && Math.abs(upY - downY) > 2 * Math.abs(upX - downX)) {
+                    Toast.makeText(GuideActivity.this, "上滑----", Toast.LENGTH_SHORT).show();
+                } else if (currentPosition == 3 && downX - upX > 6 * minSlidePace && Math.abs(upX - downX) > 2 * Math.abs(upY - downY)) {
+                    // 左滑操作是不是要判断 按下时 已经是 ViewPager 的最后一个页面了
+                    Toast.makeText(GuideActivity.this, "左滑----", Toast.LENGTH_SHORT).show();
+                }
+            }
+            return false;
+        });
     }
 
     @Override
