@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/linear_interpolator">
+
+    <!-- 实现 仿开眼 引导页底部 指示上滑箭头的 alpha 动画  -->
+    <alpha
+        android:duration="400"
+        android:fromAlpha="1.0"
+        android:toAlpha="0.4" />
+
+</set>

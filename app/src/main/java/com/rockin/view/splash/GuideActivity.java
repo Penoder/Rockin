@@ -4,12 +4,17 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.MediaController;
 
 import com.rockin.R;
 import com.rockin.adapter.CommonViewAdapter;
@@ -30,11 +35,30 @@ public class GuideActivity extends BaseActivity {
 
     private ActivityGuideBinding guideBinding;
 
+    /**
+     * ViewPager 的通用适配器
+     */
     private CommonViewAdapter bannerAdapter;
 
+    /**
+     * 引导页切换的图片，透明化，无内容
+     */
     private List<View> bannerImgs = new ArrayList<>(4);
+
+    /**
+     * 主标题中文数据
+     */
     private List<String> mainTitles = new ArrayList<>(4);
+
+    /**
+     * 次标题英文数据
+     */
     private List<String> subTitles = new ArrayList<>(4);
+
+    /**
+     * 当前滑动到的 position
+     */
+    private int currentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +136,7 @@ public class GuideActivity extends BaseActivity {
                         guideBinding.linearGuideIndicator.getChildAt(i).setSelected(false);
                     }
                 }
+                currentPosition = position;
             }
 
             @Override
@@ -119,5 +144,71 @@ public class GuideActivity extends BaseActivity {
 
             }
         });
+
+        // 执行 引导页界面 底部的上滑引导箭头的 alpha 动画
+        Animation upArrow1 = AnimationUtils.loadAnimation(this, R.anim.alpha_in_guide_up_arrows);
+        Animation upArrow2 = AnimationUtils.loadAnimation(this, R.anim.alpha_in_guide_up_arrows);
+        upArrow1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        guideBinding.ivArrowUpTwo.startAnimation(upArrow2);
+                    }
+                }, 1000);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        upArrow2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                guideBinding.ivArrowUpOne.startAnimation(upArrow1);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        // 保留在变化后的一帧
+        upArrow1.setFillAfter(true);
+        upArrow2.setFillAfter(true);
+
+        guideBinding.ivArrowUpTwo.startAnimation(upArrow2);
+
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return super.onTouchEvent(event);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        guideBinding.videoGuide.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        guideBinding.videoGuide.pause();
     }
 }

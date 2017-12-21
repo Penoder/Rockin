@@ -66,6 +66,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/transparent" />
+
+        <ImageView
+            android:id="@+id/iv_arrowUpOne"
+            android:layout_width="32dp"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="36dp"
+            android:src="@drawable/icon_arrows_up_white" />
+
+        <ImageView
+            android:id="@+id/iv_arrowUpTwo"
+            android:layout_width="32dp"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/icon_arrows_up_white" />
+
     </FrameLayout>
 
 </layout>
