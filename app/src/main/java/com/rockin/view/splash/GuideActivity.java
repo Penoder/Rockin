@@ -1,5 +1,6 @@
 package com.rockin.view.splash;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.rockin.MainActivity;
 import com.rockin.R;
 import com.rockin.adapter.CommonViewAdapter;
 import com.rockin.databinding.ActivityGuideBinding;
@@ -221,10 +223,14 @@ public class GuideActivity extends BaseActivity {
 
                 // 表示上滑操作，并且 y轴 滑动距离 大于 2倍 x轴 滑动距离
                 if (downY - upY > 6 * minSlidePace && Math.abs(upY - downY) > 2 * Math.abs(upX - downX)) {
-                    Toast.makeText(GuideActivity.this, "上滑----", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(GuideActivity.this, MainActivity.class));
+                    overridePendingTransition(R.anim.translate_from_bottom_to_up, 0);
+                    new Handler().postDelayed(this::finish, 500);
                 } else if (currentPosition == 3 && downX - upX > 6 * minSlidePace && Math.abs(upX - downX) > 2 * Math.abs(upY - downY)) {
-                    // 左滑操作是不是要判断 按下时 已经是 ViewPager 的最后一个页面了
-                    Toast.makeText(GuideActivity.this, "左滑----", Toast.LENGTH_SHORT).show();
+                    // 左滑操作，并且 x轴 滑动距离 大于 2倍 y轴 滑动距离
+                    startActivity(new Intent(GuideActivity.this, MainActivity.class));
+                    overridePendingTransition(R.anim.translate_from_right_to_left, 0);
+                    new Handler().postDelayed(this::finish, 500);
                 }
             }
             return false;

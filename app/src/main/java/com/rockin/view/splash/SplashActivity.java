@@ -37,13 +37,13 @@ public class SplashActivity extends BaseActivity {
      */
     private void ifFirstIn() {
         // 存在记录表示非第一进入 App
-//        if (SPUtils.contains(this, "FIRST_SPLASH")) {
-//            startAnimation();
-//        } else {    // 第一次进入 App
-//            SPUtils.put(this, "FIRST_SPLASH", false);
+        if (SPUtils.contains(this, "FIRST_SPLASH")) {
+            startAnimation();
+        } else {    // 第一次进入 App
+            SPUtils.put(this, "FIRST_SPLASH", false);
             startActivity(new Intent(this, GuideActivity.class));
             finish();
-//        }
+        }
     }
 
     /**
@@ -52,9 +52,10 @@ public class SplashActivity extends BaseActivity {
     private void startAnimation() {
         new Handler().postDelayed(() -> {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            finish();
+            overridePendingTransition(R.anim.translate_from_right_to_left, 0);
+            new Handler().postDelayed(this::finish, 500);
         }, 2000);
-        Animation scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_in_center);
+        Animation scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_from_center_to_out);
         scaleAnimation.setFillAfter(true);
         splashBinding.imgViewSplash.startAnimation(scaleAnimation);
     }
