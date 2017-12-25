@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_homeBanner"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -16,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/dimen_56"
+        android:layout_marginBottom="@dimen/dimen_48"
         android:gravity="center"
         android:textColor="@color/commonTextWhite"
         android:textSize="@dimen/small_title_size"
@@ -37,7 +38,7 @@
         android:layout_marginRight="@dimen/dimen_48"
         android:ellipsize="end"
         android:maxLines="1"
-        android:layout_marginBottom="@dimen/dimen_32"
+        android:layout_marginBottom="@dimen/dimen_24"
         android:gravity="center"
         android:textColor="@color/secondTextWhite"
         android:textSize="@dimen/small_size"

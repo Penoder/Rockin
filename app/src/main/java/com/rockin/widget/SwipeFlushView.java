@@ -62,6 +62,7 @@ public class SwipeFlushView extends SwipeRefreshLayout {
 
     public SwipeFlushView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         initView(context, attrs);
     }
 
@@ -237,6 +238,57 @@ public class SwipeFlushView extends SwipeRefreshLayout {
             mDownY = 0;
             mUpY = 0;
         }
+    }
+
+    private float startY;
+    private float startX;
+    // 记录viewPager是否拖拽的标记
+    private boolean mIsVpDragger;
+    private final int mTouchSlop;
+
+    /**
+     * 重写 SwipeRefreshLayout 的 onInterceptTouchEvent，解决和 ViewPager 的滑动冲突
+     * http://blog.csdn.net/u010386612/article/details/50548977
+     *
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        int action = ev.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                // 记录手指按下的位置
+                startY = ev.getY();
+                startX = ev.getX();
+                // 初始化标记
+                mIsVpDragger = false;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                // 如果viewpager正在拖拽中，那么不拦截它的事件，直接return false；
+                if (mIsVpDragger) {
+                    return false;
+                }
+
+                // 获取当前手指位置
+                float endY = ev.getY();
+                float endX = ev.getX();
+                float distanceX = Math.abs(endX - startX);
+                float distanceY = Math.abs(endY - startY);
+                // 如果X轴位移大于Y轴位移，那么将事件交给viewPager处理。
+                if (distanceX > mTouchSlop && distanceX > distanceY) {
+                    mIsVpDragger = true;
+                    return false;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                // 初始化标记
+                mIsVpDragger = false;
+                break;
+        }
+        // 如果是Y轴位移大于X轴，事件交给swipeRefreshLayout处理。
+        return super.onInterceptTouchEvent(ev);
     }
 
     /**

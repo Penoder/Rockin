@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -97,6 +98,7 @@ public class HomePageFragment extends BaseFragment {
      */
     private void initBanner() {
         View bannerView = LayoutInflater.from(mContext).inflate(R.layout.layout_home_page_banner, null);
+        FrameLayout frameHomeBanner = (FrameLayout) bannerView.findViewById(R.id.frame_homeBanner);
         viewParentBanner = (ViewPager) bannerView.findViewById(R.id.viewPager_homeBanner);
         linearIndicator = (LinearLayout) bannerView.findViewById(R.id.linear_indicator);
         tvMainTitle = (TextView) bannerView.findViewById(R.id.tv_mainTitle);
@@ -170,7 +172,6 @@ public class HomePageFragment extends BaseFragment {
         }
         homePageBinding.listViewHomePage.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_expandable_list_item_1, android.R.id.text1, listData));
     }
-
 
     public void backToTop() {
         homePageBinding.listViewHomePage.setSelection(0);

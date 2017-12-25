@@ -1,6 +1,7 @@
 package com.penoder.mylibrary.okhttp;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
@@ -53,7 +54,7 @@ public class OkHttpManager {
     /**
      * 网络请求加载中显示的 Dialog
      */
-    private AlertDialog loadDialog;
+    private ProgressDialog loadDialog;
 
     private OkHttpManager() {
         okHttpClient = new OkHttpClient();
@@ -115,11 +116,11 @@ public class OkHttpManager {
     public OkHttpManager addProgress() {
         // 为了每次重新创建
         destroyDialog();
-
-        loadDialog = new AlertDialog.Builder(mWeakReference.get())
-                .setIcon(R.drawable.loading)
-                .setMessage("内容加载中，请稍后!")
-                .show();
+        if (loadDialog == null) {
+            loadDialog = ProgressDialog.show(mWeakReference.get(), "", "内容加载中，请稍后!", true, true);
+        } else {
+            loadDialog.show();
+        }
         return this;
     }
 
@@ -136,10 +137,12 @@ public class OkHttpManager {
         if (TextUtils.isEmpty(msg)) {
             msg = "内容加载中，请稍后!";
         }
-        loadDialog = new AlertDialog.Builder(mWeakReference.get())
-                .setIcon(R.drawable.loading)
-                .setMessage(msg)
-                .show();
+        if (loadDialog == null) {
+            loadDialog = ProgressDialog.show(mWeakReference.get(), "", msg, true, true);
+        } else {
+            loadDialog.setMessage(msg);
+            loadDialog.show();
+        }
         return this;
     }
 
@@ -157,23 +160,23 @@ public class OkHttpManager {
         if (TextUtils.isEmpty(msg)) {
             msg = "内容加载中，请稍后!";
         }
-        loadDialog = new AlertDialog.Builder(mWeakReference.get())
-                .setIcon(R.drawable.loading)
-                .setMessage(msg)
-                .setCancelable(cancelable)
-                .create();
-        loadDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                // 设置返回键可以取消
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    dialog.dismiss();
-                    return true;
-                }
-                return false;
+        if (loadDialog == null) {
+            loadDialog = ProgressDialog.show(mWeakReference.get(), "", msg, true, cancelable);
+        } else {
+            loadDialog.setMessage(msg);
+            loadDialog.setCancelable(cancelable);
+            loadDialog.show();
+        }
+
+        loadDialog.setOnKeyListener((dialog, keyCode, event) -> {
+            // 设置返回键可以取消
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                dialog.dismiss();
+                return true;
             }
+            return false;
         });
-        loadDialog.show();
+
         return this;
     }
 
@@ -219,15 +222,12 @@ public class OkHttpManager {
                             sendResponse(okCallBack, false, response, object);
                         } else {
                             Gson gson = new Gson();
-                            CommonJson<Object> commonJson = gson.fromJson(jsonStr, CommonJson.class);
+                            // 这里要做 Json 解析，需要考虑的情况有数组、集合、普通对象等,不知道该方式适不适用所有情况
+                            Type type = new TypeToken<CommonJson<Object>>() {
+                            }.getType();
+                            CommonJson<Object> commonJson = gson.fromJson(jsonStr, type);
                             if (commonJson != null && commonJson.code == 1) {
-                                String dataJson = gson.toJson(commonJson.datas);
-
-                                // 这里要做 Json 解析，需要考虑的情况有数组、集合、普通对象等,不知道该方式适不适用所有情况
-                                Type type = new TypeToken<Object>() {
-                                }.getType();
-                                Object obj = gson.fromJson(dataJson, type);
-                                sendResponse(okCallBack, true, response, obj);
+                                sendResponse(okCallBack, true, response, commonJson.datas);
                             } else {
                                 sendResponse(okCallBack, false, response, object);
                             }
@@ -244,28 +244,22 @@ public class OkHttpManager {
     }
 
     private void sendFailure(Call call, Exception e, OkCallBack okCallBack) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (loadDialog != null && loadDialog.isShowing()) {
-                    loadDialog.dismiss();
-                    loadDialog = null;
-                }
-                okCallBack.failure(call, e);
+        mHandler.post(() -> {
+            if (loadDialog != null && loadDialog.isShowing()) {
+                loadDialog.dismiss();
+                loadDialog = null;
             }
+            okCallBack.failure(call, e);
         });
     }
 
     private void sendResponse(OkCallBack okCallBack, boolean isSuccess, Response response, Object obj) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (loadDialog != null && loadDialog.isShowing()) {
-                    loadDialog.dismiss();
-                    loadDialog = null;
-                }
-                okCallBack.onResponse(isSuccess, response, obj);
+        mHandler.post(() -> {
+            if (loadDialog != null && loadDialog.isShowing()) {
+                loadDialog.dismiss();
+                loadDialog = null;
             }
+            okCallBack.onResponse(isSuccess, response, obj);
         });
     }
 
