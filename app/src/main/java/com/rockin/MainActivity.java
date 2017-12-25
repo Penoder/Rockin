@@ -7,7 +7,7 @@ import com.rockin.adapter.CommonFragmentAdapter;
 import com.rockin.databinding.ActivityMainBinding;
 import com.rockin.view.base.BaseFragment;
 import com.rockin.view.base.BaseFragmentActivity;
-import com.rockin.view.concern.ConcernFragment;
+import com.rockin.view.found.FoundFragment;
 import com.rockin.view.homepage.HomePageFragment;
 import com.rockin.view.inform.InformFragment;
 import com.rockin.view.person.PersonFragment;
@@ -36,7 +36,7 @@ public class MainActivity extends BaseFragmentActivity {
      */
     private void initFragment() {
         homePageFragment = new HomePageFragment();
-        concernFragment = new ConcernFragment();
+        concernFragment = new FoundFragment();
         informFragment = new InformFragment();
         personFragment = new PersonFragment();
         mainBinding.viewPagerMain.setAdapter(new CommonFragmentAdapter(getSupportFragmentManager(), homePageFragment, concernFragment, informFragment, personFragment));
