@@ -1,9 +1,7 @@
 package com.penoder.mylibrary.okhttp;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -11,7 +9,6 @@ import android.view.KeyEvent;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.penoder.mylibrary.R;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -80,7 +77,11 @@ public class OkHttpManager {
      * @return
      */
     public OkHttpManager addUrl(String url) {
-        requestBuilder = new Request.Builder().url(url);
+        try {
+            requestBuilder = new Request.Builder().url(url);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 
@@ -101,9 +102,9 @@ public class OkHttpManager {
      * @param value
      * @return
      */
-    public OkHttpManager addParam(String key, String value) {
+    public OkHttpManager addParam(String key, Object value) {
         if (bodyBuilder != null) {
-            bodyBuilder.add(key, value);
+            bodyBuilder.add(key, value.toString());
         }
         return this;
     }
@@ -115,12 +116,8 @@ public class OkHttpManager {
      */
     public OkHttpManager addProgress() {
         // 为了每次重新创建
-        destroyDialog();
-        if (loadDialog == null) {
-            loadDialog = ProgressDialog.show(mWeakReference.get(), "", "内容加载中，请稍后!", true, true);
-        } else {
-            loadDialog.show();
-        }
+//        destroyDialog();
+        createDialog("", "内容加载中，请稍后!", true);
         return this;
     }
 
@@ -130,19 +127,12 @@ public class OkHttpManager {
      * @param msg
      * @return
      */
-    public OkHttpManager addProgress(String msg) {
-        destroyDialog();
-
-
+    public OkHttpManager addProgress(String title, String msg) {
         if (TextUtils.isEmpty(msg)) {
             msg = "内容加载中，请稍后!";
         }
-        if (loadDialog == null) {
-            loadDialog = ProgressDialog.show(mWeakReference.get(), "", msg, true, true);
-        } else {
-            loadDialog.setMessage(msg);
-            loadDialog.show();
-        }
+//        destroyDialog();
+        createDialog(title, msg, true);
         return this;
     }
 
@@ -153,20 +143,13 @@ public class OkHttpManager {
      * @param cancelable
      * @return
      */
-    public OkHttpManager addProgress(String msg, boolean cancelable) {
-        // 为了每次重新创建
-        destroyDialog();
-
+    public OkHttpManager addProgress(String title, String msg, boolean cancelable) {
         if (TextUtils.isEmpty(msg)) {
             msg = "内容加载中，请稍后!";
         }
-        if (loadDialog == null) {
-            loadDialog = ProgressDialog.show(mWeakReference.get(), "", msg, true, cancelable);
-        } else {
-            loadDialog.setMessage(msg);
-            loadDialog.setCancelable(cancelable);
-            loadDialog.show();
-        }
+        // 为了每次重新创建
+//        destroyDialog();
+        createDialog(title, msg, cancelable);
 
         loadDialog.setOnKeyListener((dialog, keyCode, event) -> {
             // 设置返回键可以取消
@@ -180,15 +163,25 @@ public class OkHttpManager {
         return this;
     }
 
+    private void createDialog(String title, String msg, boolean cancelable) {
+        if (loadDialog == null) {
+            loadDialog = ProgressDialog.show(mWeakReference.get(), title, msg, true, cancelable);
+        } else {
+            loadDialog.setMessage(msg);
+            loadDialog.setCancelable(cancelable);
+            loadDialog.show();
+        }
+    }
+
     /**
      * 为了每次重新创建 Dialog,调用时先将其销毁掉
      */
-    private void destroyDialog() {
-        if (loadDialog != null) {
-            loadDialog.dismiss();
-            loadDialog = null;
-        }
-    }
+//    private void destroyDialog() {
+//        if (loadDialog != null) {
+//            loadDialog.dismiss();
+//            loadDialog = null;
+//        }
+//    }
 
     /**
      * 表示开始执行网络请求

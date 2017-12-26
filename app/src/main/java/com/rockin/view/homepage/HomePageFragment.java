@@ -16,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.penoder.mylibrary.okhttp.OkHttpManager;
 import com.rockin.R;
 import com.rockin.adapter.CommonViewAdapter;
+import com.rockin.config.RocApi;
 import com.rockin.databinding.FragmentHomePageBinding;
 import com.rockin.utils.LogUtil;
 import com.rockin.view.base.BaseFragment;
@@ -52,6 +54,16 @@ public class HomePageFragment extends BaseFragment {
     private List<String> bannerImgUrls = new ArrayList<>();
 
     /**
+     * 广告位 主标题
+     */
+    private List<String> mainTitles = new ArrayList<>();
+
+    /**
+     * 广告位 副标题
+     */
+    private List<String> subsitles = new ArrayList<>();
+
+    /**
      * 首页显示 Banner 的 ViewPager
      */
     private ViewPager viewParentBanner;
@@ -76,6 +88,16 @@ public class HomePageFragment extends BaseFragment {
      */
     private ImageView imgViewSearch;
 
+    /**
+     * 请求数据时的时间戳
+     */
+    private long dateLine;
+
+    /**
+     * 当前请求的页面数
+     */
+    private int pageNum;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,8 +111,19 @@ public class HomePageFragment extends BaseFragment {
         homePageBinding.setViewModel(this);
         // 这个写在setViewModel前面会崩掉
         homePageBinding.executePendingBindings();
+        getDatas();
         initBanner();
         return homePageBinding.getRoot();
+    }
+
+    private void getDatas() {
+        dateLine = System.currentTimeMillis();
+        OkHttpManager.create(mContext)
+                .addUrl(RocApi.HOME_PAGE)
+                .post()
+                .addParam("date", dateLine)
+                .addParam("num", "2")
+                .addParam("page", "");
     }
 
     /**

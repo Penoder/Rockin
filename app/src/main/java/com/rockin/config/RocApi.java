@@ -14,16 +14,10 @@ public class RocApi {
      * 首页内容的 URL, 和下面的 每日精选 接口返回的数据貌似一样
      * <p>
      * 拼接参数：
-     * - `udid`：用户唯一标识。该参数可为空也可去除
-     * - `vc`：???，固定值`168`。该参数可为空也可去除
-     * - `vn`：客户端版本。该参数可为空也可去除
-     * - `deviceModel`：手机信息。该参数可为空也可去除
-     * - `first_channel`：???，固定值 `eyepetizer_baidu_market`。该参数可为空也可去除
-     * - `last_channel`：???，固定值 `eyepetizer_baidu_market`。该参数可为空也可去除
-     * - `system_version_code`：手机系统版本。该参数可为空也可去除
-     * <p>
-     * url 示例：[`http://baobab.kaiyanapp.com/api/v4/tabs/selected?udid=11111&vc=168&vn=3.3.1&deviceModel=Huawei%36&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=20`](http://baobab.kaiyanapp.com/api/v4/tabs/selected?udid=11111&vc=168&vn=3.3.1&deviceModel=Huawei%36&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=20)
-     * 或 [`http://baobab.kaiyanapp.com/api/v4/tabs/selected`](http://baobab.kaiyanapp.com/api/v4/tabs/selected)
+     * date: 当前刷新的时间戳
+     * num: 相当于 PageSize，表示每页的数量（不确定，测试1可能是7条或8条，2可能是14条或15条）
+     * page: 相当于是 pageNum，表示请求的第几页
+     * url 示例：http://baobab.kaiyanapp.com/api/v4/tabs/selected?date=1514250000000&num=1&page=0
      */
     public static final String HOME_PAGE = "http://baobab.kaiyanapp.com/api/v4/tabs/selected";
 
