@@ -17,7 +17,7 @@ public abstract class CommonListAdapter<T> extends BaseAdapter {
     private List<T> datas = new ArrayList<>();
     private int layoutId;
 
-    CommonListAdapter(List<T> datas, int layoutId) {
+    public CommonListAdapter(List<T> datas, int layoutId) {
         this.datas = datas;
         this.layoutId = layoutId;
     }
@@ -42,7 +42,7 @@ public abstract class CommonListAdapter<T> extends BaseAdapter {
         ViewHolder holder = null;
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
-            holder = new ViewHolder();
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -53,9 +53,22 @@ public abstract class CommonListAdapter<T> extends BaseAdapter {
         return convertView;
     }
 
-    abstract void onBindView(T t, ViewHolder holder, int position);
+    public abstract void onBindView(T t, ViewHolder holder, int position);
 
-    private class ViewHolder {
+    public class ViewHolder {
 
+        private View itemView;
+
+        private ViewHolder(View itemView) {
+            this.itemView = itemView;
+        }
+
+        public View getItemView() {
+            return itemView;
+        }
+
+        public <T extends View> T getView(int viewId) {
+            return (T) itemView.findViewById(viewId);
+        }
     }
 }

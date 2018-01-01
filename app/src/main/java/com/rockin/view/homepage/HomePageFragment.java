@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.penoder.mylibrary.okhttp.OkHttpManager;
 import com.rockin.R;
+import com.rockin.adapter.CommonListAdapter;
 import com.rockin.adapter.CommonViewAdapter;
 import com.rockin.config.RocApi;
 import com.rockin.databinding.FragmentHomePageBinding;
@@ -36,12 +36,15 @@ import java.util.List;
 public class HomePageFragment extends BaseFragment {
 
     private Context mContext;
+
     private FragmentHomePageBinding homePageBinding;
 
     /**
      * 首页 Banner 的通用适配器
      */
     private CommonViewAdapter bannerAdapter;
+
+    private CommonListAdapter<String> videoAdapter;
 
     /**
      * 首页 Banner 显示的 ImageView 的集合
@@ -203,7 +206,15 @@ public class HomePageFragment extends BaseFragment {
         for (int i = 0; i < 4; i++) {
             listData.addAll(bannerImgUrls);
         }
-        homePageBinding.listViewHomePage.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_expandable_list_item_1, android.R.id.text1, listData));
+
+        videoAdapter = new CommonListAdapter<String>(null, R.layout.item_home_page_video) {
+
+            @Override
+            public void onBindView(String s, ViewHolder holder, int position) {
+
+            }
+        };
+        homePageBinding.listViewHomePage.setAdapter(videoAdapter);
     }
 
     public void backToTop() {

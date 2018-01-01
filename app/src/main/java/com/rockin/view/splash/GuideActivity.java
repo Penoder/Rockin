@@ -171,12 +171,7 @@ public class GuideActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        guideBinding.ivArrowUpTwo.startAnimation(upArrow2);
-                    }
-                }, 1000);
+                new Handler().postDelayed(() -> guideBinding.ivArrowUpTwo.startAnimation(upArrow2), 1000);
             }
 
             @Override
