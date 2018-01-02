@@ -16,7 +16,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.rockin.MainActivity;
 import com.rockin.R;
@@ -235,12 +234,16 @@ public class GuideActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        guideBinding.videoGuide.seekTo(playPosition);
         guideBinding.videoGuide.start();
     }
+
+    private int playPosition;
 
     @Override
     protected void onStop() {
         super.onStop();
         guideBinding.videoGuide.pause();
+        playPosition = guideBinding.videoGuide.getCurrentPosition();
     }
 }
