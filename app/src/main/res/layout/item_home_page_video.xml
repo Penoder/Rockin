@@ -2,6 +2,82 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imgView_feed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <com.rockin.widget.CircleImageView
+            android:id="@+id/circleImg_authorIcon"
+            android:layout_width="@dimen/dimen_48"
+            android:layout_height="@dimen/dimen_48"
+            android:layout_margin="@dimen/dimen_12"
+            android:background="@drawable/icon_default_head" />
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtView_mainTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/commonTextBlack"
+                android:textSize="@dimen/common_size"
+                tools:text="不想当总统的程序猿 不是一个好毒贩" />
+
+            <TextView
+                android:id="@+id/txtView_subTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/hintTextBlack"
+                android:textSize="@dimen/common_size"
+                tools:text="百姓读史 / 04'54''" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_12">
+
+            <ImageView
+                android:id="@+id/imgView_moreOperate"
+                android:layout_width="@dimen/dimen_48"
+                android:layout_height="@dimen/dimen_48"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:src="@drawable/icon_more" />
+
+            <TextView
+                android:id="@+id/txtView_publishTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:textColor="@color/hintTextBlack"
+                android:textSize="@dimen/small_size"
+                android:visibility="invisible"
+                tools:text="3分钟前" />
+
+        </FrameLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

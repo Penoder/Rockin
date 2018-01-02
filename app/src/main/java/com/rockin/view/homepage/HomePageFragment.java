@@ -211,7 +211,8 @@ public class HomePageFragment extends BaseFragment {
 
             @Override
             public void onBindView(String s, ViewHolder holder, int position) {
-
+                holder.getView(R.id.txtView_publishTime).setVisibility(View.GONE);
+                holder.getView(R.id.imgView_moreOperate).setVisibility(View.VISIBLE);
             }
         };
         homePageBinding.listViewHomePage.setAdapter(videoAdapter);
