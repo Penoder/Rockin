@@ -8,7 +8,17 @@ package com.rockin.config;
  * @date 2017/11/25
  */
 
-public class RocApi {
+public class EyeApi {
+
+    /**
+     * 获取首页视频的接口
+     */
+    public static final String VIDEO_HOMEPAGE = "http://192.168.1.107:8080/Eyepetizer/Video/HomePage";
+
+    /**
+     * 下面是可以获取到的 开眼 App 的数据， 上面是自己后台提供的接口；
+     * 另外下面的接口已经提交到 GitHub，上面的接口不会暴露出去，所以不再提交该类
+     */
 
     /**
      * 首页内容的 URL, 和下面的 每日精选 接口返回的数据貌似一样

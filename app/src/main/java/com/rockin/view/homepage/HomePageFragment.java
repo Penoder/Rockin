@@ -15,17 +15,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.penoder.mylibrary.okhttp.OkCallBack;
 import com.penoder.mylibrary.okhttp.OkHttpManager;
 import com.rockin.R;
 import com.rockin.adapter.CommonListAdapter;
 import com.rockin.adapter.CommonViewAdapter;
-import com.rockin.config.RocApi;
+import com.rockin.config.EyeApi;
 import com.rockin.databinding.FragmentHomePageBinding;
+import com.rockin.entity.homepage.HomeEntity;
 import com.rockin.utils.LogUtil;
 import com.rockin.view.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * 首页 Fragment
@@ -114,19 +121,9 @@ public class HomePageFragment extends BaseFragment {
         homePageBinding.setViewModel(this);
         // 这个写在setViewModel前面会崩掉
         homePageBinding.executePendingBindings();
-        getDatas();
         initBanner();
+        getVideoDatas();
         return homePageBinding.getRoot();
-    }
-
-    private void getDatas() {
-        dateLine = System.currentTimeMillis();
-        OkHttpManager.create(mContext)
-                .addUrl(RocApi.HOME_PAGE)
-                .post()
-                .addParam("date", dateLine)
-                .addParam("num", "2")
-                .addParam("page", "");
     }
 
     /**
@@ -216,6 +213,28 @@ public class HomePageFragment extends BaseFragment {
             }
         };
         homePageBinding.listViewHomePage.setAdapter(videoAdapter);
+    }
+
+    private void getVideoDatas() {
+        OkHttpManager.create(mContext)
+                .addUrl(EyeApi.VIDEO_HOMEPAGE)
+                .post()
+                .sign()
+                .addParam("pageSize", "")
+                .execute(new OkCallBack<List<HomeEntity>>() {
+                    @Override
+                    public void failure(Call call, Exception e) {
+                        LogUtil.d("failure: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(boolean isSuccess, Response response, List<HomeEntity> homeEntityList) {
+                        LogUtil.d("onResponse: " + new Gson().toJson(homeEntityList));
+                        Toast.makeText(mContext, new Gson().toJson(homeEntityList) + "-----", Toast.LENGTH_SHORT).show();
+                    }
+
+                }, new TypeToken<List<HomeEntity>>() {
+                }.getType());
     }
 
     public void backToTop() {

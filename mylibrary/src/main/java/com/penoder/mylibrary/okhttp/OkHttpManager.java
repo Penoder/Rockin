@@ -42,6 +42,7 @@ public class OkHttpManager {
     private OkHttpClient okHttpClient;
     private Request.Builder requestBuilder;
     private FormBody.Builder bodyBuilder;
+    private String mUrl = "";
 
     /**
      * 用于将异步请求的回调回到主线程中
@@ -77,11 +78,8 @@ public class OkHttpManager {
      * @return
      */
     public OkHttpManager addUrl(String url) {
-        try {
-            requestBuilder = new Request.Builder().url(url);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
+        mUrl = url;
+        requestBuilder = new Request.Builder();
         return this;
     }
 
@@ -105,6 +103,15 @@ public class OkHttpManager {
     public OkHttpManager addParam(String key, Object value) {
         if (bodyBuilder != null) {
             bodyBuilder.add(key, value.toString());
+        }
+        return this;
+    }
+
+    public OkHttpManager sign() {
+        if (bodyBuilder != null) {  // post
+            addParam("SIGN", "AC0CC624B8BC080C7310055AA97EB873");
+        } else {    // get
+            mUrl = mUrl + (mUrl.contains("?") ? "&" : "?") + "SIGN=AC0CC624B8BC080C7310055AA97EB873";
         }
         return this;
     }
@@ -194,6 +201,13 @@ public class OkHttpManager {
         if (requestBuilder == null) {
             return;
         }
+
+        try {
+            requestBuilder.url(mUrl);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
         if (bodyBuilder != null) {
             request = requestBuilder.post(bodyBuilder.build()).build();
         } else {
@@ -212,17 +226,23 @@ public class OkHttpManager {
                     if (response != null && response.body() != null) {
                         jsonStr = response.body().string();
                         if (TextUtils.isEmpty(jsonStr)) {
-                            sendResponse(okCallBack, false, response, object);
+                            sendResponse(okCallBack, false, response, null);
                         } else {
                             Gson gson = new Gson();
                             // 这里要做 Json 解析，需要考虑的情况有数组、集合、普通对象等,不知道该方式适不适用所有情况
-                            Type type = new TypeToken<CommonJson<Object>>() {
-                            }.getType();
+                            Type type = null;
+                            if (object instanceof Type) {
+                                type = (Type) object;
+                            }
+                            if (object instanceof Class) {
+                                type = new TypeToken<CommonJson<Object>>() {
+                                }.getType();
+                            }
                             CommonJson<Object> commonJson = gson.fromJson(jsonStr, type);
-                            if (commonJson != null && commonJson.code == 1) {
-                                sendResponse(okCallBack, true, response, commonJson.datas);
+                            if (commonJson != null && commonJson.code == 0) {
+                                sendResponse(okCallBack, true, response, commonJson.data);
                             } else {
-                                sendResponse(okCallBack, false, response, object);
+                                sendResponse(okCallBack, false, response, null);
                             }
                         }
                     } else {
