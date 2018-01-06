@@ -3,19 +3,16 @@ package com.rockin.widget;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.ViewGroup;
+import android.view.View;
 
 /**
- * 避免 ViewPager 和 ListView 的滑动冲突
+ * 用于自适应高度的 ViewPager
  *
  * @author Penoder
  * @date 17-12-16
  */
 
 public class BannerViewPager extends ViewPager {
-
-    private ViewGroup parent;
 
     public BannerViewPager(Context context) {
         super(context);
@@ -25,32 +22,18 @@ public class BannerViewPager extends ViewPager {
         super(context, attrs);
     }
 
-    public void setNestedpParent(ViewGroup parent) {
-        this.parent = parent;
-    }
-
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (parent != null) {
-            parent.requestDisallowInterceptTouchEvent(true);
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int height = 0;
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+            int h = child.getMeasuredHeight();
+            if (h > height) {
+                height = h;
+            }
         }
-        return super.dispatchTouchEvent(event);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-        if (parent != null) {
-            parent.requestDisallowInterceptTouchEvent(true);
-        }
-        return super.onInterceptTouchEvent(event);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (parent != null) {
-            parent.requestDisallowInterceptTouchEvent(true);
-        }
-        return super.onTouchEvent(event);
-    }
-
 }

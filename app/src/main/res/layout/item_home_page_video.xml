@@ -3,23 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/transparent"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imgView_feed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scaleType="fitXY"
         android:adjustViewBounds="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dimen_6"
+        android:paddingTop="@dimen/dimen_6"
         android:gravity="center_vertical">
 
         <com.rockin.widget.CircleImageView
             android:id="@+id/circleImg_authorIcon"
-            android:layout_width="@dimen/dimen_48"
-            android:layout_height="@dimen/dimen_48"
+            android:layout_width="@dimen/dimen_44"
+            android:layout_height="@dimen/dimen_44"
             android:layout_margin="@dimen/dimen_12"
             android:background="@drawable/icon_default_head" />
 
@@ -33,18 +37,18 @@
                 android:id="@+id/txtView_mainTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="4dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/commonTextBlack"
-                android:textSize="@dimen/common_size"
+                android:textSize="@dimen/small_title_size"
                 tools:text="不想当总统的程序猿 不是一个好毒贩" />
 
             <TextView
                 android:id="@+id/txtView_subTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/hintTextBlack"
@@ -60,10 +64,9 @@
 
             <ImageView
                 android:id="@+id/imgView_moreOperate"
-                android:layout_width="@dimen/dimen_48"
-                android:layout_height="@dimen/dimen_48"
+                android:layout_width="@dimen/dimen_24"
+                android:layout_height="@dimen/dimen_24"
                 android:layout_gravity="center"
-                android:padding="10dp"
                 android:src="@drawable/icon_more" />
 
             <TextView

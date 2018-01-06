@@ -114,7 +114,7 @@ public class OkHttpManager {
      */
     public OkHttpManager sign() {
         if (bodyBuilder != null) {  // post
-            addParam("SIGN", "AC0CC624B8BC080C7310055AA97EB873");
+            addParam("SIGN", "不能说的秘密");
         } else {    // get
             mUrl = mUrl + (mUrl.contains("?") ? "&" : "?") + "SIGN=AC0CC624B8BC080C7310055AA97EB873";
         }
@@ -199,8 +199,9 @@ public class OkHttpManager {
      * 表示开始执行网络请求
      *
      * @param okCallBack
+     * @param needParse  是否需要解析
      */
-    public void execute(OkCallBack okCallBack, Class clazz) {
+    public void execute(OkCallBack okCallBack, boolean needParse) {
         Request request = null;
         if (requestBuilder == null) {
             return;
@@ -229,19 +230,23 @@ public class OkHttpManager {
                     String jsonStr = "";
                     if (response != null && response.body() != null) {
                         jsonStr = response.body().string();
-                        if (TextUtils.isEmpty(jsonStr)) {
-                            sendResponse(okCallBack, false, response, null);
-                        } else {
-                            Gson gson = new Gson();
-                            // 这里要做 Json 解析，需要考虑的情况有数组、集合、普通对象等,不知道该方式适不适用所有情况
-                            Type type = new TypeToken<CommonJson>() {
-                            }.getType();
-                            CommonJson commonJson = gson.fromJson(jsonStr, type);
-                            if (commonJson != null && commonJson.code == 0) {
-                                sendResponse(okCallBack, true, response, commonJson.data);
-                            } else {
+                        if (needParse) {
+                            if (TextUtils.isEmpty(jsonStr)) {
                                 sendResponse(okCallBack, false, response, null);
+                            } else {
+                                Gson gson = new Gson();
+                                // 这里要做 Json 解析，需要考虑的情况有数组、集合、普通对象等,不知道该方式适不适用所有情况
+                                Type type = new TypeToken<CommonJson>() {
+                                }.getType();
+                                CommonJson commonJson = gson.fromJson(jsonStr, type);
+                                if (commonJson != null && commonJson.code == 0) {
+                                    sendResponse(okCallBack, true, response, commonJson.data);
+                                } else {
+                                    sendResponse(okCallBack, false, response, null);
+                                }
                             }
+                        } else {
+                            sendResponse(okCallBack, false, response, jsonStr);
                         }
                     } else {
                         sendResponse(okCallBack, false, response, null);
