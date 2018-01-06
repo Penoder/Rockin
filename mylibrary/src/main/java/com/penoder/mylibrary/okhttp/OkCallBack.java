@@ -25,7 +25,7 @@ public interface OkCallBack<T> {
      *
      * @param isSuccess 判断网络请求是否成功
      * @param response 响应的结果
-     * @param obj      json 解析后得到的数据类型
+     * @param data      json 解析后得到的数据类型
      */
-    void onResponse(boolean isSuccess, Response response, T obj);
+    void onResponse(boolean isSuccess, Response response, T data);
 }

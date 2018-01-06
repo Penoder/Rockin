@@ -15,8 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.penoder.mylibrary.okhttp.OkCallBack;
 import com.penoder.mylibrary.okhttp.OkHttpManager;
 import com.rockin.R;
@@ -26,7 +24,10 @@ import com.rockin.config.EyeApi;
 import com.rockin.databinding.FragmentHomePageBinding;
 import com.rockin.entity.homepage.HomeEntity;
 import com.rockin.utils.LogUtil;
+import com.rockin.utils.TimeUtil;
+import com.rockin.utils.ToastUtil;
 import com.rockin.view.base.BaseFragment;
+import com.rockin.widget.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,7 @@ public class HomePageFragment extends BaseFragment {
      */
     private CommonViewAdapter bannerAdapter;
 
-    private CommonListAdapter<String> videoAdapter;
+    private CommonListAdapter<HomeEntity> videoAdapter;
 
     /**
      * 首页 Banner 显示的 ImageView 的集合
@@ -98,15 +99,13 @@ public class HomePageFragment extends BaseFragment {
      */
     private ImageView imgViewSearch;
 
-    /**
-     * 请求数据时的时间戳
-     */
-    private long dateLine;
+
+    private List<HomeEntity> videoDatas = new ArrayList<>();
 
     /**
-     * 当前请求的页面数
+     * 判断当前是刷新数据还是加载数据
      */
-    private int pageNum;
+    private boolean isLoading = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -204,12 +203,30 @@ public class HomePageFragment extends BaseFragment {
             listData.addAll(bannerImgUrls);
         }
 
-        videoAdapter = new CommonListAdapter<String>(null, R.layout.item_home_page_video) {
+        videoAdapter = new CommonListAdapter<HomeEntity>(videoDatas, R.layout.item_home_page_video) {
 
             @Override
-            public void onBindView(String s, ViewHolder holder, int position) {
-                holder.getView(R.id.txtView_publishTime).setVisibility(View.GONE);
-                holder.getView(R.id.imgView_moreOperate).setVisibility(View.VISIBLE);
+            public void onBindView(ViewHolder holder, int position) {
+                HomeEntity homeEntity = videoDatas.get(position);
+
+                ImageView imgViewFeed = holder.getView(R.id.imgView_feed);
+                CircleImageView circleImgAuthorIcon = holder.getView(R.id.circleImg_authorIcon);
+                TextView txtViewMainTitle = holder.getView(R.id.txtView_mainTitle);
+                TextView txtViewSubTitle = holder.getView(R.id.txtView_subTitle);
+                ImageView imgViewMoreOperate = holder.getView(R.id.imgView_moreOperate);
+                TextView txtViewPublishTime = holder.getView(R.id.txtView_publishTime);
+
+                txtViewPublishTime.setVisibility(View.GONE);
+                imgViewMoreOperate.setVisibility(View.VISIBLE);
+
+                // 预览图
+                Glide.with(mContext).load(homeEntity.getFeed()).placeholder(R.drawable.img_default_eyepetizer).into(imgViewFeed);
+                // 头像
+                Glide.with(mContext).load(homeEntity.getHeadIcon()).placeholder(R.drawable.icon_default_head).into(circleImgAuthorIcon);
+                txtViewMainTitle.setText(homeEntity.getTitle());
+                txtViewSubTitle.setText(homeEntity.getAuthorName() + " / " + TimeUtil.secondToTime(homeEntity.getDuration()));
+
+
             }
         };
         homePageBinding.listViewHomePage.setAdapter(videoAdapter);
@@ -225,16 +242,27 @@ public class HomePageFragment extends BaseFragment {
                     @Override
                     public void failure(Call call, Exception e) {
                         LogUtil.d("failure: " + e.getMessage());
+                        ToastUtil.showShortToast(mContext, "获取数据失败,请稍候重试");
                     }
 
                     @Override
                     public void onResponse(boolean isSuccess, Response response, List<HomeEntity> homeEntityList) {
-                        LogUtil.d("onResponse: " + new Gson().toJson(homeEntityList));
-                        Toast.makeText(mContext, new Gson().toJson(homeEntityList) + "-----", Toast.LENGTH_SHORT).show();
+                        // 前面 5 条数据是给 Banner 的,后面的才是视频列表的
+                        if (homeEntityList != null && homeEntityList.size() > 0) {
+                            if (isLoading) {
+                                videoDatas.addAll(homeEntityList);
+                                videoAdapter.notifyDataSetChanged();
+                            } else {
+                                videoDatas.clear();
+                                videoDatas.addAll(homeEntityList);
+                                videoAdapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            ToastUtil.showShortToast(mContext, "没有获取到数据,请稍候重试");
+                        }
                     }
 
-                }, new TypeToken<List<HomeEntity>>() {
-                }.getType());
+                }, List.class);
     }
 
     public void backToTop() {

@@ -107,6 +107,11 @@ public class OkHttpManager {
         return this;
     }
 
+    /**
+     * 增加请求的签名机制
+     *
+     * @return
+     */
     public OkHttpManager sign() {
         if (bodyBuilder != null) {  // post
             addParam("SIGN", "AC0CC624B8BC080C7310055AA97EB873");
@@ -194,9 +199,8 @@ public class OkHttpManager {
      * 表示开始执行网络请求
      *
      * @param okCallBack
-     * @param object
      */
-    public void execute(OkCallBack okCallBack, Object object) {
+    public void execute(OkCallBack okCallBack, Class clazz) {
         Request request = null;
         if (requestBuilder == null) {
             return;
@@ -230,15 +234,9 @@ public class OkHttpManager {
                         } else {
                             Gson gson = new Gson();
                             // 这里要做 Json 解析，需要考虑的情况有数组、集合、普通对象等,不知道该方式适不适用所有情况
-                            Type type = null;
-                            if (object instanceof Type) {
-                                type = (Type) object;
-                            }
-                            if (object instanceof Class) {
-                                type = new TypeToken<CommonJson<Object>>() {
-                                }.getType();
-                            }
-                            CommonJson<Object> commonJson = gson.fromJson(jsonStr, type);
+                            Type type = new TypeToken<CommonJson>() {
+                            }.getType();
+                            CommonJson commonJson = gson.fromJson(jsonStr, type);
                             if (commonJson != null && commonJson.code == 0) {
                                 sendResponse(okCallBack, true, response, commonJson.data);
                             } else {
@@ -246,7 +244,7 @@ public class OkHttpManager {
                             }
                         }
                     } else {
-                        sendResponse(okCallBack, false, response, object);
+                        sendResponse(okCallBack, false, response, null);
                     }
 
                 } catch (IOException | com.google.gson.JsonParseException e) {
