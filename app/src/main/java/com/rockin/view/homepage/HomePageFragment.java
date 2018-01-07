@@ -1,6 +1,7 @@
 package com.rockin.view.homepage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +29,8 @@ import com.rockin.adapter.CommonViewAdapter;
 import com.rockin.config.EyeApi;
 import com.rockin.databinding.FragmentHomePageBinding;
 import com.rockin.entity.homepage.HomeEntity;
+import com.rockin.entity.table.Author;
+import com.rockin.entity.table.Video;
 import com.rockin.utils.LogUtil;
 import com.rockin.utils.TimeUtil;
 import com.rockin.utils.ToastUtil;
@@ -148,9 +152,15 @@ public class HomePageFragment extends BaseFragment {
             @Override
             public void onBindView(ViewGroup container, View itemView, int position) {
                 super.onBindView(container, itemView, position);
+                // 默认Banner图片
+                String imgUrl = "https://cdn.dribbble.com/users/674925/screenshots/2858845/___1x.jpg";
+                if (bannerDatas.get(position).getVideo() != null) {
+                    imgUrl = bannerDatas.get(position).getVideo().homepage;
+                }
                 Glide.with(mContext)
-                        .load(bannerDatas.get(position).getHomePage())
+                        .load(imgUrl)
                         .placeholder(R.drawable.img_default_banner)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)  // 不缓存
                         .into((ImageView) itemView);
             }
         };
@@ -171,8 +181,10 @@ public class HomePageFragment extends BaseFragment {
                         linearIndicator.getChildAt(i).setSelected(false);
                     }
                 }
-                tvMainTitle.setText(bannerDatas.get(position).getTitle());
-                tvSubTitle.setText(bannerDatas.get(position).getSlogan());
+                if (bannerDatas.get(position).getVideo() != null) {
+                    tvMainTitle.setText(bannerDatas.get(position).getVideo().title);
+                    tvSubTitle.setText(bannerDatas.get(position).getVideo().slogan);
+                }
             }
 
             @Override
@@ -184,26 +196,50 @@ public class HomePageFragment extends BaseFragment {
         videoAdapter = new CommonListAdapter<HomeEntity>(videoDatas, R.layout.item_home_page_video) {
 
             @Override
-            public void onBindView(ViewHolder holder, int position) {
-                HomeEntity homeEntity = videoDatas.get(position);
-
+            public void onBindView(HomeEntity homeEntity, ViewHolder holder, int position) {
+                FrameLayout frameFeedImg = holder.getView(R.id.frame_feedImg);
                 ImageView imgViewFeed = holder.getView(R.id.imgView_feed);
+                CircleImageView circleImgEyeAuslese = holder.getView(R.id.circleImg_eyeAuslese);
+                LinearLayout linearJumpAuthor = holder.getView(R.id.linear_jumpAuthor);
                 CircleImageView circleImgAuthorIcon = holder.getView(R.id.circleImg_authorIcon);
                 TextView txtViewMainTitle = holder.getView(R.id.txtView_mainTitle);
                 TextView txtViewSubTitle = holder.getView(R.id.txtView_subTitle);
+
                 ImageView imgViewMoreOperate = holder.getView(R.id.imgView_moreOperate);
                 TextView txtViewPublishTime = holder.getView(R.id.txtView_publishTime);
-
                 txtViewPublishTime.setVisibility(View.GONE);
                 imgViewMoreOperate.setVisibility(View.VISIBLE);
 
-                // 预览图
-                Glide.with(mContext).load(homeEntity.getFeed()).placeholder(R.drawable.img_default_eyepetizer).into(imgViewFeed);
-                // 头像
-                Glide.with(mContext).load(homeEntity.getHeadIcon()).placeholder(R.drawable.icon_default_head).into(circleImgAuthorIcon);
-                txtViewMainTitle.setText(homeEntity.getTitle());
-                txtViewSubTitle.setText(homeEntity.getAuthorName() + " / " + TimeUtil.secondToTime(homeEntity.getDuration()));
+                Video video = homeEntity.getVideo();
+                Author author = homeEntity.getAuthor();
+                if (video != null) {
+                    // 是否是开眼精选视频类型
+                    circleImgEyeAuslese.setVisibility("PANORAMIC".equals(video.type) ? View.VISIBLE : View.GONE);
+                    // 预览图
+                    Glide.with(mContext).load(video.feed).placeholder(R.drawable.img_default_eyepetizer).into(imgViewFeed);
+                    txtViewMainTitle.setText(video.title);
+                }
+                if (author != null) {
+                    // 头像
+                    Glide.with(mContext).load(author.icon).placeholder(R.drawable.icon_default_head).into(circleImgAuthorIcon);
+                }
+                if (video != null && author != null) {
+                    txtViewSubTitle.setText(author.name + " / " + TimeUtil.secondToTime(video.duration));
+                }
+                // 点击跳转到视频播放页面
+                frameFeedImg.setOnClickListener(v -> {
+                    jumpToPlayer(homeEntity);
+                });
 
+                // 点击跳转到作者信息界面
+                linearJumpAuthor.setOnClickListener(v -> {
+                    jumpToAuthor(homeEntity);
+                });
+
+                // 更多操作
+                imgViewMoreOperate.setOnClickListener(v -> {
+                    moreOperate(homeEntity);
+                });
 
             }
         };
@@ -223,14 +259,50 @@ public class HomePageFragment extends BaseFragment {
 
     }
 
+    /**
+     * 更多操作
+     *
+     * @param homeEntity
+     */
+    private void moreOperate(HomeEntity homeEntity) {
+
+    }
+
+    /**
+     * 跳转到作者详情页
+     *
+     * @param homeEntity
+     */
+    private void jumpToAuthor(HomeEntity homeEntity) {
+
+    }
+
+    /**
+     * 跳转到视频播放页
+     *
+     * @param homeEntity
+     */
+    private void jumpToPlayer(HomeEntity homeEntity) {
+        Intent intent = new Intent(mContext, PlayerActivity.class);
+        intent.putExtra("VIDEO_DATA", homeEntity);
+        startActivity(intent);
+    }
+
     private void setBanner() {
         bannerImgs.clear();
         linearIndicator.removeAllViews();
         for (int i = 0; i < bannerDatas.size(); i++) {
             ImageView imgView = new ImageView(mContext);
             imgView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imgView.setAdjustViewBounds(true);
             imgView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             bannerImgs.add(imgView);
+
+            // 广告位点击事件
+            int finalI = i;
+            imgView.setOnClickListener(v -> {
+                jumpToPlayer(bannerDatas.get(finalI));
+            });
 
             ImageView imgViewIndicator = (ImageView) LayoutInflater.from(mContext).inflate(R.layout.img_banner_indicator, null).findViewById(R.id.imgView_indicator);
             imgViewIndicator.setSelected(false);
@@ -242,8 +314,10 @@ public class HomePageFragment extends BaseFragment {
         // 设置默认选中项
         viewParentBanner.setCurrentItem(0);
         linearIndicator.getChildAt(0).setSelected(true);
-        tvMainTitle.setText(bannerDatas.get(0).getTitle());
-        tvSubTitle.setText(bannerDatas.get(0).getSlogan());
+        if (bannerDatas.get(0).getVideo() != null) {
+            tvMainTitle.setText(bannerDatas.get(0).getVideo().title);
+            tvSubTitle.setText(bannerDatas.get(0).getVideo().slogan);
+        }
         bannerAdapter.notifyDataSetChanged();
     }
 
@@ -252,6 +326,7 @@ public class HomePageFragment extends BaseFragment {
                 .addUrl(EyeApi.VIDEO_HOMEPAGE)
                 .post()
                 .sign()
+                .addProgress("", "内容正在加载中，请稍后！")
                 .addParam("pageSize", "")
                 .execute(new OkCallBack<String>() {
                     @Override
@@ -279,11 +354,11 @@ public class HomePageFragment extends BaseFragment {
                                     setBanner();
 
                                     if (isLoading) {
-                                        videoDatas.addAll(homeEntityList.subList(5, homeEntityList.size() - 1));
+                                        videoDatas.addAll(homeEntityList.subList(5, homeEntityList.size()));
                                         videoAdapter.notifyDataSetChanged();
                                     } else {
                                         videoDatas.clear();
-                                        videoDatas.addAll(homeEntityList.subList(5, homeEntityList.size() - 1));
+                                        videoDatas.addAll(homeEntityList.subList(5, homeEntityList.size()));
                                         videoAdapter.notifyDataSetChanged();
                                     }
                                 } else {

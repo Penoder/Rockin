@@ -11,7 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.base.BaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.base.BaseFragmentActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.splash.SplashActivity"
@@ -27,6 +30,13 @@
             android:name=".view.splash.GuideActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FullScreenTheme" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.homepage.PlayerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

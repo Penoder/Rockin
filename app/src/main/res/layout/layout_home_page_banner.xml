@@ -18,9 +18,9 @@
         <!-- 主标题. -->
         <TextView
             android:id="@+id/tv_mainTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="@dimen/dimen_56"
             android:layout_marginLeft="@dimen/dimen_64"
             android:layout_marginRight="@dimen/dimen_64"
@@ -28,16 +28,16 @@
             android:gravity="center"
             android:maxLines="1"
             android:textColor="@color/commonTextWhite"
-            android:textSize="@dimen/small_title_size"
+            android:textSize="@dimen/title_size"
             android:textStyle="bold"
             tools:text="艺术展览馆里的[马桶艺术]" />
 
         <!-- 副标题. -->
         <TextView
             android:id="@+id/tv_subTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_24"
-            android:layout_gravity="bottom"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="@dimen/dimen_32"
             android:layout_marginLeft="@dimen/dimen_48"
             android:layout_marginRight="@dimen/dimen_48"
@@ -51,9 +51,9 @@
         <!-- 添加广告位的标题和指示器. -->
         <LinearLayout
             android:id="@+id/linear_indicator"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_36"
-            android:layout_gravity="bottom"
+            android:layout_gravity="bottom|center_horizontal"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="13dp" />
@@ -83,7 +83,7 @@
             android:gravity="center"
             android:text="@string/more_syspetizer_video"
             android:textColor="@color/secondTextBlack"
-            android:textSize="@dimen/small_title_size" />
+            android:textSize="@dimen/title_size" />
 
         <ImageView
             android:layout_width="@dimen/dimen_14"

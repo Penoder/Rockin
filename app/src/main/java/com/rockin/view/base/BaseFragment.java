@@ -3,6 +3,7 @@ package com.rockin.view.base;
 import android.support.v4.app.Fragment;
 
 import com.rockin.entity.eventbus.BaseEvent;
+import com.rockin.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,5 +35,12 @@ public class BaseFragment extends Fragment {
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // 避免 Toast 持有 Context 的引用造成内存泄漏
+        ToastUtil.cancelToast();
     }
 }

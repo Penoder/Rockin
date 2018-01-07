@@ -5,13 +5,7 @@
     <!-- 正文/按钮文字. -->
     <dimen name="common_size">14sp</dimen>
     <!-- 小标题. -->
-    <dimen name="small_title_size">16sp</dimen>
-    <!-- Appbar文字. -->
-    <dimen name="appbar_title_size">16sp</dimen>
-    <!-- 大标题. -->
-    <dimen name="large_title_size">16sp</dimen>
-    <!-- 超大号文字. -->
-    <dimen name="super_large_title_size">16sp</dimen>
+    <dimen name="title_size">16sp</dimen>
 
     <!-- 顶部状态栏高度. -->
     <dimen name="status_bar_size">24dp</dimen>

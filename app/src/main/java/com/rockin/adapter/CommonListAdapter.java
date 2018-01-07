@@ -48,12 +48,12 @@ public abstract class CommonListAdapter<T> extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        onBindView(holder, position);
+        onBindView(datas.get(position), holder, position);
 
         return convertView;
     }
 
-    public abstract void onBindView(ViewHolder holder, int position);
+    public abstract void onBindView(T t, ViewHolder holder, int position);
 
     public class ViewHolder {
 

@@ -6,14 +6,32 @@
     android:background="@color/transparent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imgView_feed"
+    <FrameLayout
+        android:id="@+id/frame_feedImg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true" />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgView_feed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/backgroundColor"
+            android:scaleType="fitXY" />
+
+        <!-- 表示视频是否属于开眼精选. -->
+        <com.rockin.widget.CircleImageView
+            android:id="@+id/circleImg_eyeAuslese"
+            android:layout_width="@dimen/dimen_64"
+            android:layout_height="@dimen/dimen_64"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/dimen_16"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/linear_jumpAuthor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/dimen_6"
@@ -41,7 +59,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/commonTextBlack"
-                android:textSize="@dimen/small_title_size"
+                android:textSize="@dimen/title_size"
                 tools:text="不想当总统的程序猿 不是一个好毒贩" />
 
             <TextView
