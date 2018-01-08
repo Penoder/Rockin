@@ -55,6 +55,12 @@ public class PlayerActivity extends BaseActivity {
     // 评论数,先写死为 0,以后加入登录系统再改
     public ObservableField<String> commentCount = new ObservableField<>("0");
 
+    // 作者名称
+    public ObservableField<String> authorName = new ObservableField<>();
+
+    // 作者描述
+    public ObservableField<String> authorDescription = new ObservableField<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +97,12 @@ public class PlayerActivity extends BaseActivity {
             playerBinding.playerVideo.setUp(mVideo.playUrl, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "");
             playerBinding.playerVideo.thumbImageView.setImageURI(Uri.parse(mVideo.feed));
         }
+
+        if (mAuthor != null) {
+            authorName.set(mAuthor.name);
+            authorDescription.set(mAuthor.description);
+            Glide.with(this).load(mAuthor.icon).placeholder(R.drawable.icon_default_head).into(playerBinding.circleImgVideoAuthor);
+        }
     }
 
     /**
@@ -123,6 +135,11 @@ public class PlayerActivity extends BaseActivity {
      * 下载事件
      */
     public ReplyCommand onDownloadCommand = new ReplyCommand(() -> {
+    });
+
+    public ReplyCommand onAttentionCommand = new ReplyCommand(() -> {
+    });
+    public ReplyCommand onAuthorInfoCommand = new ReplyCommand(() -> {
     });
 
     @Override

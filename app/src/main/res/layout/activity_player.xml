@@ -29,6 +29,7 @@
                 android:id="@+id/imgView_playBG"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/backgroundColor"
                 android:scaleType="fitXY" />
 
             <com.rockin.widget.CustomScrollView
@@ -110,6 +111,7 @@
                             android:layout_marginLeft="@dimen/dimen_12"
                             android:layout_marginRight="@dimen/dimen_12"
                             android:paddingBottom="10dp"
+                            android:lineSpacingMultiplier="1.15"
                             android:paddingTop="4dp"
                             android:text="@{viewModel.videoDescription}"
                             android:textColor="@color/commonTextWhite"
@@ -133,8 +135,8 @@
                                 app:clickCommand="@{viewModel.onHeartCommand}">
 
                                 <ImageView
-                                    android:layout_width="@dimen/dimen_20"
-                                    android:layout_height="@dimen/dimen_20"
+                                    android:layout_width="@dimen/dimen_24"
+                                    android:layout_height="@dimen/dimen_24"
                                     android:src="@drawable/selector_play_heart" />
 
                                 <TextView
@@ -161,8 +163,8 @@
                                 app:clickCommand="@{viewModel.onSharedCommand}">
 
                                 <ImageView
-                                    android:layout_width="@dimen/dimen_20"
-                                    android:layout_height="@dimen/dimen_20"
+                                    android:layout_width="@dimen/dimen_24"
+                                    android:layout_height="@dimen/dimen_24"
                                     android:src="@drawable/icon_export_white" />
 
                                 <TextView
@@ -189,8 +191,8 @@
                                 app:clickCommand="@{viewModel.onCommentCommand}">
 
                                 <ImageView
-                                    android:layout_width="@dimen/dimen_20"
-                                    android:layout_height="@dimen/dimen_20"
+                                    android:layout_width="@dimen/dimen_24"
+                                    android:layout_height="@dimen/dimen_24"
                                     android:src="@drawable/icon_msg_white" />
 
                                 <TextView
@@ -217,8 +219,8 @@
                                 app:clickCommand="@{viewModel.onDownloadCommand}">
 
                                 <ImageView
-                                    android:layout_width="@dimen/dimen_20"
-                                    android:layout_height="@dimen/dimen_20"
+                                    android:layout_width="@dimen/dimen_24"
+                                    android:layout_height="@dimen/dimen_24"
                                     android:src="@drawable/icon_download_white" />
 
                                 <TextView
@@ -236,7 +238,102 @@
 
                         </LinearLayout>
 
-                        <include layout="@layout/horizontal_line_white" />
+                        <!-- 分类标签. 可能没有，不显示-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:padding="@dimen/dimen_12"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="@dimen/dimen_56"
+                                android:layout_weight="1"
+                                android:background="@drawable/shape_video_category_grey_bg"
+                                android:gravity="center"
+                                android:text="6666"
+                                android:textColor="@color/commonTextWhite"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="@dimen/dimen_56"
+                                android:layout_marginLeft="@dimen/dimen_8"
+                                android:layout_weight="1"
+                                android:background="@drawable/shape_video_category_grey_bg"
+                                android:gravity="center"
+                                android:text="6666"
+                                android:textColor="@color/commonTextWhite"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="@dimen/dimen_56"
+                                android:layout_marginLeft="@dimen/dimen_8"
+                                android:layout_weight="1"
+                                android:background="@drawable/shape_video_category_grey_bg"
+                                android:gravity="center"
+                                android:text="6666"
+                                android:textColor="@color/commonTextWhite"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            app:clickCommand="@{viewModel.onAuthorInfoCommand}">
+
+                            <com.rockin.widget.CircleImageView
+                                android:id="@+id/circleImg_videoAuthor"
+                                android:layout_width="@dimen/float_btn_small_size"
+                                android:layout_height="@dimen/float_btn_small_size"
+                                android:layout_margin="@dimen/dimen_12"
+                                android:background="@drawable/icon_default_head" />
+
+                            <LinearLayout
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/dimen_2"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="@{viewModel.authorName}"
+                                    android:textColor="@color/commonTextWhite"
+                                    android:textSize="@dimen/common_size"
+                                    tools:text="开眼生活精选" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_2"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="@{viewModel.authorDescription}"
+                                    android:textColor="@color/commonTextWhite"
+                                    android:textSize="@dimen/small_size"
+                                    tools:text="匠心、健康、生活感悟" />
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/imgView_attentionAuthor"
+                                android:layout_width="@dimen/dimen_48"
+                                android:layout_height="@dimen/dimen_24"
+                                android:layout_margin="@dimen/dimen_12"
+                                android:background="@drawable/selector_attention"
+                                app:clickCommand="@{viewModel.onAttentionCommand}" />
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
