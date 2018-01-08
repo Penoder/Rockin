@@ -17,7 +17,7 @@ public class EyeApi {
     /**
      * 获取首页视频的接口
      */
-    public static final String VIDEO_HOMEPAGE = "http://192.168.1.107:8080/Eyepetizer/Video/HomePage";
+    public static final String VIDEO_HOMEPAGE = "http://192.168.1.103:8080/Eyepetizer/Video/HomePage";
 
     /**
      * 下面是可以获取到的 开眼 App 的数据， 上面是自己后台提供的接口；

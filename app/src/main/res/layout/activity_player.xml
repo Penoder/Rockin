@@ -10,29 +10,27 @@
             type="com.rockin.view.homepage.PlayerActivity" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imgView_playBG"
+        <com.penoder.mylibrary.player.JZVideoPlayerStandard
+            android:id="@+id/playerVideo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/backgroundColor"
-            android:scaleType="fitXY" />
+            android:layout_height="210dp"
+            android:background="@color/backgroundColor" />
 
-        <LinearLayout
-            android:id="@+id/linear_playerBG"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/transparentBG"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <com.penoder.mylibrary.player.JZVideoPlayerStandard
-                android:id="@+id/playerVideo"
+            <ImageView
+                android:id="@+id/imgView_playBG"
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
-                android:background="@color/backgroundColor" />
+                android:layout_height="match_parent"
+                android:background="@color/backgroundColor"
+                android:scaleType="fitXY" />
 
             <com.rockin.widget.CustomScrollView
                 android:layout_width="match_parent"
@@ -41,6 +39,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/transparentBG"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -112,7 +111,121 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/dimen_12"
+                        android:paddingLeft="@dimen/dimen_12"
+                        android:paddingRight="@dimen/dimen_12">
+
+                        <LinearLayout
+                            android:id="@+id/linear_playHeart"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:clickCommand="@{viewModel.onHeartCommand}">
+
+                            <ImageView
+                                android:layout_width="@dimen/dimen_20"
+                                android:layout_height="@dimen/dimen_20"
+                                android:src="@drawable/selector_play_heart" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/dimen_8"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@{viewModel.heartCount}"
+                                android:textColor="@color/commonTextWhite"
+                                android:textSize="@dimen/title_size"
+                                tools:text="23" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linear_playExport"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:clickCommand="@{viewModel.onSharedCommand}">
+
+                            <ImageView
+                                android:layout_width="@dimen/dimen_20"
+                                android:layout_height="@dimen/dimen_20"
+                                android:src="@drawable/icon_export_white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/dimen_8"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@{viewModel.sharedCount}"
+                                android:textColor="@color/commonTextWhite"
+                                android:textSize="@dimen/title_size"
+                                tools:text="9" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linear_playMessage"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:clickCommand="@{viewModel.onCommentCommand}">
+
+                            <ImageView
+                                android:layout_width="@dimen/dimen_20"
+                                android:layout_height="@dimen/dimen_20"
+                                android:src="@drawable/icon_msg_white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/dimen_8"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@{viewModel.commentCount}"
+                                android:textColor="@color/commonTextWhite"
+                                android:textSize="@dimen/title_size"
+                                tools:text="23" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linear_playDownload"
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:clickCommand="@{viewModel.onDownloadCommand}">
+
+                            <ImageView
+                                android:layout_width="@dimen/dimen_20"
+                                android:layout_height="@dimen/dimen_20"
+                                android:src="@drawable/icon_download_white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/dimen_8"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@string/download"
+                                android:textColor="@color/commonTextWhite"
+                                android:textSize="@dimen/title_size" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -120,7 +233,6 @@
 
             </com.rockin.widget.CustomScrollView>
 
-        </LinearLayout>
-
-    </FrameLayout>
+        </FrameLayout>
+    </LinearLayout>
 </layout>

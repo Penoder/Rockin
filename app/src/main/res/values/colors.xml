@@ -20,7 +20,7 @@
 
     <!-- 背景色. -->
     <color name="backgroundColor">#8A8A8A</color>
-    <color name="transparentBG">#7777</color>
+    <color name="transparentBG">#70707070</color>
 
     <color name="transparent">#0000</color>
 

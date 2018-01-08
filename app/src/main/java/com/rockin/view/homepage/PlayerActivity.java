@@ -46,6 +46,15 @@ public class PlayerActivity extends BaseActivity {
     // 描述信息
     public ObservableField<String> videoDescription = new ObservableField<>();
 
+    // 点赞数
+    public ObservableField<String> heartCount = new ObservableField<>();
+
+    // 分享数
+    public ObservableField<String> sharedCount = new ObservableField<>();
+
+    // 评论数,先写死为 0,以后加入登录系统再改
+    public ObservableField<String> commentCount = new ObservableField<>("0");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +83,8 @@ public class PlayerActivity extends BaseActivity {
             videoTitle.set(mVideo.title);
             categoryDuration.set("#" + mVideo.category + " / " + TimeUtil.secondToTime(mVideo.duration) + ("PANORAMIC".equals(mVideo.type) ? " / 开眼精选" : ""));
             videoDescription.set(mVideo.description);
+            heartCount.set(mVideo.collectCount + "");
+            sharedCount.set(mVideo.sharedCount + "");
             playerBinding.txtViewPlayDescription.setVisibility(View.GONE);
             playerBinding.imgViewUpDownDescription.setVisibility(View.VISIBLE);
 
@@ -88,6 +99,30 @@ public class PlayerActivity extends BaseActivity {
     public ReplyCommand onShowDescriptionCommand = new ReplyCommand(() -> {
         playerBinding.imgViewUpDownDescription.setSelected(!playerBinding.imgViewUpDownDescription.isSelected());
         playerBinding.txtViewPlayDescription.setVisibility(playerBinding.imgViewUpDownDescription.isSelected() ? View.VISIBLE : View.GONE);
+    });
+
+    /**
+     * 点赞事件
+     */
+    public ReplyCommand onHeartCommand = new ReplyCommand(() -> {
+    });
+
+    /**
+     * 分享事件
+     */
+    public ReplyCommand onSharedCommand = new ReplyCommand(() -> {
+    });
+
+    /**
+     * 评论事件
+     */
+    public ReplyCommand onCommentCommand = new ReplyCommand(() -> {
+    });
+
+    /**
+     * 下载事件
+     */
+    public ReplyCommand onDownloadCommand = new ReplyCommand(() -> {
     });
 
     @Override
