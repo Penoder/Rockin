@@ -148,22 +148,7 @@ public class HomePageFragment extends BaseFragment {
         homePageBinding.listViewHomePage.addHeaderView(bannerView);
 
         // 首先初始化 Banner 适配器,里面的值还是 0;所以在获取网络请求之后需要重新更新
-        bannerAdapter = new CommonViewAdapter(bannerImgs) {
-            @Override
-            public void onBindView(ViewGroup container, View itemView, int position) {
-                super.onBindView(container, itemView, position);
-                // 默认Banner图片
-                String imgUrl = "https://cdn.dribbble.com/users/674925/screenshots/2858845/___1x.jpg";
-                if (bannerDatas.get(position).getVideo() != null) {
-                    imgUrl = bannerDatas.get(position).getVideo().homepage;
-                }
-                Glide.with(mContext)
-                        .load(imgUrl)
-                        .placeholder(R.drawable.img_default_banner)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)  // 不缓存
-                        .into((ImageView) itemView);
-            }
-        };
+        bannerAdapter = new CommonViewAdapter(bannerImgs);
         viewParentBanner.setAdapter(bannerAdapter);
 
         viewParentBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -295,8 +280,13 @@ public class HomePageFragment extends BaseFragment {
             ImageView imgView = new ImageView(mContext);
             imgView.setScaleType(ImageView.ScaleType.FIT_XY);
             imgView.setAdjustViewBounds(true);
+            imgView.setBackgroundResource(R.color.backgroundColor);
             imgView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             bannerImgs.add(imgView);
+
+            if (bannerDatas.get(i).getVideo() != null) {
+                Glide.with(mContext).load(bannerDatas.get(i).getVideo().homepage).placeholder(R.drawable.img_default_banner).into(imgView);
+            }
 
             // 广告位点击事件
             int finalI = i;

@@ -29,203 +29,214 @@
                 android:id="@+id/imgView_playBG"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/backgroundColor"
                 android:scaleType="fitXY" />
 
             <com.rockin.widget.CustomScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_shadow_play_bg">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/transparentBG"
+                    android:background="@color/halfTransparent"
                     android:orientation="vertical">
 
+                    <include layout="@layout/horizontal_line_white" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="@dimen/dimen_4"
-                        android:paddingLeft="@dimen/dimen_12"
-                        android:paddingRight="@dimen/dimen_12"
-                        android:paddingTop="@dimen/dimen_12">
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="0dip"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/dimen_4"
+                            android:paddingLeft="@dimen/dimen_12"
+                            android:paddingRight="@dimen/dimen_12"
+                            android:paddingTop="@dimen/dimen_12">
 
-                            <TextView
-                                android:id="@+id/txtView_playerTitle"
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="0dip"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/dimen_2"
-                                android:ellipsize="end"
-                                android:maxLines="1"
-                                android:text="@{viewModel.videoTitle}"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/title_size"
-                                android:textStyle="bold"
-                                tools:text="获奖讽刺短片：【识时下车】" />
+                                android:layout_margin="4dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/txtView_categoryDuration"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_4"
-                                android:ellipsize="end"
-                                android:maxLines="1"
-                                android:text="@{viewModel.categoryDuration}"
-                                android:textColor="@color/commonTextWhite"
-                                android:textSize="@dimen/title_size"
-                                tools:text="#剧情 / 06'21'' / 开眼精选" />
+                                <TextView
+                                    android:id="@+id/txtView_playerTitle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/dimen_2"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="@{viewModel.videoTitle}"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/title_size"
+                                    android:textStyle="bold"
+                                    tools:text="获奖讽刺短片：【识时下车】" />
 
-                        </LinearLayout>
+                                <TextView
+                                    android:id="@+id/txtView_categoryDuration"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_4"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="@{viewModel.categoryDuration}"
+                                    android:textColor="@color/commonTextWhite"
+                                    android:textSize="@dimen/title_size"
+                                    tools:text="#剧情 / 06'21'' / 开眼精选" />
 
-                        <ImageView
-                            android:id="@+id/imgView_upDownDescription"
-                            android:layout_width="@dimen/dimen_36"
-                            android:layout_height="@dimen/dimen_36"
-                            android:padding="@dimen/dimen_10"
-                            android:src="@drawable/selector_white_arrows_up_down"
-                            android:visibility="gone"
-                            app:clickCommand="@{viewModel.onShowDescriptionCommand}" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/txtView_playDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_12"
-                        android:layout_marginRight="@dimen/dimen_12"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="4dp"
-                        android:text="@{viewModel.videoDescription}"
-                        android:textColor="@color/commonTextWhite"
-                        android:textSize="@dimen/small_size"
-                        tools:text="这部获奖无数的黑色幽默短片，讲述了一位大叔在热情帮助一位白人女士之后，却带着种族偏见不断找车上的黑人兄弟[麻烦]，并试图引起周围人的共鸣，没想到最后却落得被[抛下]的下场。对比鲜明的故事情节，讽刺感十足。From hoellerwanger" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/dimen_12"
-                        android:paddingLeft="@dimen/dimen_12"
-                        android:paddingRight="@dimen/dimen_12">
-
-                        <LinearLayout
-                            android:id="@+id/linear_playHeart"
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            app:clickCommand="@{viewModel.onHeartCommand}">
+                            </LinearLayout>
 
                             <ImageView
-                                android:layout_width="@dimen/dimen_20"
-                                android:layout_height="@dimen/dimen_20"
-                                android:src="@drawable/selector_play_heart" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/dimen_8"
-                                android:ellipsize="end"
-                                android:gravity="center"
-                                android:maxLines="1"
-                                android:text="@{viewModel.heartCount}"
-                                android:textColor="@color/commonTextWhite"
-                                android:textSize="@dimen/title_size"
-                                tools:text="23" />
+                                android:id="@+id/imgView_upDownDescription"
+                                android:layout_width="@dimen/dimen_36"
+                                android:layout_height="@dimen/dimen_36"
+                                android:padding="@dimen/dimen_10"
+                                android:src="@drawable/selector_white_arrows_up_down"
+                                android:visibility="gone"
+                                app:clickCommand="@{viewModel.onShowDescriptionCommand}" />
 
                         </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/txtView_playDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_12"
+                            android:layout_marginRight="@dimen/dimen_12"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="4dp"
+                            android:text="@{viewModel.videoDescription}"
+                            android:textColor="@color/commonTextWhite"
+                            android:textSize="@dimen/small_size"
+                            tools:text="这部获奖无数的黑色幽默短片，讲述了一位大叔在热情帮助一位白人女士之后，却带着种族偏见不断找车上的黑人兄弟[麻烦]，并试图引起周围人的共鸣，没想到最后却落得被[抛下]的下场。对比鲜明的故事情节，讽刺感十足。From hoellerwanger" />
 
                         <LinearLayout
-                            android:id="@+id/linear_playExport"
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            app:clickCommand="@{viewModel.onSharedCommand}">
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/dimen_12"
+                            android:paddingLeft="@dimen/dimen_12"
+                            android:paddingRight="@dimen/dimen_12">
 
-                            <ImageView
-                                android:layout_width="@dimen/dimen_20"
-                                android:layout_height="@dimen/dimen_20"
-                                android:src="@drawable/icon_export_white" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:id="@+id/linear_playHeart"
+                                android:layout_width="0dip"
                                 android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/dimen_8"
-                                android:ellipsize="end"
-                                android:gravity="center"
-                                android:maxLines="1"
-                                android:text="@{viewModel.sharedCount}"
-                                android:textColor="@color/commonTextWhite"
-                                android:textSize="@dimen/title_size"
-                                tools:text="9" />
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                app:clickCommand="@{viewModel.onHeartCommand}">
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_20"
+                                    android:layout_height="@dimen/dimen_20"
+                                    android:src="@drawable/selector_play_heart" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="@dimen/dimen_8"
+                                    android:ellipsize="end"
+                                    android:gravity="center"
+                                    android:maxLines="1"
+                                    android:text="@{viewModel.heartCount}"
+                                    android:textColor="@color/commonTextWhite"
+                                    android:textSize="@dimen/title_size"
+                                    tools:text="23" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linear_playExport"
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                app:clickCommand="@{viewModel.onSharedCommand}">
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_20"
+                                    android:layout_height="@dimen/dimen_20"
+                                    android:src="@drawable/icon_export_white" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="@dimen/dimen_8"
+                                    android:ellipsize="end"
+                                    android:gravity="center"
+                                    android:maxLines="1"
+                                    android:text="@{viewModel.sharedCount}"
+                                    android:textColor="@color/commonTextWhite"
+                                    android:textSize="@dimen/title_size"
+                                    tools:text="9" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linear_playMessage"
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                app:clickCommand="@{viewModel.onCommentCommand}">
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_20"
+                                    android:layout_height="@dimen/dimen_20"
+                                    android:src="@drawable/icon_msg_white" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="@dimen/dimen_8"
+                                    android:ellipsize="end"
+                                    android:gravity="center"
+                                    android:maxLines="1"
+                                    android:text="@{viewModel.commentCount}"
+                                    android:textColor="@color/commonTextWhite"
+                                    android:textSize="@dimen/title_size"
+                                    tools:text="23" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linear_playDownload"
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                app:clickCommand="@{viewModel.onDownloadCommand}">
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_20"
+                                    android:layout_height="@dimen/dimen_20"
+                                    android:src="@drawable/icon_download_white" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="@dimen/dimen_8"
+                                    android:ellipsize="end"
+                                    android:gravity="center"
+                                    android:maxLines="1"
+                                    android:text="@string/download"
+                                    android:textColor="@color/commonTextWhite"
+                                    android:textSize="@dimen/title_size" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/linear_playMessage"
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            app:clickCommand="@{viewModel.onCommentCommand}">
-
-                            <ImageView
-                                android:layout_width="@dimen/dimen_20"
-                                android:layout_height="@dimen/dimen_20"
-                                android:src="@drawable/icon_msg_white" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/dimen_8"
-                                android:ellipsize="end"
-                                android:gravity="center"
-                                android:maxLines="1"
-                                android:text="@{viewModel.commentCount}"
-                                android:textColor="@color/commonTextWhite"
-                                android:textSize="@dimen/title_size"
-                                tools:text="23" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/linear_playDownload"
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            app:clickCommand="@{viewModel.onDownloadCommand}">
-
-                            <ImageView
-                                android:layout_width="@dimen/dimen_20"
-                                android:layout_height="@dimen/dimen_20"
-                                android:src="@drawable/icon_download_white" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/dimen_8"
-                                android:ellipsize="end"
-                                android:gravity="center"
-                                android:maxLines="1"
-                                android:text="@string/download"
-                                android:textColor="@color/commonTextWhite"
-                                android:textSize="@dimen/title_size" />
-
-                        </LinearLayout>
+                        <include layout="@layout/horizontal_line_white" />
 
                     </LinearLayout>
 
