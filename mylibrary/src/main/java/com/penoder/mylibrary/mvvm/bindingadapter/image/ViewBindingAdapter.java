@@ -22,6 +22,7 @@ public final class ViewBindingAdapter {
     public static void setImageUri(ImageView mImageView, String uri) {
         if (!TextUtils.isEmpty(uri)) {
             mImageView.setImageURI(Uri.parse(uri));
+
         }
     }
 
@@ -32,8 +33,11 @@ public final class ViewBindingAdapter {
                                  final ReplyCommand<GlideDrawable> onSuccessCommand,
                                  final ReplyCommand<Target<GlideDrawable>> onFailureCommand) {
         imageView.setImageResource(placeholderImageRes);
-        if (imageView.getTag() != null && !uri.equals(imageView.getTag())) {
+        if (imageView.getTag() == null && !uri.equals(imageView.getTag())) {
             if (!TextUtils.isEmpty(uri)) {
+
+//                Glide.with(imageView.getContext()).load(uri).placeholder(placeholderImageRes).into(imageView);
+
                 RequestListener<String, GlideDrawable> requestListener = new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
@@ -52,7 +56,20 @@ public final class ViewBindingAdapter {
                     }
                 };
 
-                Glide.with(imageView.getContext()).load(uri).override(width, height).placeholder(placeholderImageRes).listener(requestListener).into(imageView);
+                if (width > 0 && height > 0) {
+                    Glide.with(imageView.getContext())
+                            .load(uri)
+                            .override(width, height)
+                            .placeholder(placeholderImageRes)
+                            .listener(requestListener)
+                            .into(imageView);
+                } else {
+                    Glide.with(imageView.getContext())
+                            .load(uri)
+                            .placeholder(placeholderImageRes)
+                            .listener(requestListener)
+                            .into(imageView);
+                }
                 imageView.setTag(uri);
             }
         }

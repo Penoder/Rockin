@@ -8,6 +8,9 @@
         <variable
             name="viewModel"
             type="com.rockin.view.homepage.PlayerActivity" />
+
+        <import type="android.view.View" />
+
     </data>
 
     <LinearLayout
@@ -34,6 +37,8 @@
 
             <com.rockin.widget.CustomScrollView
                 android:layout_width="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none"
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_shadow_play_bg">
 
@@ -43,12 +48,10 @@
                     android:background="@color/halfTransparent"
                     android:orientation="vertical">
 
-                    <include layout="@layout/horizontal_line_white" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:orientation="vertical">-->
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -327,17 +330,40 @@
                             <ImageView
                                 android:id="@+id/imgView_attentionAuthor"
                                 android:layout_width="@dimen/dimen_48"
-                                android:layout_height="@dimen/dimen_24"
+                                android:layout_height="@dimen/dimen_20"
                                 android:layout_margin="@dimen/dimen_12"
                                 android:background="@drawable/selector_attention"
                                 app:clickCommand="@{viewModel.onAttentionCommand}" />
 
                         </LinearLayout>
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_14"
+                            android:text="@string/recommendation"
+                            android:textColor="@color/commonTextWhite"
+                            android:textSize="@dimen/common_size"
+                            android:visibility="@{viewModel.videoItems.size() > 0 ? View.VISIBLE : View.GONE}" />
+
+                        <ListView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/dimen_12"
+                            android:divider="@color/dividerWhite"
+                            android:dividerHeight="1px"
+                            app:itemBinding="@{viewModel.videoItemView}"
+                            app:items="@{viewModel.videoItems}" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:src="@drawable/icon_end"
+                            android:visibility="@{viewModel.videoItems.size() > 0 ? View.VISIBLE : View.GONE}" />
 
                     </LinearLayout>
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
             </com.rockin.widget.CustomScrollView>
 

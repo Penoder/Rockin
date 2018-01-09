@@ -1,7 +1,9 @@
 package com.rockin.view.homepage;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
+import android.databinding.ObservableList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.penoder.mylibrary.mvvm.command.ReplyCommand;
 import com.penoder.mylibrary.player.JZVideoPlayer;
 import com.penoder.mylibrary.player.JZVideoPlayerStandard;
+import com.rockin.BR;
 import com.rockin.R;
 import com.rockin.databinding.ActivityPlayerBinding;
 import com.rockin.entity.homepage.HomeEntity;
@@ -18,6 +21,9 @@ import com.rockin.entity.table.PlayInfo;
 import com.rockin.entity.table.Video;
 import com.rockin.utils.TimeUtil;
 import com.rockin.view.base.BaseActivity;
+import com.rockin.view.homepage.itemView.ItemVideoViewModel;
+
+import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 /**
  * @author Penoder
@@ -61,6 +67,10 @@ public class PlayerActivity extends BaseActivity {
     // 作者描述
     public ObservableField<String> authorDescription = new ObservableField<>();
 
+
+    public ObservableList<ItemVideoViewModel> videoItems = new ObservableArrayList<>();
+    public ItemBinding videoItemView = ItemBinding.of(BR.viewModel, R.layout.item_recommend_video);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +78,7 @@ public class PlayerActivity extends BaseActivity {
         playerBinding.setViewModel(this);
 
         getVideoDataAndInit();
+        videoItems.add(new ItemVideoViewModel(mVideo, this));
     }
 
     /**

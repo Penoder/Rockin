@@ -8,4 +8,5 @@
     <string name="isLoaading">正在努力加载中...</string>
     <string name="more_syspetizer_video">更多开眼编辑精选</string>
     <string name="download">缓存</string>
+    <string name="recommendation">相关推荐</string>
 </resources>

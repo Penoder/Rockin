@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.rockin.view.homepage.itemView.ItemVideoViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dimen_8"
+        android:paddingRight="@dimen/dimen_12"
+        android:paddingTop="@dimen/dimen_8">
+
+        <ImageView
+            android:id="@+id/imgView_recommendVideoFeed"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dimen_12"
+            android:layout_weight="2"
+            android:adjustViewBounds="true"
+            android:background="@color/backgroundColor"
+            android:scaleType="fitXY"
+            app:uri="@{viewModel.feedUrl}" />
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_4"
+                android:maxLines="2"
+                android:text="@{viewModel.videoTitle}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/title_size"
+                tools:text="每一块都裹满了巧克力的曲奇甜饼" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4"
+                android:maxLines="1"
+                android:text="@{viewModel.categoryAndTime}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_size"
+                tools:text="#开胃 / 01'32''" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
