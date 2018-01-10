@@ -6,24 +6,38 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.penoder.mylibrary.mvvm.command.ReplyCommand;
+import com.penoder.mylibrary.okhttp.CommonJson;
+import com.penoder.mylibrary.okhttp.OkCallBack;
+import com.penoder.mylibrary.okhttp.OkHttpManager;
 import com.penoder.mylibrary.player.JZVideoPlayer;
 import com.penoder.mylibrary.player.JZVideoPlayerStandard;
 import com.rockin.BR;
 import com.rockin.R;
+import com.rockin.config.EyeApi;
 import com.rockin.databinding.ActivityPlayerBinding;
 import com.rockin.entity.homepage.HomeEntity;
 import com.rockin.entity.table.Author;
 import com.rockin.entity.table.PlayInfo;
 import com.rockin.entity.table.Video;
+import com.rockin.utils.LogUtil;
 import com.rockin.utils.TimeUtil;
+import com.rockin.utils.ToastUtil;
 import com.rockin.view.base.BaseActivity;
 import com.rockin.view.homepage.itemView.ItemVideoViewModel;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * @author Penoder
@@ -78,7 +92,52 @@ public class PlayerActivity extends BaseActivity {
         playerBinding.setViewModel(this);
 
         getVideoDataAndInit();
+
+        getRecommend();
+
         videoItems.add(new ItemVideoViewModel(mVideo, this));
+    }
+
+    /**
+     * 获取相关推荐 30 条视频数据
+     */
+    private void getRecommend() {
+        OkHttpManager.create(this)
+                .addUrl(EyeApi.VIDEO_RECOMMEND)
+                .post()
+                .sign()
+                .execute(new OkCallBack<String>() {
+
+                    @Override
+                    public void failure(Call call, Exception e) {
+                        LogUtil.d("failure: " + e.getMessage());
+                        ToastUtil.showShortToast(PlayerActivity.this, "获取数据失败,请稍候重试");
+                    }
+
+                    @Override
+                    public void onResponse(boolean isSuccess, Response response, String jsonStr) {
+                        if (TextUtils.isEmpty(jsonStr)) {
+                            ToastUtil.showShortToast(PlayerActivity.this, "没有获取到数据,请稍候重试");
+                        } else {
+                            Gson gson = new Gson();
+                            Type type = new TypeToken<CommonJson<List<HomeEntity>>>() {
+                            }.getType();
+                            CommonJson<List<HomeEntity>> commonJson = gson.fromJson(jsonStr, type);
+                            if (commonJson != null && commonJson.code == 0) {
+                                List<HomeEntity> homeEntityList = commonJson.data;
+                                if (homeEntityList != null && homeEntityList.size() > 0) {
+                                    for (int i = 0; i < homeEntityList.size(); i++) {
+                                        videoItems.add(new ItemVideoViewModel(homeEntityList.get(i).getVideo(), PlayerActivity.this));
+                                    }
+                                } else {
+                                    ToastUtil.showShortToast(PlayerActivity.this, "没有获取到数据,请稍候重试");
+                                }
+                            } else {
+                                ToastUtil.showShortToast(PlayerActivity.this, "获取数据失败,请稍候重试");
+                            }
+                        }
+                    }
+                }, false);
     }
 
     /**
