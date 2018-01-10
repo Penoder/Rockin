@@ -347,6 +347,7 @@
                             android:visibility="@{viewModel.videoItems.size() > 0 ? View.VISIBLE : View.GONE}" />
 
                         <ListView
+                            android:id="@+id/listView_recommend"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/dimen_12"
