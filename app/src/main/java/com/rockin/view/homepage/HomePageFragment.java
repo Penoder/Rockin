@@ -327,6 +327,7 @@ public class HomePageFragment extends BaseFragment {
 
                     @Override
                     public void onResponse(boolean isSuccess, Response response, String jsonStr) {
+                        LogUtil.i("首页视频数据： " + jsonStr);
                         if (TextUtils.isEmpty(jsonStr)) {
                             ToastUtil.showShortToast(mContext, "没有获取到数据,请稍候重试");
                         } else {

@@ -179,7 +179,7 @@ public class SwipeFlushView extends SwipeRefreshLayout {
         // 设置加载状态，让布局显示出来
         setLoading(true);
         if (mOnLoadListener != null) {
-            new Handler().postDelayed(() -> mOnLoadListener.onLoad(), 3000);
+            mOnLoadListener.onLoad();
         } else {    // 未设置加载监听事件的话，实现转2秒后结束的效果
             new Handler().postDelayed(() -> setLoading(false), 2000);
         }

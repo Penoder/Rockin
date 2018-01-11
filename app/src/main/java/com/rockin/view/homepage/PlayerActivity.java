@@ -116,7 +116,7 @@ public class PlayerActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(boolean isSuccess, Response response, String jsonStr) {
-                        LogUtil.i(jsonStr);
+                        LogUtil.i("视频播放页相关推荐数据： " + jsonStr);
                         if (TextUtils.isEmpty(jsonStr)) {
                             ToastUtil.showShortToast(PlayerActivity.this, "没有获取到数据,请稍候重试");
                         } else {
