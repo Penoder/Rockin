@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.penoder.mylibrary.okhttp.CommonJson;
@@ -373,6 +372,7 @@ public class HomePageFragment extends BaseFragment {
     }
 
     public void backToTop() {
+        //
         homePageBinding.listViewHomePage.setSelection(0);
     }
 }

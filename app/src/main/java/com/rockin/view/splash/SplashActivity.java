@@ -24,6 +24,11 @@ public class SplashActivity extends BaseActivity {
 
     ActivitySplashBinding splashBinding;
 
+    /**
+     * 启动页背景图缩放动画
+     */
+    private Animation scaleAnimation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +60,15 @@ public class SplashActivity extends BaseActivity {
             overridePendingTransition(R.anim.translate_from_right_to_left, 0);
             new Handler().postDelayed(this::finish, 500);
         }, 2000);
-        Animation scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_from_center_to_out);
+        scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_from_center_to_out);
         scaleAnimation.setFillAfter(true);
         splashBinding.imgViewSplash.startAnimation(scaleAnimation);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 避免属性动画持有 View，View 持有 Activity 的引用导致内存泄漏
+        scaleAnimation.cancel();
     }
 }

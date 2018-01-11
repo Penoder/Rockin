@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import com.bumptech.glide.Glide;
 import com.rockin.R;
 import com.rockin.databinding.ItemRecommendVideoBinding;
+import com.rockin.entity.homepage.HomeEntity;
 import com.rockin.entity.table.Video;
 import com.rockin.utils.TimeUtil;
 
@@ -18,7 +19,7 @@ import com.rockin.utils.TimeUtil;
 
 public class ItemVideoViewModel {
 
-    private Video mVideo;
+    public HomeEntity mHomeEntity;
 
     private Context mContext;
 
@@ -35,18 +36,15 @@ public class ItemVideoViewModel {
 
     }
 
-    public ItemVideoViewModel(Video mVideo, Context mContext) {
-        if (mVideo == null) {
+    public ItemVideoViewModel(HomeEntity homeEntity, Context mContext) {
+        if (homeEntity == null || homeEntity.getVideo() == null) {
             return;
         }
-        this.mVideo = mVideo;
+        this.mHomeEntity = homeEntity;
         this.mContext = mContext;
-        categoryAndTime.set(mVideo.category + " / " + TimeUtil.secondToTime(mVideo.duration));
-        videoTitle.set(mVideo.title);
-        feedUrl.set(mVideo.feed);
-
-//        ItemRecommendVideoBinding recommendBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.item_recommend_video, null, false);
-//        Glide.with(mContext).load(mVideo.feed).into(recommendBinding.imgViewRecommendVideoFeed);
+        categoryAndTime.set(homeEntity.getVideo().category + " / " + TimeUtil.secondToTime(homeEntity.getVideo().duration));
+        videoTitle.set(homeEntity.getVideo().title);
+        feedUrl.set(homeEntity.getVideo().feed);
     }
 
 }

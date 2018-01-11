@@ -2,6 +2,7 @@ package com.rockin;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 
 import com.rockin.adapter.CommonFragmentAdapter;
 import com.rockin.databinding.ActivityMainBinding;
@@ -21,6 +22,11 @@ public class MainActivity extends BaseFragmentActivity {
     private ActivityMainBinding mainBinding;
 
     private BaseFragment homePageFragment, concernFragment, informFragment, personFragment;
+
+    /**
+     * 记录上一次选择的标签
+     */
+    private int lastClickTab = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,25 +63,42 @@ public class MainActivity extends BaseFragmentActivity {
             mainBinding.imgViewTabOne.setSelected(true);
             mainBinding.txtViewTabOne.setSelected(true);
             mainBinding.viewPagerMain.setCurrentItem(0);
+            compareClickTab();
+            lastClickTab = 0;
         });
         mainBinding.linearTabTwo.setOnClickListener(v -> {
             cancelSelectTab();
             mainBinding.imgViewTabTwo.setSelected(true);
             mainBinding.txtViewTabTwo.setSelected(true);
             mainBinding.viewPagerMain.setCurrentItem(1);
+            compareClickTab();
+            lastClickTab = 1;
         });
         mainBinding.linearTabThree.setOnClickListener(v -> {
             cancelSelectTab();
             mainBinding.imgViewTabThree.setSelected(true);
             mainBinding.txtViewTabThree.setSelected(true);
             mainBinding.viewPagerMain.setCurrentItem(2);
+            compareClickTab();
+            lastClickTab = 2;
         });
         mainBinding.linearTabFour.setOnClickListener(v -> {
             cancelSelectTab();
             mainBinding.imgViewTabFour.setSelected(true);
             mainBinding.txtViewTabFour.setSelected(true);
             mainBinding.viewPagerMain.setCurrentItem(3);
+            compareClickTab();
+            lastClickTab = 3;
         });
+    }
+
+    private void compareClickTab() {
+        if (mainBinding.viewPagerMain.getCurrentItem() == lastClickTab) {
+            // 首页视频列表回顶部
+            if (mainBinding.viewPagerMain.getCurrentItem() == 0 && homePageFragment != null) {
+                ((HomePageFragment) homePageFragment).backToTop();
+            }
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.rockin.view.homepage;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
@@ -8,6 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -92,10 +96,7 @@ public class PlayerActivity extends BaseActivity {
         playerBinding.setViewModel(this);
 
         getVideoDataAndInit();
-
         getRecommend();
-
-        videoItems.add(new ItemVideoViewModel(mVideo, this));
     }
 
     /**
@@ -107,7 +108,6 @@ public class PlayerActivity extends BaseActivity {
                 .post()
                 .sign()
                 .execute(new OkCallBack<String>() {
-
                     @Override
                     public void failure(Call call, Exception e) {
                         LogUtil.d("failure: " + e.getMessage());
@@ -116,6 +116,7 @@ public class PlayerActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(boolean isSuccess, Response response, String jsonStr) {
+                        LogUtil.i(jsonStr);
                         if (TextUtils.isEmpty(jsonStr)) {
                             ToastUtil.showShortToast(PlayerActivity.this, "没有获取到数据,请稍候重试");
                         } else {
@@ -127,8 +128,9 @@ public class PlayerActivity extends BaseActivity {
                                 List<HomeEntity> homeEntityList = commonJson.data;
                                 if (homeEntityList != null && homeEntityList.size() > 0) {
                                     for (int i = 0; i < homeEntityList.size(); i++) {
-                                        videoItems.add(new ItemVideoViewModel(homeEntityList.get(i).getVideo(), PlayerActivity.this));
+                                        videoItems.add(new ItemVideoViewModel(homeEntityList.get(i), PlayerActivity.this));
                                     }
+                                    setListViewHeight(playerBinding.listViewRecommend);
                                 } else {
                                     ToastUtil.showShortToast(PlayerActivity.this, "没有获取到数据,请稍候重试");
                                 }
@@ -165,7 +167,7 @@ public class PlayerActivity extends BaseActivity {
             playerBinding.imgViewUpDownDescription.setVisibility(View.VISIBLE);
 
             playerBinding.playerVideo.setUp(mVideo.playUrl, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "");
-            playerBinding.playerVideo.thumbImageView.setImageURI(Uri.parse(mVideo.feed));
+            Glide.with(PlayerActivity.this).load(mVideo.feed).into(playerBinding.playerVideo.thumbImageView);
         }
 
         if (mAuthor != null) {
@@ -207,10 +209,56 @@ public class PlayerActivity extends BaseActivity {
     public ReplyCommand onDownloadCommand = new ReplyCommand(() -> {
     });
 
+    /**
+     * 关注按钮点击事件
+     */
     public ReplyCommand onAttentionCommand = new ReplyCommand(() -> {
     });
+
+    /**
+     * 作者信息点击事件，跳转到作者详情页
+     */
     public ReplyCommand onAuthorInfoCommand = new ReplyCommand(() -> {
     });
+
+    /**
+     * 推荐的视频的 Item 点击事件, 跳转到自身
+     */
+    public ReplyCommand<Integer> onRecommendItemCommand = new ReplyCommand<>((position) -> {
+        Intent intent = new Intent(this, PlayerActivity.class);
+        intent.putExtra("VIDEO_DATA", videoItems.get(position).mHomeEntity);
+        startActivity(intent);
+        finish();
+    });
+
+    /**
+     * 重写计算 ListView 高度，避免 ScrollView 嵌套 ListView 只显示 1 个 Item
+     *
+     * @param listView
+     */
+    public void setListViewHeight(ListView listView) {
+        // 获取ListView对应的Adapter
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
+            // listAdapter.getCount()返回数据项的数目
+            View listItem = listAdapter.getView(i, null, listView);
+            // 计算子项View 的宽高
+            listItem.measure(0, 0);
+            // 统计所有子项的总高度
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        // listView.getDividerHeight()获取子项间分隔符占用的高度
+        // params.height最后得到整个ListView完整显示需要的高度
+        listView.setLayoutParams(params);
+    }
 
     @Override
     public void onBackPressed() {

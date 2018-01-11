@@ -73,6 +73,11 @@ public class GuideActivity extends BaseActivity {
      */
     private int minSlidePace;
 
+    /**
+     * 引导页底部上滑提示箭头的 Alpha 动画
+     */
+    private Animation upArrow1, upArrow2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,8 +165,8 @@ public class GuideActivity extends BaseActivity {
         });
 
         // 执行 引导页界面 底部的上滑引导箭头的 alpha 动画
-        Animation upArrow1 = AnimationUtils.loadAnimation(this, R.anim.alpha_in_guide_up_arrows);
-        Animation upArrow2 = AnimationUtils.loadAnimation(this, R.anim.alpha_in_guide_up_arrows);
+        upArrow1 = AnimationUtils.loadAnimation(this, R.anim.alpha_in_guide_up_arrows);
+        upArrow2 = AnimationUtils.loadAnimation(this, R.anim.alpha_in_guide_up_arrows);
         upArrow1.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -245,5 +250,21 @@ public class GuideActivity extends BaseActivity {
         super.onStop();
         guideBinding.videoGuide.pause();
         playPosition = guideBinding.videoGuide.getCurrentPosition();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 避免属性动画持有 View，View 持有 Activity 的引用导致内存泄漏
+        if (upArrow1 != null) {
+            upArrow1.setAnimationListener(null);
+            upArrow1.cancel();
+            upArrow1 = null;
+        }
+        if (upArrow2 != null) {
+            upArrow2.setAnimationListener(null);
+            upArrow2.cancel();
+            upArrow2 = null;
+        }
     }
 }
