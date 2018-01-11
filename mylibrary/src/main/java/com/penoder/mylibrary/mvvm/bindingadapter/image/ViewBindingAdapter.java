@@ -35,9 +35,6 @@ public final class ViewBindingAdapter {
         imageView.setImageResource(placeholderImageRes);
         if (imageView.getTag() == null && !uri.equals(imageView.getTag())) {
             if (!TextUtils.isEmpty(uri)) {
-
-//                Glide.with(imageView.getContext()).load(uri).placeholder(placeholderImageRes).into(imageView);
-
                 RequestListener<String, GlideDrawable> requestListener = new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {

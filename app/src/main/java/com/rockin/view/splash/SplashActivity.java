@@ -69,6 +69,8 @@ public class SplashActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         // 避免属性动画持有 View，View 持有 Activity 的引用导致内存泄漏
-        scaleAnimation.cancel();
+        if (scaleAnimation != null) {
+            scaleAnimation.cancel();
+        }
     }
 }

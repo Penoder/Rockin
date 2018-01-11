@@ -24,8 +24,8 @@
             android:layout_height="80dp"
             android:layout_weight="5"
             android:adjustViewBounds="true"
-            android:background="@color/backgroundColor"
             android:scaleType="fitXY"
+            app:placeholderImageRes="@drawable/img_default_eyepetizer"
             app:uri="@{viewModel.feedUrl}" />
 
         <LinearLayout
