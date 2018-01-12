@@ -8,10 +8,9 @@
             type="com.rockin.view.homepage.HomePageFragment" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <com.rockin.widget.SwipeFlushView
             android:id="@+id/swipe_homePage"
@@ -20,15 +19,22 @@
 
             <ListView
                 android:id="@+id/listView_homePage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:cacheColorHint="@color/transparent"
                 android:divider="@null"
                 android:listSelector="@color/transparent"
                 android:overScrollMode="never"
-                android:scrollbars="none"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:scrollbars="none" />
 
         </com.rockin.widget.SwipeFlushView>
 
-    </LinearLayout>
+        <!-- 没有加载出数据或者无网络时显示，使用 ViewStub 可以减少布局的绘制消耗的内存. -->
+        <ViewStub
+            android:id="@+id/stub_homeFailure"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout="@layout/layout_error_display" />
+
+    </FrameLayout>
 </layout>

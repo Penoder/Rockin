@@ -1,15 +1,9 @@
 package com.rockin.view.homepage.itemView;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.databinding.ObservableField;
-import android.view.LayoutInflater;
 
-import com.bumptech.glide.Glide;
-import com.rockin.R;
-import com.rockin.databinding.ItemRecommendVideoBinding;
 import com.rockin.entity.homepage.HomeEntity;
-import com.rockin.entity.table.Video;
 import com.rockin.utils.TimeUtil;
 
 /**
@@ -46,5 +40,9 @@ public class ItemVideoViewModel {
         videoTitle.set(homeEntity.getVideo().title);
         feedUrl.set(homeEntity.getVideo().feed);
     }
+
+//    public ReplyCommand<Target<GlideDrawable>> onFailureLoadImgCommand = new ReplyCommand<>((target) -> {
+//        LogUtil.i("ItemVideoViewModel --> : 加载图片失败");
+//    });
 
 }

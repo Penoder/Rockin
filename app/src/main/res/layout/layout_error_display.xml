@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imgView_errorDisplayImg"
+        android:layout_width="@dimen/dimen_64"
+        android:layout_height="@dimen/dimen_64"
+        app:srcCompat="@mipmap/icon_app" />
+
+    <TextView
+        android:id="@+id/txtView_errorDisplayTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_64"
+        android:layout_marginRight="@dimen/dimen_64"
+        android:layout_marginTop="@dimen/dimen_24"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.15"
+        android:textColor="@color/secondTextBlack"
+        android:textSize="@dimen/common_size"
+        tools:text="网络错误\n点击屏幕重试" />
+
+</LinearLayout>
