@@ -126,7 +126,7 @@ public class HomePageFragment extends BaseFragment {
         // 这个写在setViewModel前面会崩掉
         homePageBinding.executePendingBindings();
         initBanner();
-        getVideoDatas();
+        getVideoDatas(true);
         return homePageBinding.getRoot();
     }
 
@@ -232,13 +232,13 @@ public class HomePageFragment extends BaseFragment {
         // 刷新数据
         homePageBinding.swipeHomePage.setOnFlushListener(() -> {
             isLoading = false;
-            getVideoDatas();
+            getVideoDatas(false);
         });
 
         // 加载数据
         homePageBinding.swipeHomePage.setOnLoadListener(() -> {
             isLoading = true;
-            getVideoDatas();
+            getVideoDatas(false);
         });
 
     }
@@ -310,12 +310,12 @@ public class HomePageFragment extends BaseFragment {
         bannerAdapter.notifyDataSetChanged();
     }
 
-    private void getVideoDatas() {
+    private void getVideoDatas(boolean showProgress) {
         OkHttpManager.create(mContext)
                 .addUrl(EyeApi.VIDEO_HOMEPAGE)
                 .post()
                 .sign()
-                .addProgress("", "内容正在加载中，请稍后！")
+                .addProgress("", "内容正在加载中，请稍后！", showProgress)
                 .addParam("pageSize", "")
                 .execute(new OkCallBack<String>() {
                     @Override

@@ -124,9 +124,14 @@ public class OkHttpManager {
     /**
      * 用于执行网络请求的时候 弹出一个 加载中
      *
+     * @param showable 是否需要显示Dialog，可能加载数据只想第一次显示，后面不显示，但是该方法还是每次调用了
      * @return
      */
-    public OkHttpManager addProgress() {
+    public OkHttpManager addProgress(boolean showable) {
+        if (!showable) {
+            return this;
+        }
+
         // 为了每次重新创建
 //        destroyDialog();
         createDialog("", "内容加载中，请稍后!", true);
@@ -136,10 +141,16 @@ public class OkHttpManager {
     /**
      * 网络请求加载中的提示文字由自个定
      *
+     * @param title
      * @param msg
+     * @param showable 是否需要显示Dialog，可能加载数据只想第一次显示，后面不显示，但是该方法还是每次调用了
      * @return
      */
-    public OkHttpManager addProgress(String title, String msg) {
+    public OkHttpManager addProgress(String title, String msg, boolean showable) {
+        if (!showable) {
+            return this;
+        }
+
         if (TextUtils.isEmpty(msg)) {
             msg = "内容加载中，请稍后!";
         }
@@ -151,11 +162,17 @@ public class OkHttpManager {
     /**
      * 是否可以取消掉显示的加载中 Dialog
      *
+     * @param title
      * @param msg
      * @param cancelable
+     * @param showable   是否需要显示Dialog，可能加载数据只想第一次显示，后面不显示，但是该方法还是每次调用了
      * @return
      */
-    public OkHttpManager addProgress(String title, String msg, boolean cancelable) {
+    public OkHttpManager addProgress(String title, String msg, boolean cancelable, boolean showable) {
+        if (!showable) {
+            return this;
+        }
+
         if (TextUtils.isEmpty(msg)) {
             msg = "内容加载中，请稍后!";
         }
