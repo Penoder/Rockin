@@ -10,13 +10,85 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/notification"
+                android:textColor="@color/commonTextBlack"
+                android:textSize="@dimen/dimen_18"
+                android:textStyle="bold|italic" />
+
+            <ImageView
+                android:id="@+id/imgView_searchVideo"
+                android:layout_width="@dimen/dimen_44"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginRight="@dimen/dimen_6"
+                android:padding="@dimen/dimen_10"
+                android:src="@drawable/icon_search_black" />
+
+        </FrameLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="INFORM" />
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_64"
+                android:layout_height="@dimen/dimen_64"
+                android:src="@drawable/icon_warning" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginRight="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_36"
+                android:gravity="center"
+                android:text="@string/dont_miss_important_msg"
+                android:textColor="@color/commonTextBlack"
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginRight="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@string/the_function_after_login"
+                android:textColor="@color/commonTextBlack"
+                android:textSize="@dimen/common_size" />
+
+            <TextView
+                android:id="@+id/txtView_loginInNotice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_64"
+                android:layout_marginRight="@dimen/dimen_64"
+                android:layout_marginTop="@dimen/dimen_48"
+                android:background="@color/deepskyblue"
+                android:gravity="center"
+                android:maxLines="1"
+                android:padding="@dimen/dimen_8"
+                android:text="@string/login_in"
+                android:textColor="@color/commonTextWhite"
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

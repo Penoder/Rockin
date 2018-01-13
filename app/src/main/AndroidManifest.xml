@@ -37,6 +37,16 @@
             android:name=".view.homepage.PlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+
+        <receiver android:name=".broadcast.NetWorkChangeReceiver">
+            <intent-filter>
+                <action android:name="android.NET.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.NET.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.NET.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".view.homepage.AuthorActivity"></activity>
     </application>
 
 </manifest>

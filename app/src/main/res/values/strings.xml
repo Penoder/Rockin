@@ -9,4 +9,8 @@
     <string name="more_syspetizer_video">更多开眼编辑精选</string>
     <string name="download">缓存</string>
     <string name="recommendation">相关推荐</string>
+    <string name="notification">Notification</string>
+    <string name="dont_miss_important_msg">别错过重要的信息</string>
+    <string name="the_function_after_login">登录后即可查看评论回复、点赞及关注等通知信息</string>
+    <string name="login_in">登录</string>
 </resources>

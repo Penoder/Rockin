@@ -2,6 +2,7 @@ package com.rockin.view.homepage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.penoder.mylibrary.okhttp.OkHttpManager;
 import com.rockin.R;
 import com.rockin.adapter.CommonListAdapter;
 import com.rockin.adapter.CommonViewAdapter;
+import com.rockin.broadcast.NetWorkChangeReceiver;
 import com.rockin.config.EyeApi;
 import com.rockin.databinding.FragmentHomePageBinding;
 import com.rockin.entity.homepage.HomeEntity;
@@ -112,10 +114,18 @@ public class HomePageFragment extends BaseFragment {
      */
     private boolean isLoading = false;
 
+    private NetWorkChangeReceiver receiver;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
+        receiver = new NetWorkChangeReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.NET.conn.CONNECTIVITY_CHANGE");
+        intentFilter.addAction("android.NET.wifi.WIFI_STATE_CHANGED");
+        intentFilter.addAction("android.NET.wifi.STATE_CHANGE");
+        mContext.registerReceiver(receiver, intentFilter);
     }
 
     @Nullable
@@ -258,7 +268,7 @@ public class HomePageFragment extends BaseFragment {
      * @param homeEntity
      */
     private void jumpToAuthor(HomeEntity homeEntity) {
-
+        Intent intent = new Intent(mContext, AuthorActivity.class);
     }
 
     /**
@@ -375,5 +385,16 @@ public class HomePageFragment extends BaseFragment {
     public void backToTop() {
         //
         homePageBinding.listViewHomePage.setSelection(0);
+    }
+
+    private class NetReciver extends NetWorkChangeReceiver {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (receiver != null)
+            mContext.unregisterReceiver(receiver);
     }
 }
