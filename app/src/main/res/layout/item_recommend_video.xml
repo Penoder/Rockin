@@ -8,6 +8,9 @@
         <variable
             name="viewModel"
             type="com.rockin.view.homepage.itemView.ItemVideoViewModel" />
+
+        <import type="com.rockin.R" />
+
     </data>
 
     <LinearLayout
@@ -25,7 +28,7 @@
             android:layout_weight="5"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            app:placeholderImageRes="@drawable/img_default_eyepetizer"
+            app:placeholderImageRes="@{R.drawable.img_default_eyepetizer}"
             app:uri="@{viewModel.feedUrl}" />
 
         <LinearLayout

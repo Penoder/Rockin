@@ -173,7 +173,7 @@ public class PlayerActivity extends BaseActivity {
         if (mAuthor != null) {
             authorName.set(mAuthor.name);
             authorDescription.set(mAuthor.description);
-            Glide.with(this).load(mAuthor.icon).placeholder(R.drawable.icon_default_head).into(playerBinding.circleImgVideoAuthor);
+            Glide.with(this).load(mAuthor.icon).into(playerBinding.circleImgVideoAuthor);
         }
     }
 

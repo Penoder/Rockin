@@ -23,6 +23,7 @@ import com.rockin.adapter.CommonViewAdapter;
 import com.rockin.databinding.ActivityGuideBinding;
 import com.rockin.view.base.BaseActivity;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,12 +79,15 @@ public class GuideActivity extends BaseActivity {
      */
     private Animation upArrow1, upArrow2;
 
+    private GuideHandler guideHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         guideBinding = DataBindingUtil.setContentView(this, R.layout.activity_guide);
         // 设置屏幕常亮，不会变暗也不会锁屏(http://blog.csdn.net/mrzhang628/article/details/50752392)
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        guideHandler = new GuideHandler(this);
         initVideoView();
         minSlidePace = ViewConfiguration.get(this).getScaledTouchSlop();
         initBanner();
@@ -126,8 +130,7 @@ public class GuideActivity extends BaseActivity {
             imgView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             bannerImgs.add(imgView);
 
-            ImageView imgViewIndicator = (ImageView) LayoutInflater.from(this)
-                    .inflate(R.layout.img_banner_indicator, null).findViewById(R.id.imgView_indicator);
+            ImageView imgViewIndicator = (ImageView) LayoutInflater.from(this).inflate(R.layout.img_banner_indicator, null).findViewById(R.id.imgView_indicator);
             imgViewIndicator.setSelected(false);
             guideBinding.linearGuideIndicator.addView(imgViewIndicator);
         }
@@ -175,7 +178,7 @@ public class GuideActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                new Handler().postDelayed(() -> guideBinding.ivArrowUpTwo.startAnimation(upArrow2), 1000);
+                guideHandler.postDelayed(runnable, 1000);
             }
 
             @Override
@@ -236,6 +239,21 @@ public class GuideActivity extends BaseActivity {
         });
     }
 
+    private static class GuideHandler extends Handler {
+        WeakReference<GuideActivity> weakReference;
+
+        GuideHandler(GuideActivity activity) {
+            weakReference = new WeakReference<>(activity);
+        }
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            guideBinding.ivArrowUpTwo.startAnimation(upArrow2);
+        }
+    };
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -265,6 +283,10 @@ public class GuideActivity extends BaseActivity {
             upArrow2.setAnimationListener(null);
             upArrow2.cancel();
             upArrow2 = null;
+        }
+        if (guideHandler != null) {
+            guideHandler.removeCallbacksAndMessages(null);
+            guideHandler = null;
         }
     }
 }
