@@ -13,4 +13,9 @@
     <string name="dont_miss_important_msg">别错过重要的信息</string>
     <string name="the_function_after_login">登录后即可查看评论回复、点赞及关注等通知信息</string>
     <string name="login_in">登录</string>
+    <string name="comment_and_collect_after_login">点击登录即可发表评论及同步已收藏视频</string>
+    <string name="collect">收藏</string>
+    <string name="comment">评论</string>
+    <string name="heart">喜欢</string>
+    <string name="version_info">Version 3.14.254</string>
 </resources>

@@ -19,12 +19,14 @@
     <color name="dividerBlack">#D8D8D8</color>
 
     <!-- 背景色. -->
-    <color name="backgroundColor">#8A8A8A</color>
+    <color name="backgroundColor">#cdcdcd</color>
 
     <color name="transparent">#0000</color>
     <color name="halfTransparent">#3333</color>
 
     <color name="black0.3">#333333</color>
+
+    <color name="lightGrey">#e6e6e6</color>
 
     <!-- 颜色库. -->
     <color name="white">#FFFFFF</color>

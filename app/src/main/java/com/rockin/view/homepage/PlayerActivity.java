@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -168,6 +167,9 @@ public class PlayerActivity extends BaseActivity {
 
             playerBinding.playerVideo.setUp(mVideo.playUrl, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "");
             Glide.with(PlayerActivity.this).load(mVideo.feed).into(playerBinding.playerVideo.thumbImageView);
+
+            // 判断网络，wifi自动播
+            playerBinding.playerVideo.startVideo();
         }
 
         if (mAuthor != null) {
