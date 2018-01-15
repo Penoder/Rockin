@@ -33,7 +33,7 @@
                 android:text="@={viewModel.searchContent}"
                 android:textColor="@color/secondTextBlack"
                 android:textColorHint="@color/hintTextBlack"
-                android:textSize="@dimen/small_size"
+                android:textSize="@dimen/common_size"
                 app:requestFocus="true" />
 
             <TextView
@@ -42,7 +42,7 @@
                 android:padding="@dimen/dimen_8"
                 android:text="@string/cancel"
                 android:textColor="@color/secondTextBlack"
-                android:textSize="@dimen/common_size"
+                android:textSize="@dimen/title_size"
                 app:clickCommand="@{viewModel.onCancelSearchCommand}" />
 
         </LinearLayout>
@@ -63,7 +63,7 @@
                     android:gravity="center"
                     android:text="@string/input_keyword_to_found_more_video"
                     android:textColor="@color/hintTextBlack"
-                    android:textSize="@dimen/small_size" />
+                    android:textSize="@dimen/common_size" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                     android:gravity="center"
                     android:text="@string/the_hottest_keyword"
                     android:textColor="@color/commonTextBlack"
-                    android:textSize="@dimen/common_size" />
+                    android:textSize="@dimen/title_size" />
 
                 <com.rockin.widget.FlowLayout
                     android:id="@+id/flow_searchWord"
