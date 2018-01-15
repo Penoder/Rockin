@@ -26,7 +26,8 @@
 
     <color name="black0.3">#333333</color>
 
-    <color name="lightGrey">#e6e6e6</color>
+    <color name="lightGrey">#E6E6E6</color>
+    <color name="lightGray">#EEEEEE</color>
 
     <!-- 颜色库. -->
     <color name="white">#FFFFFF</color>

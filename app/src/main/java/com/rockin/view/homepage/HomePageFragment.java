@@ -1,5 +1,6 @@
 package com.rockin.view.homepage;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -152,7 +153,7 @@ public class HomePageFragment extends BaseFragment {
         imgViewSearch = (ImageView) bannerView.findViewById(R.id.imgView_search);
         linearMoreVideo = (LinearLayout) bannerView.findViewById(R.id.linear_moreVideo);
 
-        imgViewSearch.setOnClickListener(v -> Toast.makeText(mContext, "跳转到查询界面", Toast.LENGTH_SHORT).show());
+        imgViewSearch.setOnClickListener(v -> jumpToSearch());
 
         homePageBinding.listViewHomePage.addHeaderView(bannerView);
 
@@ -260,6 +261,14 @@ public class HomePageFragment extends BaseFragment {
      */
     private void moreOperate(HomeEntity homeEntity) {
 
+    }
+
+    /**
+     * 跳转到查询页面
+     */
+    private void jumpToSearch() {
+        startActivity(new Intent(mContext, SearchActivity.class));
+        ((Activity)mContext).overridePendingTransition(R.anim.translate_from_up_to_bottom, R.anim.translate_from_bottom_to_up);
     }
 
     /**

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.rockin.view.homepage.SearchActivity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dimen_8"
+            android:paddingLeft="@dimen/dimen_12"
+            android:paddingTop="@dimen/dimen_8">
+
+            <EditText
+                android:id="@+id/editTxt_search"
+                android:layout_width="0dip"
+                android:layout_height="@dimen/dimen_32"
+                android:layout_weight="1"
+                android:background="@drawable/shape_grey_bg_radius_18"
+                android:gravity="center"
+                android:hint="帮你找到感兴趣的视频"
+                android:textColor="@color/secondTextBlack"
+                android:textColorHint="@color/hintTextBlack"
+                android:textSize="@dimen/small_size"
+                app:requestFocus="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_8"
+                android:text="@string/cancel"
+                android:textColor="@color/secondTextBlack"
+                android:textSize="@dimen/common_size"
+                app:clickCommand="@{viewModel.onCancelSearchCommand}" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_12"
+                    android:gravity="center"
+                    android:text="@string/input_keyword_to_found_more_video"
+                    android:textColor="@color/hintTextBlack"
+                    android:textSize="@dimen/small_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_12"
+                    android:gravity="center"
+                    android:text="@string/the_hottest_keyword"
+                    android:textColor="@color/commonTextBlack"
+                    android:textSize="@dimen/common_size" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/listView_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="@color/transparent"
+                android:divider="@null"
+                android:listSelector="@color/transparent"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>

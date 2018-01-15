@@ -37,6 +37,15 @@
             android:name=".view.homepage.PlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.homepage.AuthorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.homepage.SearchActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
 
         <receiver android:name=".broadcast.NetWorkChangeReceiver">
             <intent-filter>
@@ -45,8 +54,6 @@
                 <action android:name="android.NET.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
-
-        <activity android:name=".view.homepage.AuthorActivity"></activity>
     </application>
 
 </manifest>

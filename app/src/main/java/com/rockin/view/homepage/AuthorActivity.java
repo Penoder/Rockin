@@ -1,11 +1,11 @@
 package com.rockin.view.homepage;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import com.rockin.R;
+import com.rockin.view.base.BaseActivity;
 
-public class AuthorActivity extends Activity {
+public class AuthorActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
