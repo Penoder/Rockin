@@ -57,7 +57,7 @@ public class SplashActivity extends BaseActivity {
     private void startAnimation() {
         new Handler().postDelayed(() -> {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.translate_from_right_to_left, 0);
+            overridePendingTransition(R.anim.translate_from_right_to_in, 0);
             new Handler().postDelayed(this::finish, 500);
         }, 2000);
         scaleAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_from_center_to_out);

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -30,7 +29,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/shape_grey_bg_radius_18"
                 android:gravity="center"
-                android:hint="帮你找到感兴趣的视频"
+                android:hint="@string/help_to_found_video"
+                android:text="@={viewModel.searchContent}"
                 android:textColor="@color/secondTextBlack"
                 android:textColorHint="@color/hintTextBlack"
                 android:textSize="@dimen/small_size"
@@ -73,6 +73,13 @@
                     android:text="@string/the_hottest_keyword"
                     android:textColor="@color/commonTextBlack"
                     android:textSize="@dimen/common_size" />
+
+                <com.rockin.widget.FlowLayout
+                    android:id="@+id/flow_searchWord"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/dimen_24"
+                    android:paddingRight="@dimen/dimen_24" />
 
             </LinearLayout>
 

@@ -226,12 +226,12 @@ public class GuideActivity extends BaseActivity {
                 // 表示上滑操作，并且 y轴 滑动距离 大于 2倍 x轴 滑动距离
                 if (downY - upY > 6 * minSlidePace && Math.abs(upY - downY) > 2 * Math.abs(upX - downX)) {
                     startActivity(new Intent(GuideActivity.this, MainActivity.class));
-                    overridePendingTransition(R.anim.translate_from_bottom_to_up, 0);
+                    overridePendingTransition(R.anim.translate_from_bottom_to_in, 0);
                     new Handler().postDelayed(this::finish, 500);
                 } else if (currentPosition == 3 && downX - upX > 6 * minSlidePace && Math.abs(upX - downX) > 2 * Math.abs(upY - downY)) {
                     // 左滑操作，并且 x轴 滑动距离 大于 2倍 y轴 滑动距离
                     startActivity(new Intent(GuideActivity.this, MainActivity.class));
-                    overridePendingTransition(R.anim.translate_from_right_to_left, 0);
+                    overridePendingTransition(R.anim.translate_from_right_to_in, 0);
                     new Handler().postDelayed(this::finish, 500);
                 }
             }

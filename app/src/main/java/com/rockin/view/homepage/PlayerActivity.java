@@ -30,6 +30,7 @@ import com.rockin.entity.table.Author;
 import com.rockin.entity.table.PlayInfo;
 import com.rockin.entity.table.Video;
 import com.rockin.utils.LogUtil;
+import com.rockin.utils.NetUtils;
 import com.rockin.utils.TimeUtil;
 import com.rockin.utils.ToastUtil;
 import com.rockin.view.base.BaseActivity;
@@ -169,7 +170,9 @@ public class PlayerActivity extends BaseActivity {
             Glide.with(PlayerActivity.this).load(mVideo.feed).into(playerBinding.playerVideo.thumbImageView);
 
             // 判断网络，wifi自动播
-            playerBinding.playerVideo.startVideo();
+            if (NetUtils.isWifi(this)) {
+                playerBinding.playerVideo.startVideo();
+            }
         }
 
         if (mAuthor != null) {
