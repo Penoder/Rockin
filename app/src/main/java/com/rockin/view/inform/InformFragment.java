@@ -47,7 +47,7 @@ public class InformFragment extends BaseFragment {
      */
     public ReplyCommand onSearchCommand = new ReplyCommand(() -> {
         startActivity(new Intent(mContext, SearchActivity.class));
-        ((Activity)mContext).overridePendingTransition(R.anim.translate_from_up_to_bottom, R.anim.translate_from_bottom_to_up);
+        ((Activity)mContext).overridePendingTransition(R.anim.translate_from_up_to_in, 0);
     });
 
 }

@@ -42,6 +42,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.homepage.SearchActivity"
+            android:theme="@style/TransparentTheme"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />

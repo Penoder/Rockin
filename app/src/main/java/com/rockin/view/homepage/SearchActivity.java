@@ -22,5 +22,8 @@ public class SearchActivity extends BaseActivity {
         searchBinding.setViewModel(this);
     }
 
-    public ReplyCommand onCancelSearchCommand = new ReplyCommand(this::finish);
+    public ReplyCommand onCancelSearchCommand = new ReplyCommand(() -> {
+        finish();
+        overridePendingTransition(0, R.anim.translate_from_up_to_out);
+    });
 }

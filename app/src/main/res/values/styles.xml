@@ -17,4 +17,9 @@
         <item name="android:windowBackground">@drawable/img_splash</item>
     </style>
 
+    <!-- 透明背景，避免 Activity 跳转动画的黑屏. -->
+    <style name="TransparentTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 </resources>

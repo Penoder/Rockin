@@ -12,6 +12,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -268,7 +270,7 @@ public class HomePageFragment extends BaseFragment {
      */
     private void jumpToSearch() {
         startActivity(new Intent(mContext, SearchActivity.class));
-        ((Activity)mContext).overridePendingTransition(R.anim.translate_from_up_to_bottom, R.anim.translate_from_bottom_to_up);
+        ((Activity) mContext).overridePendingTransition(R.anim.translate_from_up_to_in, 0);
     }
 
     /**
