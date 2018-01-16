@@ -346,8 +346,13 @@
                         android:text="@string/recommendation"
                         android:textColor="@color/commonTextWhite"
                         android:textSize="@dimen/common_size"
-                        android:visibility="@{viewModel.videoItems.size() > 0 ? View.VISIBLE : View.GONE}" />
+                        android:visibility="@{(viewModel.videoItems != null &amp;&amp; viewModel.videoItems.size() > 0) ? View.VISIBLE : View.GONE}" />
 
+                    <!--
+                        app:itemBinding="@{viewModel.videoItemView}"
+                        app:items="@{viewModel.videoItems}"
+                        app:onItemClickCommand="@{viewModel.onRecommendItemCommand}"
+                    -->
                     <ListView
                         android:id="@+id/listView_recommend"
                         android:layout_width="match_parent"
@@ -356,16 +361,13 @@
                         android:cacheColorHint="@color/transparent"
                         android:divider="@color/dividerWhite"
                         android:dividerHeight="1px"
-                        android:listSelector="@color/transparent"
-                        app:itemBinding="@{viewModel.videoItemView}"
-                        app:items="@{viewModel.videoItems}"
-                        app:onItemClickCommand="@{viewModel.onRecommendItemCommand}" />
+                        android:listSelector="@color/transparent" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:src="@drawable/icon_end"
-                        android:visibility="@{viewModel.videoItems.size() > 0 ? View.VISIBLE : View.GONE}" />
+                        android:visibility="@{(viewModel.videoItems != null &amp;&amp; viewModel.videoItems.size() > 0) ? View.VISIBLE : View.GONE}" />
 
                 </LinearLayout>
 

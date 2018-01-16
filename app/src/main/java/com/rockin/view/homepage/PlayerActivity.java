@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -21,8 +23,8 @@ import com.penoder.mylibrary.okhttp.OkCallBack;
 import com.penoder.mylibrary.okhttp.OkHttpManager;
 import com.penoder.mylibrary.player.JZVideoPlayer;
 import com.penoder.mylibrary.player.JZVideoPlayerStandard;
-import com.rockin.BR;
 import com.rockin.R;
+import com.rockin.adapter.CommonListAdapter;
 import com.rockin.config.EyeApi;
 import com.rockin.databinding.ActivityPlayerBinding;
 import com.rockin.entity.homepage.HomeEntity;
@@ -34,12 +36,11 @@ import com.rockin.utils.NetUtils;
 import com.rockin.utils.TimeUtil;
 import com.rockin.utils.ToastUtil;
 import com.rockin.view.base.BaseActivity;
-import com.rockin.view.homepage.itemView.ItemVideoViewModel;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
-import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -85,9 +86,14 @@ public class PlayerActivity extends BaseActivity {
     // 作者描述
     public ObservableField<String> authorDescription = new ObservableField<>();
 
+    /**
+     * 原本采用数据绑定的形式显示相关推荐列表，但是预览图显示有点问题，所以还是采用适配器试下
+     */
+    public ObservableList<HomeEntity> videoItems = new ObservableArrayList<>();
+//    public ItemBinding videoItemView = ItemBinding.of(BR.viewModel, R.layout.item_recommend_video);
 
-    public ObservableList<ItemVideoViewModel> videoItems = new ObservableArrayList<>();
-    public ItemBinding videoItemView = ItemBinding.of(BR.viewModel, R.layout.item_recommend_video);
+    private List<HomeEntity> recommendVideos = new ArrayList<>();
+    private CommonListAdapter<HomeEntity> recommendAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,49 +103,6 @@ public class PlayerActivity extends BaseActivity {
 
         getVideoDataAndInit();
         getRecommend();
-    }
-
-    /**
-     * 获取相关推荐 30 条视频数据
-     */
-    private void getRecommend() {
-        OkHttpManager.create(this)
-                .addUrl(EyeApi.VIDEO_RECOMMEND)
-                .post()
-                .sign()
-                .execute(new OkCallBack<String>() {
-                    @Override
-                    public void failure(Call call, Exception e) {
-                        LogUtil.d("failure: " + e.getMessage());
-                        ToastUtil.showShortToast(PlayerActivity.this, "获取数据失败,请稍候重试");
-                    }
-
-                    @Override
-                    public void onResponse(boolean isSuccess, Response response, String jsonStr) {
-                        LogUtil.i("视频播放页相关推荐数据： " + jsonStr);
-                        if (TextUtils.isEmpty(jsonStr)) {
-                            ToastUtil.showShortToast(PlayerActivity.this, "没有获取到数据,请稍候重试");
-                        } else {
-                            Gson gson = new Gson();
-                            Type type = new TypeToken<CommonJson<List<HomeEntity>>>() {
-                            }.getType();
-                            CommonJson<List<HomeEntity>> commonJson = gson.fromJson(jsonStr, type);
-                            if (commonJson != null && commonJson.code == 0) {
-                                List<HomeEntity> homeEntityList = commonJson.data;
-                                if (homeEntityList != null && homeEntityList.size() > 0) {
-                                    for (int i = 0; i < homeEntityList.size(); i++) {
-                                        videoItems.add(new ItemVideoViewModel(homeEntityList.get(i), PlayerActivity.this));
-                                    }
-                                    setListViewHeight(playerBinding.listViewRecommend);
-                                } else {
-                                    ToastUtil.showShortToast(PlayerActivity.this, "没有获取到数据,请稍候重试");
-                                }
-                            } else {
-                                ToastUtil.showShortToast(PlayerActivity.this, "获取数据失败,请稍候重试");
-                            }
-                        }
-                    }
-                }, false);
     }
 
     /**
@@ -178,8 +141,79 @@ public class PlayerActivity extends BaseActivity {
         if (mAuthor != null) {
             authorName.set(mAuthor.name);
             authorDescription.set(mAuthor.description);
+            if (!TextUtils.isEmpty(categoryDuration.get()) && !categoryDuration.get().contains("开眼精选")) {
+                categoryDuration.set(categoryDuration.get() + (mAuthor.name.contains("精选") ? " / 开眼精选" : ""));
+            }
             Glide.with(this).load(mAuthor.icon).into(playerBinding.circleImgVideoAuthor);
         }
+
+        recommendAdapter = new CommonListAdapter<HomeEntity>(recommendVideos, R.layout.item_recommend_video) {
+            @Override
+            public void onBindView(HomeEntity homeEntity, ViewHolder holder, int position) {
+                if (homeEntity != null && homeEntity.getVideo() != null) {
+                    ImageView imgViewRecommendVideoFeed = holder.getView(R.id.imgView_recommendVideoFeed);
+                    TextView txtViewRecommendTitle = holder.getView(R.id.txtView_recommendTitle);
+                    TextView txtViewRecommendCategory = holder.getView(R.id.txtView_recommendCategory);
+                    Glide.with(PlayerActivity.this).load(homeEntity.getVideo().feed).placeholder(R.drawable.img_default_eyepetizer).into(imgViewRecommendVideoFeed);
+                    txtViewRecommendTitle.setText(homeEntity.getVideo().title);
+                    txtViewRecommendCategory.setText(homeEntity.getVideo().category + " / " + TimeUtil.secondToTime(homeEntity.getVideo().duration));
+                }
+            }
+        };
+        playerBinding.listViewRecommend.setAdapter(recommendAdapter);
+        playerBinding.listViewRecommend.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(PlayerActivity.this, PlayerActivity.class);
+            intent.putExtra("VIDEO_DATA", recommendVideos.get(position));
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    /**
+     * 获取相关推荐 30 条视频数据
+     */
+    private void getRecommend() {
+        OkHttpManager.create(this)
+                .addUrl(EyeApi.VIDEO_RECOMMEND)
+                .post()
+                .sign()
+                .execute(new OkCallBack<String>() {
+                    @Override
+                    public void failure(Call call, Exception e) {
+                        LogUtil.d("failure: " + e.getMessage());
+                        ToastUtil.showShortToast(PlayerActivity.this, "获取数据失败,请稍候重试");
+                    }
+
+                    @Override
+                    public void onResponse(boolean isSuccess, Response response, String jsonStr) {
+                        LogUtil.i("视频播放页相关推荐数据： " + jsonStr);
+                        if (TextUtils.isEmpty(jsonStr)) {
+                            ToastUtil.showShortToast(PlayerActivity.this, "没有获取到数据,请稍候重试");
+                        } else {
+                            Gson gson = new Gson();
+                            Type type = new TypeToken<CommonJson<List<HomeEntity>>>() {
+                            }.getType();
+                            CommonJson<List<HomeEntity>> commonJson = gson.fromJson(jsonStr, type);
+                            if (commonJson != null && commonJson.code == 0) {
+                                List<HomeEntity> homeEntityList = commonJson.data;
+                                if (homeEntityList != null && homeEntityList.size() > 0) {
+                                    recommendVideos.clear();
+                                    recommendVideos.addAll(homeEntityList);
+                                    videoItems.addAll(homeEntityList);
+                                    recommendAdapter.notifyDataSetChanged();
+                                    setListViewHeight(playerBinding.listViewRecommend);
+//                                    for (int i = 0; i < homeEntityList.size(); i++) {
+//                                        videoItems.add(new ItemVideoViewModel(homeEntityList.get(i), PlayerActivity.this));
+//                                    }
+                                } else {
+                                    ToastUtil.showShortToast(PlayerActivity.this, "没有获取到数据,请稍候重试");
+                                }
+                            } else {
+                                ToastUtil.showShortToast(PlayerActivity.this, "获取数据失败,请稍候重试");
+                            }
+                        }
+                    }
+                }, false);
     }
 
     /**
@@ -229,12 +263,12 @@ public class PlayerActivity extends BaseActivity {
     /**
      * 推荐的视频的 Item 点击事件, 跳转到自身
      */
-    public ReplyCommand<Integer> onRecommendItemCommand = new ReplyCommand<>((position) -> {
-        Intent intent = new Intent(this, PlayerActivity.class);
-        intent.putExtra("VIDEO_DATA", videoItems.get(position).mHomeEntity);
-        startActivity(intent);
-        finish();
-    });
+//    public ReplyCommand<Integer> onRecommendItemCommand = new ReplyCommand<>((position) -> {
+//        Intent intent = new Intent(this, PlayerActivity.class);
+//        intent.putExtra("VIDEO_DATA", videoItems.get(position).mHomeEntity);
+//        startActivity(intent);
+//        finish();
+//    });
 
     /**
      * 重写计算 ListView 高度，避免 ScrollView 嵌套 ListView 只显示 1 个 Item

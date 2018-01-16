@@ -10,7 +10,6 @@ import com.rockin.utils.TimeUtil;
  * @author Penoder
  * @date 2018/1/10.
  */
-
 public class ItemVideoViewModel {
 
     public HomeEntity mHomeEntity;

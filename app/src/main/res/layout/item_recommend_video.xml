@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools">-->
 
-    <data>
+    <!--<data>-->
 
-        <variable
-            name="viewModel"
-            type="com.rockin.view.homepage.itemView.ItemVideoViewModel" />
+        <!--<variable-->
+            <!--name="viewModel"-->
+            <!--type="com.rockin.view.homepage.itemView.ItemVideoViewModel" />-->
 
-        <import type="com.rockin.R" />
+        <!--<import type="com.rockin.R" />-->
 
-    </data>
+    <!--</data>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingBottom="@dimen/dimen_8"
-        android:paddingRight="@dimen/dimen_12"
-        android:paddingTop="@dimen/dimen_8">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_vertical"
+    android:paddingBottom="@dimen/dimen_8"
+    android:paddingRight="@dimen/dimen_12"
+    android:paddingTop="@dimen/dimen_8">
 
+        <!--
+            app:placeholderImageRes="@{R.drawable.img_default_eyepetizer}"
+            app:uri="@{viewModel.feedUrl}".
+        -->
         <ImageView
             android:id="@+id/imgView_recommendVideoFeed"
             android:layout_width="0dip"
             android:layout_height="80dp"
             android:layout_weight="5"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            app:placeholderImageRes="@{R.drawable.img_default_eyepetizer}"
-            app:uri="@{viewModel.feedUrl}" />
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="0dip"
@@ -39,23 +41,25 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/dimen_8">
 
+            <!-- android:text="@{viewModel.videoTitle}". -->
             <TextView
+                android:id="@+id/txtView_recommendTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dimen_4"
                 android:maxLines="2"
-                android:text="@{viewModel.videoTitle}"
                 android:textColor="@color/white"
                 android:textSize="@dimen/title_size"
                 android:textStyle="bold"
                 tools:text="每一块都裹满了巧克力的曲奇甜饼" />
 
+            <!-- android:text="@{viewModel.categoryAndTime}". -->
             <TextView
+                android:id="@+id/txtView_recommendCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_4"
                 android:maxLines="1"
-                android:text="@{viewModel.categoryAndTime}"
                 android:textColor="@color/white"
                 android:textSize="@dimen/common_size"
                 tools:text="#开胃 / 01'32''" />
@@ -63,4 +67,4 @@
         </LinearLayout>
 
     </LinearLayout>
-</layout>
+<!--</layout>-->

@@ -2,7 +2,6 @@ package com.rockin;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 
 import com.rockin.adapter.CommonFragmentAdapter;
 import com.rockin.databinding.ActivityMainBinding;
