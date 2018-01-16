@@ -1,18 +1,24 @@
 package com.rockin.view.homepage;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
+import android.databinding.ObservableList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
 import com.penoder.mylibrary.mvvm.command.ReplyCommand;
+import com.rockin.BR;
 import com.rockin.R;
 import com.rockin.databinding.ActivitySearchBinding;
 import com.rockin.view.base.BaseActivity;
+import com.rockin.view.homepage.itemView.ItemSearchViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 /**
  * @author Penoder
@@ -22,12 +28,24 @@ public class SearchActivity extends BaseActivity {
 
     private ActivitySearchBinding searchBinding;
 
+    /**
+     * 输入的搜索词
+     */
     public ObservableField<String> searchContent = new ObservableField<>();
+
+    /**
+     * 提示搜索词搜索出的结果数量
+     */
+    public ObservableField<String> searchResultCount = new ObservableField<>();
 
     /**
      * 热门搜索词
      */
     private List<String> keyWords = new ArrayList<>();
+
+
+    public ObservableList<ItemSearchViewModel> items = new ObservableArrayList<>();
+    public ItemBinding videoItemView = ItemBinding.of(BR.viewModel, R.layout.item_search_result);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

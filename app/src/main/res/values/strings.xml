@@ -22,4 +22,11 @@
     <string name="input_keyword_to_found_more_video">输入标题或描述中的关键词找到更多视频</string>
     <string name="the_hottest_keyword">- 热门搜索词 -</string>
     <string name="help_to_found_video">帮你找到感兴趣的视频</string>
+    <string name="the_search_result">- 「搜索词」搜索结果共 Count 个 -</string>
+    <string name="my_message">我的消息</string>
+    <string name="my_attention">我的关注</string>
+    <string name="my_cache">我的缓存</string>
+    <string name="watch_record">观看记录</string>
+    <string name="feedback">意见反馈</string>
+    <string name="contribute">我要投稿</string>
 </resources>

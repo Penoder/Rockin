@@ -10,9 +10,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -105,8 +105,76 @@
         <com.rockin.widget.CustomScrollView
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_48"
+                    android:gravity="center"
+                    android:text="@string/my_message"
+                    android:textColor="@drawable/selector_txt_press_black_to_grey"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:gravity="center"
+                    android:text="@string/my_attention"
+                    android:textColor="@drawable/selector_txt_press_black_to_grey"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:gravity="center"
+                    android:text="@string/my_cache"
+                    android:textColor="@drawable/selector_txt_press_black_to_grey"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:gravity="center"
+                    android:text="@string/watch_record"
+                    android:textColor="@drawable/selector_txt_press_black_to_grey"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:gravity="center"
+                    android:text="@string/feedback"
+                    android:textColor="@drawable/selector_txt_press_black_to_grey"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:gravity="center"
+                    android:text="@string/contribute"
+                    android:textColor="@drawable/selector_txt_press_black_to_grey"
+                    android:textSize="@dimen/title_size" />
+
+            </LinearLayout>
 
         </com.rockin.widget.CustomScrollView>
 
