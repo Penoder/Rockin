@@ -29,4 +29,8 @@
     <string name="watch_record">观看记录</string>
     <string name="feedback">意见反馈</string>
     <string name="contribute">我要投稿</string>
+    <string name="more_operate">更多操作</string>
+    <string name="no_interesting">不感兴趣</string>
+    <string name="shield_the_author">屏蔽该作者</string>
+    <string name="cache_video">缓存视频</string>
 </resources>

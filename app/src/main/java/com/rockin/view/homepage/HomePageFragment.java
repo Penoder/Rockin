@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -119,6 +121,11 @@ public class HomePageFragment extends BaseFragment {
 
     private NetWorkChangeReceiver receiver;
 
+    /**
+     * 更多操作的 PopupWindow
+     */
+    PopupWindow popupWindow;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +146,7 @@ public class HomePageFragment extends BaseFragment {
         // 这个写在setViewModel前面会崩掉
         homePageBinding.executePendingBindings();
         initBanner();
+        initPopupWindow();
         getVideoDatas(true);
         return homePageBinding.getRoot();
     }
@@ -257,11 +265,34 @@ public class HomePageFragment extends BaseFragment {
     }
 
     /**
+     * 初始化更多操作的 PopupWindow
+     */
+    private void initPopupWindow() {
+        View contentView = LayoutInflater.from(mContext).inflate(R.layout.layout_popup_more_operate, null);
+        popupWindow = new PopupWindow(mContext);
+        popupWindow.setContentView(contentView);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setOutsideTouchable(true);
+    }
+
+    /**
      * 更多操作
      *
      * @param homeEntity
      */
     private void moreOperate(HomeEntity homeEntity) {
+        if (popupWindow == null) {
+            initPopupWindow();
+        }
+        popupWindow.showAsDropDown(homePageBinding.getRoot(), Gravity.BOTTOM, 0, 0);
+        View contentView = popupWindow.getContentView();
+        TextView txtViewNoInteresting = (TextView) contentView.findViewById(R.id.txtView_noInteresting);
+        TextView txtViewShieldAuthor = (TextView) contentView.findViewById(R.id.txtView_shieldAuthor);
+        TextView txtViewCacheVideo = (TextView) contentView.findViewById(R.id.txtView_cacheVideo);
+        TextView txtViewCancelMoreOperate = (TextView) contentView.findViewById(R.id.txtView_cancelMoreOperate);
+
+        txtViewCancelMoreOperate.setOnClickListener(v -> popupWindow.dismiss());
 
     }
 
