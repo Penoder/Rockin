@@ -1,5 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+// 注：需要配置符号表时，使用bugly插件
+//apply plugin: 'bugly'
+//bugly {
+//    appId = 'd16c72f77e'
+//    appKey = '7e8f2c93-6250-47db-912d-f758667d6535'
+//}
 
 android {
     compileSdkVersion 25
@@ -11,6 +17,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
     }
     buildTypes {
         debug {
@@ -56,4 +66,8 @@ dependencies {
     // RxJava 2
     compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    // Bugly
+    compile 'com.tencent.bugly:crashreport:latest.release'  // 2.6.6
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'  // 2.6.6
 }
