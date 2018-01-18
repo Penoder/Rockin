@@ -53,6 +53,7 @@ import com.rockin.widget.CircleImageView;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import okhttp3.Call;
@@ -318,7 +319,15 @@ public class HomePageFragment extends BaseFragment {
             videoAdapter.notifyDataSetChanged();
         });
         txtViewShieldAuthor.setOnClickListener(v -> {
-
+            popupWindow.dismiss();
+            Iterator iterator = videoDatas.iterator();
+            while (iterator.hasNext()) {
+                HomeEntity entity = (HomeEntity) iterator.next();
+                if (entity != null && entity.getAuthor() != null && entity.getAuthor().name.equals(homeEntity.getAuthor() != null ? homeEntity.getAuthor().name : "")) {
+                    iterator.remove();
+                }
+            }
+            videoAdapter.notifyDataSetChanged();
         });
 
     }
