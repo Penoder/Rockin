@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.rockin.MainActivity;
+import com.rockin.view.MainActivity;
 import com.rockin.R;
 import com.rockin.databinding.ActivitySplashBinding;
 import com.rockin.utils.SPUtils;

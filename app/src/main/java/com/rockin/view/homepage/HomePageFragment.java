@@ -5,9 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,6 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +42,10 @@ import com.rockin.databinding.FragmentHomePageBinding;
 import com.rockin.entity.homepage.HomeEntity;
 import com.rockin.entity.table.Author;
 import com.rockin.entity.table.Video;
+import com.rockin.utils.DownloadUtil;
+import com.rockin.utils.FileUtil;
 import com.rockin.utils.LogUtil;
+import com.rockin.utils.MD5Util;
 import com.rockin.utils.TimeUtil;
 import com.rockin.utils.ToastUtil;
 import com.rockin.view.base.BaseFragment;
@@ -125,6 +133,11 @@ public class HomePageFragment extends BaseFragment {
      * 更多操作的 PopupWindow
      */
     PopupWindow popupWindow;
+
+    /**
+     * 显示下载进度
+     */
+    private AlertDialog downLoadDialoog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -271,9 +284,12 @@ public class HomePageFragment extends BaseFragment {
         View contentView = LayoutInflater.from(mContext).inflate(R.layout.layout_popup_more_operate, null);
         popupWindow = new PopupWindow(mContext);
         popupWindow.setContentView(contentView);
-        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
+        popupWindow.setAnimationStyle(R.style.PopupAnimation);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
     }
 
     /**
@@ -285,7 +301,9 @@ public class HomePageFragment extends BaseFragment {
         if (popupWindow == null) {
             initPopupWindow();
         }
-        popupWindow.showAsDropDown(homePageBinding.getRoot(), Gravity.BOTTOM, 0, 0);
+        popupWindow.showAtLocation(homePageBinding.getRoot(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        popupWindow.update();
+//        popupWindow.showAsDropDown(homePageBinding.getRoot(), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);, 0, 0);
         View contentView = popupWindow.getContentView();
         TextView txtViewNoInteresting = (TextView) contentView.findViewById(R.id.txtView_noInteresting);
         TextView txtViewShieldAuthor = (TextView) contentView.findViewById(R.id.txtView_shieldAuthor);
@@ -293,6 +311,15 @@ public class HomePageFragment extends BaseFragment {
         TextView txtViewCancelMoreOperate = (TextView) contentView.findViewById(R.id.txtView_cancelMoreOperate);
 
         txtViewCancelMoreOperate.setOnClickListener(v -> popupWindow.dismiss());
+        txtViewCacheVideo.setOnClickListener(v -> downLoadVideo(homeEntity));
+        txtViewNoInteresting.setOnClickListener(v -> {
+            popupWindow.dismiss();
+            videoDatas.remove(homeEntity);
+            videoAdapter.notifyDataSetChanged();
+        });
+        txtViewShieldAuthor.setOnClickListener(v -> {
+
+        });
 
     }
 
@@ -424,6 +451,60 @@ public class HomePageFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 缓存视频
+     *
+     * @param homeEntity
+     */
+    private void downLoadVideo(HomeEntity homeEntity) {
+        View downProgress = LayoutInflater.from(mContext).inflate(R.layout.layout_progress, null);
+        ProgressBar progressDownVideo = (ProgressBar) downProgress.findViewById(R.id.progress_downVideo);
+
+        if (downLoadDialoog == null) {
+            downLoadDialoog = new AlertDialog.Builder(mContext)
+                    .setMessage("缓存中...")
+                    .setView(progressDownVideo)
+                    .create();
+        }
+        downLoadDialoog.show();
+
+        popupWindow.dismiss();
+        if (homeEntity == null || homeEntity.getVideo() == null || TextUtils.isEmpty(homeEntity.getVideo().playUrl)) {
+            ToastUtil.showShortToast(mContext, "获取视频数据失败，暂无法下载");
+            return;
+        }
+        String downLoadPath = Environment.getExternalStorageDirectory() + "/OpenEyes/download";
+        if (FileUtil.existFile(downLoadPath, true)) {
+            String fileName = homeEntity.getVideo().title + ".mp4";
+            DownloadUtil.get().download(homeEntity.getVideo().playUrl, downLoadPath, fileName, new DownloadUtil.OnDownloadListener() {
+                @Override
+                public void onDownloadSuccess() {
+                    LogUtil.i(Thread.currentThread().getName());
+                    ToastUtil.showShortToast(mContext, "缓存完成");
+                    if (downLoadDialoog != null && downLoadDialoog.isShowing()) {
+                        downLoadDialoog.hide();
+                    }
+                }
+
+                @Override
+                public void onDownloading(int progress) {
+                    progressDownVideo.setProgress(progress);
+                }
+
+                @Override
+                public void onDownloadFailed() {
+                    ToastUtil.showShortToast(mContext, "缓存失败");
+                    if (downLoadDialoog != null && downLoadDialoog.isShowing()) {
+                        downLoadDialoog.hide();
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * 回顶部
+     */
     public void backToTop() {
         //
         homePageBinding.listViewHomePage.setSelection(0);
@@ -436,7 +517,12 @@ public class HomePageFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (receiver != null)
+        if (receiver != null) {
             mContext.unregisterReceiver(receiver);
+        }
+        if (downLoadDialoog != null) {
+            downLoadDialoog.dismiss();
+            downLoadDialoog = null;
+        }
     }
 }

@@ -17,7 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.rockin.MainActivity;
+import com.rockin.view.MainActivity;
 import com.rockin.R;
 import com.rockin.adapter.CommonViewAdapter;
 import com.rockin.databinding.ActivityGuideBinding;

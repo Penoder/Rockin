@@ -1,8 +1,9 @@
-package com.rockin;
+package com.rockin.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
+import com.rockin.R;
 import com.rockin.adapter.CommonFragmentAdapter;
 import com.rockin.databinding.ActivityMainBinding;
 import com.rockin.view.base.BaseFragment;

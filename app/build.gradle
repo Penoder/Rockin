@@ -1,11 +1,16 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 // 注：需要配置符号表时，使用bugly插件
-//apply plugin: 'bugly'
-//bugly {
-//    appId = 'd16c72f77e'
-//    appKey = '7e8f2c93-6250-47db-912d-f758667d6535'
-//}
+apply plugin: 'bugly'
+bugly {
+    appId = 'd16c72f77e'
+    appKey = '7e8f2c93-6250-47db-912d-f758667d6535'
+
+    debug = true    // 调试模式开关
+    execute = true  // 插件开关
+    upload = true   // 上传开关
+    outputDir = "/sdcard/OpenEyes/crash"  // 符号表文件输出路径
+}
 
 android {
     compileSdkVersion 25

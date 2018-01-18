@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rockin">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
     <application
         android:name=".config.MyApplication"
         android:allowBackup="true"
@@ -10,6 +15,7 @@
         android:roundIcon="@mipmap/icon_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".view.base.BaseActivity"
             android:screenOrientation="portrait" />
@@ -31,7 +37,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/FullScreenTheme" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.homepage.PlayerActivity"
@@ -42,9 +48,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.homepage.SearchActivity"
-            android:theme="@style/TransparentTheme"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
+            android:theme="@style/TransparentTheme"
             android:windowSoftInputMode="stateVisible|adjustResize" />
 
 

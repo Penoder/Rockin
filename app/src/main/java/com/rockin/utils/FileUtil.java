@@ -52,7 +52,7 @@ public class FileUtil {
     /***
      * 根据路径删除图片
      */
-    public static boolean deleteFile(File file)throws IOException{
+    public static boolean deleteFile(File file) throws IOException {
         return file != null && file.delete();
     }
 
@@ -64,7 +64,7 @@ public class FileUtil {
     public static String getExtensionName(String filename) {
         if ((filename != null) && (filename.length() > 0)) {
             int dot = filename.lastIndexOf('.');
-            if ((dot >-1) && (dot < (filename.length() - 1))) {
+            if ((dot > -1) && (dot < (filename.length() - 1))) {
                 return filename.substring(dot + 1);
             }
         }
@@ -89,5 +89,21 @@ public class FileUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 判断文件（夹）是否存在，以及是否需要创建
+     *
+     * @param path
+     * @param newFile
+     * @return
+     */
+    public static boolean existFile(String path, boolean newFile) {
+        File file = new File(path);
+        return file.exists() || newFile && file.mkdirs();
+    }
+
+    public static boolean existFile(String path) {
+        return existFile(path, false);
     }
 }
