@@ -6,12 +6,16 @@ import android.os.Bundle;
 import com.rockin.R;
 import com.rockin.adapter.CommonFragmentAdapter;
 import com.rockin.databinding.ActivityMainBinding;
+import com.rockin.utils.ToastUtil;
 import com.rockin.view.base.BaseFragment;
 import com.rockin.view.base.BaseFragmentActivity;
 import com.rockin.view.found.FoundFragment;
 import com.rockin.view.homepage.HomePageFragment;
 import com.rockin.view.inform.InformFragment;
 import com.rockin.view.person.PersonFragment;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author Penoder
@@ -27,6 +31,8 @@ public class MainActivity extends BaseFragmentActivity {
      * 记录上一次选择的标签
      */
     private int lastClickTab = 0;
+
+    private static Boolean isExit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,5 +119,26 @@ public class MainActivity extends BaseFragmentActivity {
         mainBinding.txtViewTabTwo.setSelected(false);
         mainBinding.txtViewTabThree.setSelected(false);
         mainBinding.txtViewTabFour.setSelected(false);
+    }
+
+    /**
+     * 双击退出
+     */
+    private void doubleClickExit() {
+        Timer tExit;
+        if (!isExit) {
+            isExit = true; // 准备退出
+            ToastUtil.showShortToast(this, "再按一次退出");
+            tExit = new Timer();
+            tExit.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false; // 取消退出
+                }
+            }, 1500); // 如果1.5秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
+        } else {
+            finish();
+            System.exit(0);
+        }
     }
 }
