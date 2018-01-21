@@ -27,7 +27,7 @@
         android:padding="@dimen/dimen_20"
         android:text="@string/no_interesting"
         android:textColor="@color/commonTextBlack"
-        android:textSize="@dimen/dimen_18" />
+        android:textSize="@dimen/large_title_size" />
 
     <View
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
         android:padding="@dimen/dimen_20"
         android:text="@string/shield_the_author"
         android:textColor="@color/commonTextBlack"
-        android:textSize="@dimen/dimen_18" />
+        android:textSize="@dimen/large_title_size" />
 
     <View
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
         android:padding="@dimen/dimen_20"
         android:text="@string/cache_video"
         android:textColor="@color/commonTextBlack"
-        android:textSize="@dimen/dimen_18" />
+        android:textSize="@dimen/large_title_size" />
 
     <View
         android:layout_width="match_parent"

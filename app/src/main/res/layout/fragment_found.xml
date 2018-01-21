@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,13 +11,105 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="match_parent">
 
-        <TextView
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/discovery"
+                android:textColor="@color/commonTextBlack"
+                android:textSize="@dimen/large_title_size"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:gravity="start|center_vertical"
+                android:text="@string/my_attention"
+                android:textColor="@color/commonTextBlack"
+                android:textSize="@dimen/title_size"
+                app:clickCommand="@{viewModel.onAttentionCommand}" />
+
+            <ImageView
+                android:id="@+id/imgView_searchIcon"
+                android:layout_width="@dimen/dimen_44"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginLeft="@dimen/dimen_6"
+                android:layout_marginRight="@dimen/dimen_6"
+                android:padding="@dimen/dimen_10"
+                android:src="@drawable/icon_search_black"
+                app:clickCommand="@{viewModel.onSearchCommand}" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_tabHot"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/dimen_6"
+                android:text="@string/hot"
+                android:textColor="@drawable/selector_discovery_tab_txt_color"
+                android:textSize="@dimen/small_size"
+                android:textStyle="bold"
+                app:clickCommand="@{viewModel.onHotTabCommand}" />
+
+            <TextView
+                android:id="@+id/txtView_tabAttention"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/dimen_6"
+                android:text="@string/attention"
+                android:textColor="@drawable/selector_discovery_tab_txt_color"
+                android:textSize="@dimen/small_size"
+                android:textStyle="bold"
+                app:clickCommand="@{viewModel.onAttentionTabCommand}" />
+
+            <TextView
+                android:id="@+id/txtView_tabClassify"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/dimen_6"
+                android:text="@string/classify"
+                android:textColor="@drawable/selector_discovery_tab_txt_color"
+                android:textSize="@dimen/small_size"
+                android:textStyle="bold"
+                app:clickCommand="@{viewModel.onClassifyTabCommand}" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgView_tabSelected"
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/dimen_4"
+            android:src="@drawable/icon_tab_selected" />
+
+        <include layout="@layout/horizontal_line" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager_discovery"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="CONCERN" />
+            app:onPageSelectedCommand="@{viewModel.onViewPagerSelectedCommand}" />
 
     </LinearLayout>
 </layout>

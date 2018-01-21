@@ -33,4 +33,8 @@
     <string name="no_interesting">不感兴趣</string>
     <string name="shield_the_author">屏蔽该作者</string>
     <string name="cache_video">缓存视频</string>
+    <string name="discovery">Discovery</string>
+    <string name="hot">热门</string>
+    <string name="attention">关注</string>
+    <string name="classify">分类</string>
 </resources>

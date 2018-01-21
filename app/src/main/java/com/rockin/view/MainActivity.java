@@ -34,6 +34,8 @@ public class MainActivity extends BaseFragmentActivity {
 
     private static Boolean isExit = false;
 
+    private Timer tExit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,15 +123,21 @@ public class MainActivity extends BaseFragmentActivity {
         mainBinding.txtViewTabFour.setSelected(false);
     }
 
+    @Override
+    public void onBackPressed() {
+        doubleClickExit();
+    }
+
     /**
      * 双击退出
      */
     private void doubleClickExit() {
-        Timer tExit;
         if (!isExit) {
             isExit = true; // 准备退出
             ToastUtil.showShortToast(this, "再按一次退出");
-            tExit = new Timer();
+            if (tExit == null) {
+                tExit = new Timer();
+            }
             tExit.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -138,6 +146,7 @@ public class MainActivity extends BaseFragmentActivity {
             }, 1500); // 如果1.5秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
         } else {
             finish();
+            overridePendingTransition(0, 0);
             System.exit(0);
         }
     }
