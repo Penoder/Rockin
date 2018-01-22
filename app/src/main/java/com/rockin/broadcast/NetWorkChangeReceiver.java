@@ -8,7 +8,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Parcelable;
 
-import com.rockin.utils.LogUtil;
+import com.penoder.mylibrary.utils.LogUtil;
 
 /**
  * @author Penoder

@@ -1,4 +1,4 @@
-package com.rockin.utils;
+package com.penoder.mylibrary.utils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -11,8 +11,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -100,8 +100,8 @@
             android:id="@+id/imgView_tabSelected"
             android:layout_width="@dimen/dimen_10"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/dimen_4"
-            android:src="@drawable/icon_tab_selected" />
+            android:background="@drawable/icon_tab_selected"
+            android:paddingBottom="@dimen/dimen_4" />
 
         <include layout="@layout/horizontal_line" />
 

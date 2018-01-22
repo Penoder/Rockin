@@ -14,8 +14,8 @@ import com.penoder.mylibrary.mvvm.command.ReplyCommand;
 import com.rockin.R;
 import com.rockin.adapter.CommonFragmentAdapter;
 import com.rockin.databinding.FragmentFoundBinding;
-import com.rockin.utils.ScreenUtils;
-import com.rockin.utils.ToastUtil;
+import com.penoder.mylibrary.utils.ScreenUtils;
+import com.penoder.mylibrary.utils.ToastUtil;
 import com.rockin.view.base.BaseFragment;
 import com.rockin.view.found.attention.AttentionFragment;
 import com.rockin.view.found.classify.ClassifyFragment;
@@ -67,8 +67,6 @@ public class FoundFragment extends BaseFragment {
         foundBinding.txtViewTabHot.setSelected(true);
 
         int screenWidth = ScreenUtils.getScreenWidth(mContext);
-
-
         hotCenterX = screenWidth / 6;
         attentionCenterX = screenWidth / 2;
         classifyCenterX = screenWidth * 5 / 6;

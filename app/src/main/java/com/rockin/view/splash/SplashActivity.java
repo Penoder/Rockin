@@ -10,7 +10,7 @@ import android.view.animation.AnimationUtils;
 import com.rockin.view.MainActivity;
 import com.rockin.R;
 import com.rockin.databinding.ActivitySplashBinding;
-import com.rockin.utils.SPUtils;
+import com.penoder.mylibrary.utils.SPUtils;
 import com.rockin.view.base.BaseActivity;
 
 /**

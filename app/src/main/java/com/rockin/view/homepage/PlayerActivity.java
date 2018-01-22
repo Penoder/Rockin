@@ -31,10 +31,10 @@ import com.rockin.entity.homepage.HomeEntity;
 import com.rockin.entity.table.Author;
 import com.rockin.entity.table.PlayInfo;
 import com.rockin.entity.table.Video;
-import com.rockin.utils.LogUtil;
-import com.rockin.utils.NetUtils;
-import com.rockin.utils.TimeUtil;
-import com.rockin.utils.ToastUtil;
+import com.penoder.mylibrary.utils.LogUtil;
+import com.penoder.mylibrary.utils.NetUtils;
+import com.penoder.mylibrary.utils.TimeUtil;
+import com.penoder.mylibrary.utils.ToastUtil;
 import com.rockin.view.base.BaseActivity;
 
 import java.lang.reflect.Type;

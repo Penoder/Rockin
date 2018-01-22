@@ -4,7 +4,7 @@ import android.content.Context;
 import android.databinding.ObservableField;
 
 import com.rockin.entity.homepage.HomeEntity;
-import com.rockin.utils.TimeUtil;
+import com.penoder.mylibrary.utils.TimeUtil;
 
 /**
  * @author Penoder
