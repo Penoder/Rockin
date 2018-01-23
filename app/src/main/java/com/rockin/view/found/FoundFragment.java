@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.penoder.mylibrary.mvvm.bindingadapter.viewpager.ViewBindingAdapter;
 import com.penoder.mylibrary.mvvm.command.ReplyCommand;
+import com.penoder.mylibrary.utils.DensityUtils;
+import com.penoder.mylibrary.utils.ScreenUtils;
+import com.penoder.mylibrary.utils.ToastUtil;
 import com.rockin.R;
 import com.rockin.adapter.CommonFragmentAdapter;
 import com.rockin.databinding.FragmentFoundBinding;
-import com.penoder.mylibrary.utils.ScreenUtils;
-import com.penoder.mylibrary.utils.ToastUtil;
 import com.rockin.view.base.BaseFragment;
 import com.rockin.view.found.attention.AttentionFragment;
 import com.rockin.view.found.classify.ClassifyFragment;
@@ -40,6 +42,11 @@ public class FoundFragment extends BaseFragment {
      */
     private float hotCenterX, attentionCenterX, classifyCenterX, indicatorHalfWidth;
 
+    /**
+     * 三个标签中间的相距的距离
+     */
+    float distance12, distance23;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,13 +57,13 @@ public class FoundFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         foundBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_found, container, false);
-        initView(foundBinding.getRoot());
+        initView();
         foundBinding.setViewModel(this);
         foundBinding.executePendingBindings();
         return foundBinding.getRoot();
     }
 
-    private void initView(View view) {
+    private void initView() {
         hotFragment = new HotFragment();
         attentionFragment = new AttentionFragment();
         classifyFragment = new ClassifyFragment();
@@ -71,22 +78,37 @@ public class FoundFragment extends BaseFragment {
         attentionCenterX = screenWidth / 2;
         classifyCenterX = screenWidth * 5 / 6;
 
-        /**
-         * 屏幕宽度 和 ImgView 宽度的 单位 应该没统一
-         */
+        distance12 = attentionCenterX - hotCenterX;
+        distance23 = classifyCenterX - attentionCenterX;
+
         foundBinding.imgViewTabSelected.measure(0, 0);
-        indicatorHalfWidth = foundBinding.imgViewTabSelected.getMeasuredWidth() * 0.5F;
+        indicatorHalfWidth = DensityUtils.px2dp(mContext, foundBinding.imgViewTabSelected.getMeasuredWidth()) * 0.5F;
 
         foundBinding.imgViewTabSelected.setX(hotCenterX - indicatorHalfWidth);
-
     }
+
+    /**
+     * 监听 ViewPager 的滑动事件，实现标签下面的选中卡的平移效果
+     */
+    public ReplyCommand<ViewBindingAdapter.ViewPagerDataWrapper> onViewPagerScrollCommand = new ReplyCommand<>((wrapper) -> {
+        switch ((int) wrapper.position) {
+            case 0:
+                foundBinding.imgViewTabSelected.setX(hotCenterX - indicatorHalfWidth + wrapper.positionOffset * (distance12));
+                break;
+            case 1:
+                foundBinding.imgViewTabSelected.setX(attentionCenterX - indicatorHalfWidth + wrapper.positionOffset * (distance23));
+                break;
+            default:
+                break;
+        }
+    });
 
     /**
      * ViewPager 的 selected 事件
      */
-    public ReplyCommand<Integer> onViewPagerSelectedCommand = new ReplyCommand<Integer>((position) -> {
+    public ReplyCommand<Integer> onViewPagerSelectedCommand = new ReplyCommand<>((position) -> {
         selectTab(position);
-        float localX = 0;
+        float localX;
         if (position == 0) {
             localX = hotCenterX - indicatorHalfWidth;
         } else if (position == 1) {

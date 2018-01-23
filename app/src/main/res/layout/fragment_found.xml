@@ -61,7 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="@dimen/dimen_6"
+                android:paddingBottom="@dimen/dimen_2"
+                android:paddingTop="@dimen/dimen_10"
                 android:text="@string/hot"
                 android:textColor="@drawable/selector_discovery_tab_txt_color"
                 android:textSize="@dimen/small_size"
@@ -74,7 +75,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="@dimen/dimen_6"
+                android:paddingBottom="@dimen/dimen_2"
+                android:paddingTop="@dimen/dimen_10"
                 android:text="@string/attention"
                 android:textColor="@drawable/selector_discovery_tab_txt_color"
                 android:textSize="@dimen/small_size"
@@ -87,7 +89,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="@dimen/dimen_6"
+                android:paddingBottom="@dimen/dimen_2"
+                android:paddingTop="@dimen/dimen_10"
                 android:text="@string/classify"
                 android:textColor="@drawable/selector_discovery_tab_txt_color"
                 android:textSize="@dimen/small_size"
@@ -109,6 +112,7 @@
             android:id="@+id/viewPager_discovery"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:onPageScrolledCommand="@{viewModel.onViewPagerScrollCommand}"
             app:onPageSelectedCommand="@{viewModel.onViewPagerSelectedCommand}" />
 
     </LinearLayout>
