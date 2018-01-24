@@ -37,4 +37,9 @@
     <string name="hot">热门</string>
     <string name="attention">关注</string>
     <string name="classify">分类</string>
+    <string name="setting">设置</string>
+    <string name="remind_me_by_use_flux">- 使用流量时提醒我 -</string>
+    <string name="remind_me_about_update">- 日报更新提醒 -</string>
+    <string name="auto_play_in_wifi">- Wi-Fi下自动播放 -</string>
+    <string name="translation">- 翻译 -</string>
 </resources>

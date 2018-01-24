@@ -19,7 +19,7 @@
     <color name="dividerBlack">#D8D8D8</color>
 
     <!-- 背景色. -->
-    <color name="backgroundColor">#cdcdcd</color>
+    <color name="backgroundColor">#EEEEEE</color>
 
     <color name="transparent">#0000</color>
     <color name="halfTransparent">#3333</color>

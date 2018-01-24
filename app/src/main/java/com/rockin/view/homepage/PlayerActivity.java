@@ -161,6 +161,7 @@ public class PlayerActivity extends BaseActivity {
             }
         };
         playerBinding.listViewRecommend.setAdapter(recommendAdapter);
+        playerBinding.listViewRecommend.setFocusable(false);    // 避免 ListView 抢占 ScrollView 的焦点
         playerBinding.listViewRecommend.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(PlayerActivity.this, PlayerActivity.class);
             intent.putExtra("VIDEO_DATA", recommendVideos.get(position));

@@ -15,7 +15,6 @@
         android:roundIcon="@mipmap/icon_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".view.base.BaseActivity"
             android:screenOrientation="portrait" />
@@ -52,6 +51,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/TransparentTheme"
             android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".view.person.SettingActivity"
+            android:screenOrientation="portrait" />
 
 
         <receiver android:name=".broadcast.NetWorkChangeReceiver">
@@ -61,6 +63,7 @@
                 <action android:name="android.NET.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>

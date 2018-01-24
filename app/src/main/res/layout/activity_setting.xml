@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.rockin.view.person.SettingActivity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/setting"
+                android:textColor="@color/commonTextBlack"
+                android:textSize="@dimen/large_title_size" />
+
+            <ImageView
+                android:id="@+id/imgView_searchVideo"
+                android:layout_width="@dimen/dimen_44"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dimen_12"
+                android:src="@drawable/icon_arrows_left_grey"
+                app:clickCommand="@{viewModel.onBackCommand}" />
+
+        </FrameLayout>
+
+        <include layout="@layout/horizontal_line" />
+
+        <com.rockin.widget.CustomScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_36"
+                    android:gravity="center"
+                    android:text="@string/remind_me_by_use_flux"
+                    android:textColor="@color/secondTextBlack"
+                    android:textSize="@dimen/small_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_36"
+                    android:gravity="center"
+                    android:text="@string/remind_me_about_update"
+                    android:textColor="@color/secondTextBlack"
+                    android:textSize="@dimen/small_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_36"
+                    android:gravity="center"
+                    android:text="@string/auto_play_in_wifi"
+                    android:textColor="@color/secondTextBlack"
+                    android:textSize="@dimen/small_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_36"
+                    android:gravity="center"
+                    android:text="@string/translation"
+                    android:textColor="@color/secondTextBlack"
+                    android:textSize="@dimen/small_size" />
+
+            </LinearLayout>
+
+        </com.rockin.widget.CustomScrollView>
+
+    </LinearLayout>
+
+</layout>
