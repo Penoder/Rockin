@@ -32,7 +32,7 @@
                 android:layout_width="@dimen/dimen_44"
                 android:layout_height="match_parent"
                 android:padding="@dimen/dimen_12"
-                android:src="@drawable/icon_arrows_left_grey"
+                android:src="@drawable/icon_arrows_left_black"
                 app:clickCommand="@{viewModel.onBackCommand}" />
 
         </FrameLayout>
@@ -56,7 +56,7 @@
                     android:gravity="center"
                     android:text="@string/remind_me_by_use_flux"
                     android:textColor="@color/secondTextBlack"
-                    android:textSize="@dimen/small_size" />
+                    android:textSize="@dimen/common_size" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                     android:gravity="center"
                     android:text="@string/remind_me_about_update"
                     android:textColor="@color/secondTextBlack"
-                    android:textSize="@dimen/small_size" />
+                    android:textSize="@dimen/common_size" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                     android:gravity="center"
                     android:text="@string/auto_play_in_wifi"
                     android:textColor="@color/secondTextBlack"
-                    android:textSize="@dimen/small_size" />
+                    android:textSize="@dimen/common_size" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                     android:gravity="center"
                     android:text="@string/translation"
                     android:textColor="@color/secondTextBlack"
-                    android:textSize="@dimen/small_size" />
+                    android:textSize="@dimen/common_size" />
 
             </LinearLayout>
 
