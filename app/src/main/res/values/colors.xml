@@ -30,6 +30,8 @@
     <color name="lightGray">#EEEEEE</color>
 
     <!-- 颜色库. -->
+    <color name="black">#000000</color>
+    <!--白色. -->
     <color name="white">#FFFFFF</color>
     <!--白色. -->
     <color name="ivory">#FFFFF0</color>

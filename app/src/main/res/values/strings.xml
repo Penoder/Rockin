@@ -42,4 +42,14 @@
     <string name="remind_me_about_update">- 日报更新提醒 -</string>
     <string name="auto_play_in_wifi">- Wi-Fi下自动播放 -</string>
     <string name="translation">- 翻译 -</string>
+    <string name="open">打开</string>
+    <string name="close">关闭</string>
+    <string name="clean_all_cache">清除所有缓存</string>
+    <string name="choice_cache_path">选择缓存路径</string>
+    <string name="check_version_upgrade">检查版本更新</string>
+    <string name="user_protocol">用户协议</string>
+    <string name="video_function_declaration">视频功能声明</string>
+    <string name="the_copyright_to_report">版权举报</string>
+    <string name="you_contribution_is_highly_appreciated">- Your contribution is highly appreciated! -</string>
+    <string name="open_to_open">让每一个人都开眼，开了又开。</string>
 </resources>
