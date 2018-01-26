@@ -154,7 +154,12 @@ public class PlayerActivity extends BaseActivity {
                     ImageView imgViewRecommendVideoFeed = holder.getView(R.id.imgView_recommendVideoFeed);
                     TextView txtViewRecommendTitle = holder.getView(R.id.txtView_recommendTitle);
                     TextView txtViewRecommendCategory = holder.getView(R.id.txtView_recommendCategory);
-                    Glide.with(PlayerActivity.this).load(homeEntity.getVideo().feed).placeholder(R.drawable.img_default_eyepetizer).into(imgViewRecommendVideoFeed);
+                    /*
+                        遇到过 java.lang.IllegalArgumentException 非法参数异常，View 已经被回收了才调用 Glide 的 into（View）
+                     */
+                    if (imgViewRecommendVideoFeed != null) {
+                        Glide.with(PlayerActivity.this).load(homeEntity.getVideo().feed).placeholder(R.drawable.img_default_eyepetizer).into(imgViewRecommendVideoFeed);
+                    }
                     txtViewRecommendTitle.setText(homeEntity.getVideo().title);
                     txtViewRecommendCategory.setText(homeEntity.getVideo().category + " / " + TimeUtil.secondToTime(homeEntity.getVideo().duration));
                 }

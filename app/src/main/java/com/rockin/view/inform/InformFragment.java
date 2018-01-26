@@ -47,7 +47,14 @@ public class InformFragment extends BaseFragment {
      */
     public ReplyCommand onSearchCommand = new ReplyCommand(() -> {
         startActivity(new Intent(mContext, SearchActivity.class));
-        ((Activity)mContext).overridePendingTransition(R.anim.translate_from_up_to_in, 0);
+        ((Activity) mContext).overridePendingTransition(R.anim.translate_from_up_to_in, 0);
+    });
+
+    /**
+     * 登录按钮点击事件
+     */
+    public ReplyCommand onLoginCommand = new ReplyCommand(() -> {
+
     });
 
 }

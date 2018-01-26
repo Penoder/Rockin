@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dimen_2"
     android:gravity="center">
 
     <TextView
@@ -11,7 +12,7 @@
         android:layout_marginRight="@dimen/dimen_12"
         android:padding="@dimen/dimen_2"
         android:text="@string/open"
-        android:textColor="@color/commonTextBlack"
+        android:textColor="@color/selector_switch_txt_color"
         android:textSize="@dimen/title_size" />
 
     <View
@@ -26,7 +27,7 @@
         android:layout_marginLeft="@dimen/dimen_12"
         android:padding="@dimen/dimen_2"
         android:text="@string/close"
-        android:textColor="@color/commonTextBlack"
+        android:textColor="@color/selector_switch_txt_color"
         android:textSize="@dimen/title_size" />
 
 </LinearLayout>

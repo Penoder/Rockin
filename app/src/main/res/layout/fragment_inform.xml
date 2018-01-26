@@ -28,7 +28,6 @@
                 android:textStyle="bold|italic" />
 
             <ImageView
-                android:id="@+id/imgView_searchVideo"
                 android:layout_width="@dimen/dimen_44"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
@@ -75,7 +74,6 @@
                 android:textSize="@dimen/common_size" />
 
             <TextView
-                android:id="@+id/txtView_loginInNotice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_64"
@@ -87,6 +85,7 @@
                 android:padding="@dimen/dimen_8"
                 android:text="@string/login_in"
                 android:textColor="@color/commonTextWhite"
+                app:clickCommand="@{viewModel.onLoginCommand}"
                 android:textSize="@dimen/title_size"
                 android:textStyle="bold" />
 

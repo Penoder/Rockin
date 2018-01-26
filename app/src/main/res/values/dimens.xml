@@ -59,5 +59,8 @@
     <dimen name="dimen_56">56dp</dimen>
     <dimen name="dimen_64">64dp</dimen>
     <dimen name="dimen_72">72dp</dimen>
+    <dimen name="dimen_84">84dp</dimen>
+    <dimen name="dimen_96">96dp</dimen>
+    <dimen name="dimen_100">100dp</dimen>
     <dimen name="dimen_240">240dp</dimen>
 </resources>
