@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#607d8b</color>
-    <color name="colorPrimaryDark">#607d8b</color>
-    <color name="colorAccent">#607d8b</color>
-
     <color name="mainColor">#607d8b</color>
+    <color name="subColor">#00BCD4</color>
 
     <!-- 白色常用的设置文字的颜色. -->
     <color name="commonTextWhite">#FFFFFF</color>
