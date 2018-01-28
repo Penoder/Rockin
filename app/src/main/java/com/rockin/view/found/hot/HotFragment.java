@@ -1,6 +1,7 @@
 package com.rockin.view.found.hot;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +33,7 @@ import com.rockin.entity.table.Author;
 import com.rockin.entity.table.PlayInfo;
 import com.rockin.entity.table.Video;
 import com.rockin.view.base.BaseFragment;
+import com.rockin.view.homepage.PlayerActivity;
 import com.rockin.widget.CircleImageView;
 
 import java.io.IOException;
@@ -104,12 +106,18 @@ public class HotFragment extends BaseFragment {
                 txtViewPublishTime.setVisibility(View.VISIBLE);
                 if (homeEntity.getVideo() != null && homeEntity.getAuthor() != null) {
                     if (imgViewFeed != null) {
-                        Glide.with(mContext).load(homeEntity.getVideo().feed).placeholder(R.drawable.img_default_eyepetizer).into(imgViewFeed);
+                        if (!(homeEntity.getVideo().feed + position).equals(imgViewFeed.getTag(imgViewFeed.getId()))) {
+                            Glide.with(mContext).load(homeEntity.getVideo().feed).placeholder(R.drawable.img_default_eyepetizer).into(imgViewFeed);
+                            imgViewFeed.setTag(imgViewFeed.getId(), homeEntity.getVideo().feed + position);
+                        }
                     }
                     txtViewMainTitle.setText(homeEntity.getVideo().title);
                     txtViewSubTitle.setText(homeEntity.getVideo().slogan);
                     if (circleImgAuthorIcon != null) {
-                        Glide.with(mContext).load(homeEntity.getAuthor().icon).placeholder(R.drawable.icon_default_head).into(circleImgAuthorIcon);
+                        if (!(homeEntity.getAuthor().icon + position).equals(circleImgAuthorIcon.getTag(circleImgAuthorIcon.getId()))) {
+                            Glide.with(mContext).load(homeEntity.getAuthor().icon).placeholder(R.drawable.icon_default_head).into(circleImgAuthorIcon);
+                            circleImgAuthorIcon.setTag(circleImgAuthorIcon.getId(), homeEntity.getAuthor().icon + position);
+                        }
                     }
                     txtViewSubTitle.setText(homeEntity.getAuthor().name + " / " + TimeUtil.secondToTime(homeEntity.getVideo().duration));
                     // 后面根据视频的时间戳与现在的时间戳比较得到多少时间前发布的
@@ -149,7 +157,9 @@ public class HotFragment extends BaseFragment {
      * 最新发布的视频的Item的点击事件
      */
     public ReplyCommand<Integer> onVideoItemCommand = new ReplyCommand<Integer>((position) -> {
-        ToastUtil.showShortToast(mContext, "--------- " + position);
+        Intent intent = new Intent(mContext, PlayerActivity.class);
+        intent.putExtra("VIDEO_DATA", hotVideos.get(position));
+        startActivity(intent);
     });
 
     private static class MyHandler extends Handler {
