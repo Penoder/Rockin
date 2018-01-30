@@ -52,4 +52,7 @@
     <string name="the_copyright_to_report">版权举报</string>
     <string name="you_contribution_is_highly_appreciated">- Your contribution is highly appreciated! -</string>
     <string name="open_to_open">让每一个人都开眼，开了又开。</string>
+    <string name="all_category">全部分类</string>
+    <string name="all_rank">全部排行</string>
+    <string name="all_topic">全部专题</string>
 </resources>

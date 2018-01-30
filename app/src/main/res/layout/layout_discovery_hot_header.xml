@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.rockin.widget.BannerViewPager
+        android:id="@+id/viewPager_hotBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        layout="@layout/horizontal_line"
+        android:layout_width="match_parent"
+        android:layout_height="4dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_64"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="@string/all_category"
+        android:textColor="@color/commonTextBlack"
+        android:textSize="@dimen/large_title_size" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_180"
+                android:layout_margin="@dimen/dimen_10"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_default_eyepetizer" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_180"
+                android:layout_margin="@dimen/dimen_10"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_default_eyepetizer" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_180"
+                android:layout_margin="@dimen/dimen_10"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_default_eyepetizer" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_180"
+                android:layout_margin="@dimen/dimen_10"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_default_eyepetizer" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_180"
+                android:layout_margin="@dimen/dimen_10"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_default_eyepetizer" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <include
+        layout="@layout/horizontal_line"
+        android:layout_width="match_parent"
+        android:layout_height="4dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_64"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="@string/all_rank"
+        android:textColor="@color/commonTextBlack"
+        android:textSize="@dimen/large_title_size" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_180"
+                android:layout_margin="@dimen/dimen_10"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_default_eyepetizer" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_180"
+                android:layout_margin="@dimen/dimen_10"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_default_eyepetizer" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_180"
+                android:layout_margin="@dimen/dimen_10"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_default_eyepetizer" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <include
+        layout="@layout/horizontal_line"
+        android:layout_width="match_parent"
+        android:layout_height="4dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_64"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="@string/all_topic"
+        android:textColor="@color/commonTextBlack"
+        android:textSize="@dimen/large_title_size" />
+
+</LinearLayout>

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import com.google.gson.JsonSyntaxException;
 import com.penoder.mylibrary.mvvm.command.ReplyCommand;
 import com.penoder.mylibrary.utils.LogUtil;
 import com.penoder.mylibrary.utils.TimeUtil;
-import com.penoder.mylibrary.utils.ToastUtil;
 import com.rockin.R;
 import com.rockin.adapter.CommonListAdapter;
 import com.rockin.config.EyeApi;
@@ -87,6 +85,9 @@ public class HotFragment extends BaseFragment {
     }
 
     private void initAdapter() {
+        View hotHeaderView = LayoutInflater.from(mContext).inflate(R.layout.layout_discovery_hot_header, null);
+        hotBinding.listViewHotVideo.addHeaderView(hotHeaderView);
+
         hotAdapter = new CommonListAdapter<HomeEntity>(hotVideos, R.layout.item_home_page_video) {
             @Override
             public void onBindView(HomeEntity homeEntity, ViewHolder holder, int position) {
@@ -317,6 +318,7 @@ public class HotFragment extends BaseFragment {
                 String txtTitle = itemEntity.getData().getText();
                 if ("最新发布".equals(txtTitle)) {
                     isLatestVideo = true;
+                    continue;   // 调出当前循环，下一次才开始加入
                 }
             }
             if (isLatestVideo) {
