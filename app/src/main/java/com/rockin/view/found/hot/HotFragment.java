@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.penoder.mylibrary.mvvm.command.ReplyCommand;
 import com.penoder.mylibrary.utils.LogUtil;
 import com.penoder.mylibrary.utils.TimeUtil;
 import com.rockin.R;
@@ -123,6 +122,14 @@ public class HotFragment extends BaseFragment {
                     txtViewSubTitle.setText(homeEntity.getAuthor().name + " / " + TimeUtil.secondToTime(homeEntity.getVideo().duration));
                     // 后面根据视频的时间戳与现在的时间戳比较得到多少时间前发布的
                     txtViewPublishTime.setText("*分钟前");
+
+                    frameFeedImg.setOnClickListener(v -> jumpToPlayer(homeEntity));
+                    linearJumpAuthor.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            jumpToAuthor();
+                        }
+                    });
                 }
             }
         };
@@ -155,13 +162,20 @@ public class HotFragment extends BaseFragment {
     }
 
     /**
+     * 跳转到作者信息界面
+     */
+    private void jumpToAuthor() {
+
+    }
+
+    /**
      * 最新发布的视频的Item的点击事件
      */
-    public ReplyCommand<Integer> onVideoItemCommand = new ReplyCommand<Integer>((position) -> {
+    private void jumpToPlayer(HomeEntity homeEntity) {
         Intent intent = new Intent(mContext, PlayerActivity.class);
-        intent.putExtra("VIDEO_DATA", hotVideos.get(position));
+        intent.putExtra("VIDEO_DATA", homeEntity);
         startActivity(intent);
-    });
+    }
 
     private static class MyHandler extends Handler {
         WeakReference<HotFragment> hotReference;

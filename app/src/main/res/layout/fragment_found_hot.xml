@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -16,7 +15,6 @@
         android:listSelector="@color/transparent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
-        android:scrollbars="none"
-        app:onItemClickCommand="@{viewModel.onVideoItemCommand}" />
+        android:scrollbars="none" />
 
 </layout>
