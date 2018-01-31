@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.rockin.R;
 import com.rockin.adapter.CommonListAdapter;
 import com.rockin.config.EyeApi;
 import com.rockin.databinding.FragmentFoundHotBinding;
+import com.rockin.entity.discovery.hot.HotBanner;
 import com.rockin.entity.discovery.hot.HotEntity;
 import com.rockin.entity.homepage.HomeEntity;
 import com.rockin.entity.table.Author;
@@ -34,7 +36,9 @@ import com.rockin.view.homepage.PlayerActivity;
 import com.rockin.widget.CircleImageView;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +49,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
+ * 开眼还禁止了状态栏点击回顶～～～
+ *
  * @author Penoder
  * @date 2018/1/21.
  */
@@ -59,6 +65,8 @@ public class HotFragment extends BaseFragment {
     private List<HomeEntity> hotVideos = new ArrayList<>();
 
     private CommonListAdapter<HomeEntity> hotAdapter;
+
+    private List<HotBanner> bannerList = new ArrayList<>();
 
     /**
      * 用于判断获取的数据是不是到达了最新发布的时候，一般前面9条不是
@@ -124,12 +132,7 @@ public class HotFragment extends BaseFragment {
                     txtViewPublishTime.setText("*分钟前");
 
                     frameFeedImg.setOnClickListener(v -> jumpToPlayer(homeEntity));
-                    linearJumpAuthor.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            jumpToAuthor();
-                        }
-                    });
+                    linearJumpAuthor.setOnClickListener(v -> jumpToAuthor());
                 }
             }
         };
@@ -198,7 +201,8 @@ public class HotFragment extends BaseFragment {
     }
 
     /**
-     * 解析Json数据
+     * 解析Json数据，
+     * 解析得到的 Banner 地址，url 字段前面要 URL 解码，后面需要经过 Native/UTF-8解码
      */
     private void parse(String jsonStr) {
         LogUtil.i("Rocoder：parse：解析视频数据");
@@ -245,7 +249,6 @@ public class HotFragment extends BaseFragment {
                 Video video = new Video(videoId, title, slogan, description, category, feed, blurred, homepage, playUrl, duration, webUrl, releaseTime, date, type, collectCount, sharedCount, authorId);
                 if (isLatestVideo) {
                     homeEntity.setVideo(video);
-                    LogUtil.i("Rocoder：parse：------------------  " + homeEntity.getVideo().title);
                 }
                 // --------------------------- 以上为需要插入到 video 表中的数据--------------------------- //
 
@@ -317,11 +320,25 @@ public class HotFragment extends BaseFragment {
                 if (itemEntity.getData() != null) {
                     List<HotEntity.ItemEntity.DataEntity.ItemDataEntity> cardList = itemEntity.getData().getItemList();
                     if (cardList != null && cardList.size() > 0) {
+                        bannerList.clear();
                         for (HotEntity.ItemEntity.DataEntity.ItemDataEntity cardEntity : cardList) {
                             HotEntity.ItemEntity.DataEntity.ItemDataEntity.BannerEntity bannerEntity = cardEntity.getData();
                             if (bannerEntity != null) {
-                                // 这里懒得解析了，反正也不想插入到数据库，交给 Android 端吧！辣鸡，说的 Android 不要你解析一样
-                                System.out.println("Banner 位的链接： " + bannerEntity.getActionUrl());
+                                String actionUrl = bannerEntity.getActionUrl();
+                                if (!TextUtils.isEmpty(actionUrl)) {
+                                    actionUrl = actionUrl.substring(actionUrl.indexOf("url=http") + 4);
+                                }
+                                // 需要 URLDecode 解码 http://blog.csdn.net/afgasdg/article/details/40304817
+                                actionUrl = actionUrl.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
+                                try {
+                                    actionUrl = URLDecoder.decode(actionUrl, "UTF-8");
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
+                                HotBanner hotBanner = new HotBanner();
+                                hotBanner.image = bannerEntity.getImage();
+                                hotBanner.actionUrl = actionUrl;
+                                bannerList.add(hotBanner);
                             }
                         }
                     }

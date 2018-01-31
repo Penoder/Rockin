@@ -1,6 +1,7 @@
 package com.rockin.view.homepage;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -16,6 +17,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -128,7 +131,7 @@ public class HomePageFragment extends BaseFragment {
     /**
      * 更多操作的 PopupWindow
      */
-    PopupWindow popupWindow;
+    private Dialog mDialog;
 
     /**
      * 显示下载进度
@@ -155,7 +158,6 @@ public class HomePageFragment extends BaseFragment {
         // 这个写在setViewModel前面会崩掉
         homePageBinding.executePendingBindings();
         initBanner();
-        initPopupWindow();
         getVideoDatas(true);
         return homePageBinding.getRoot();
     }
@@ -276,55 +278,69 @@ public class HomePageFragment extends BaseFragment {
     /**
      * 初始化更多操作的 PopupWindow
      */
-    private void initPopupWindow() {
-        View contentView = LayoutInflater.from(mContext).inflate(R.layout.layout_popup_more_operate, null);
-        popupWindow = new PopupWindow(mContext);
-        popupWindow.setContentView(contentView);
-        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setFocusable(true);
-        popupWindow.setAnimationStyle(R.style.PopupAnimation);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
+    private void initPopupWindow(View contentView) {
+        mDialog = new Dialog(mContext, R.style.PopupDialog);
+        //获得dialog的window窗口
+        Window window = mDialog.getWindow();
+        if (window != null) {
+            //设置dialog在屏幕底部
+            window.setGravity(Gravity.BOTTOM);
+            //设置dialog弹出时的动画效果，从屏幕底部向上弹出
+            window.setWindowAnimations(R.style.PopupAnimation);
+            window.getDecorView().setPadding(0, 0, 0, 0);
+            //获得window窗口的属性
+            android.view.WindowManager.LayoutParams lp = window.getAttributes();
+            //设置窗口宽度为充满全屏
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            //设置窗口高度为包裹内容
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            //将设置好的属性set回去
+            window.setAttributes(lp);
+        }
+        //将自定义布局加载到dialog上
+        mDialog.setContentView(contentView);
     }
 
     /**
-     * 更多操作
+     * 更多操作：关于Android 7.0上 PopupWindow展示位置错误的 Bug
+     * ComputeGravity(); 1390 多行
      *
      * @param homeEntity
      */
+    TextView txtViewNoInteresting;
+    TextView txtViewShieldAuthor;
+    TextView txtViewCacheVideo;
+    TextView txtViewCancelMoreOperate;
+
     private void moreOperate(HomeEntity homeEntity) {
-        if (popupWindow == null) {
-            initPopupWindow();
-        }
-        popupWindow.showAtLocation(homePageBinding.getRoot(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-        popupWindow.update();
-//        popupWindow.showAsDropDown(homePageBinding.getRoot(), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);, 0, 0);
-        View contentView = popupWindow.getContentView();
-        TextView txtViewNoInteresting = (TextView) contentView.findViewById(R.id.txtView_noInteresting);
-        TextView txtViewShieldAuthor = (TextView) contentView.findViewById(R.id.txtView_shieldAuthor);
-        TextView txtViewCacheVideo = (TextView) contentView.findViewById(R.id.txtView_cacheVideo);
-        TextView txtViewCancelMoreOperate = (TextView) contentView.findViewById(R.id.txtView_cancelMoreOperate);
+        if (mDialog == null) {
+            View contentView = View.inflate(mContext, R.layout.layout_popup_more_operate, null);
+            initPopupWindow(contentView);
+            txtViewNoInteresting = (TextView) contentView.findViewById(R.id.txtView_noInteresting);
+            txtViewShieldAuthor = (TextView) contentView.findViewById(R.id.txtView_shieldAuthor);
+            txtViewCacheVideo = (TextView) contentView.findViewById(R.id.txtView_cacheVideo);
+            txtViewCancelMoreOperate = (TextView) contentView.findViewById(R.id.txtView_cancelMoreOperate);
 
-        txtViewCancelMoreOperate.setOnClickListener(v -> popupWindow.dismiss());
-        txtViewCacheVideo.setOnClickListener(v -> downLoadVideo(homeEntity));
-        txtViewNoInteresting.setOnClickListener(v -> {
-            popupWindow.dismiss();
-            videoDatas.remove(homeEntity);
-            videoAdapter.notifyDataSetChanged();
-        });
-        txtViewShieldAuthor.setOnClickListener(v -> {
-            popupWindow.dismiss();
-            Iterator iterator = videoDatas.iterator();
-            while (iterator.hasNext()) {
-                HomeEntity entity = (HomeEntity) iterator.next();
-                if (entity != null && entity.getAuthor() != null && entity.getAuthor().name.equals(homeEntity.getAuthor() != null ? homeEntity.getAuthor().name : "")) {
-                    iterator.remove();
+            txtViewCancelMoreOperate.setOnClickListener(v -> mDialog.hide());
+            txtViewCacheVideo.setOnClickListener(v -> downLoadVideo(homeEntity));
+            txtViewNoInteresting.setOnClickListener(v -> {
+                mDialog.hide();
+                videoDatas.remove(homeEntity);
+                videoAdapter.notifyDataSetChanged();
+            });
+            txtViewShieldAuthor.setOnClickListener(v -> {
+                mDialog.hide();
+                Iterator iterator = videoDatas.iterator();
+                while (iterator.hasNext()) {
+                    HomeEntity entity = (HomeEntity) iterator.next();
+                    if (entity != null && entity.getAuthor() != null && entity.getAuthor().name.equals(homeEntity.getAuthor() != null ? homeEntity.getAuthor().name : "")) {
+                        iterator.remove();
+                    }
                 }
-            }
-            videoAdapter.notifyDataSetChanged();
-        });
-
+                videoAdapter.notifyDataSetChanged();
+            });
+        }
+        mDialog.show();
     }
 
     /**
@@ -471,8 +487,7 @@ public class HomePageFragment extends BaseFragment {
                     .create();
         }
         downLoadDialoog.show();
-
-        popupWindow.dismiss();
+        mDialog.hide();
         if (homeEntity == null || homeEntity.getVideo() == null || TextUtils.isEmpty(homeEntity.getVideo().playUrl)) {
             ToastUtil.showShortToast(mContext, "获取视频数据失败，暂无法下载");
             return;
@@ -527,6 +542,10 @@ public class HomePageFragment extends BaseFragment {
         if (downLoadDialoog != null) {
             downLoadDialoog.dismiss();
             downLoadDialoog = null;
+        }
+        if (mDialog != null) {
+            mDialog.dismiss();
+            mDialog = null;
         }
     }
 }

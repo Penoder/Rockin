@@ -344,7 +344,7 @@ public class HotEntity {
                     /**
                      * Banner 封面图
                      */
-                    private String iamge;
+                    private String image;
 
                     /**
                      * Banner 详情的 WebUrl， 例如：http://www.kaiyanapp.com/topic_article.html?nid=47&cookie={cookie}&shareable=true
@@ -384,12 +384,12 @@ public class HotEntity {
                         this.description = description;
                     }
 
-                    public String getIamge() {
-                        return iamge;
+                    public String getImage() {
+                        return image;
                     }
 
-                    public void setIamge(String iamge) {
-                        this.iamge = iamge;
+                    public void setImage(String image) {
+                        this.image = image;
                     }
 
                     public String getActionUrl() {

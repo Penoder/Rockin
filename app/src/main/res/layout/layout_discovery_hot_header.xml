@@ -101,21 +101,28 @@
                 android:layout_height="@dimen/dimen_180"
                 android:layout_margin="@dimen/dimen_10"
                 android:scaleType="fitXY"
-                android:src="@drawable/img_default_eyepetizer" />
+                android:src="@drawable/img_rank_weekly" />
 
             <ImageView
                 android:layout_width="@dimen/dimen_180"
                 android:layout_height="@dimen/dimen_180"
                 android:layout_margin="@dimen/dimen_10"
                 android:scaleType="fitXY"
-                android:src="@drawable/img_default_eyepetizer" />
+                android:src="@drawable/img_rank_month" />
 
             <ImageView
                 android:layout_width="@dimen/dimen_180"
                 android:layout_height="@dimen/dimen_180"
                 android:layout_margin="@dimen/dimen_10"
                 android:scaleType="fitXY"
-                android:src="@drawable/img_default_eyepetizer" />
+                android:src="@drawable/img_rank_all" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_180"
+                android:layout_margin="@dimen/dimen_10"
+                android:background="@color/backgroundColor"
+                android:scaleType="fitXY" />
 
         </LinearLayout>
 
