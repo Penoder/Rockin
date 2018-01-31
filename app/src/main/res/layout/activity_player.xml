@@ -22,7 +22,7 @@
         <com.penoder.mylibrary.player.JZVideoPlayerStandard
             android:id="@+id/playerVideo"
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="@dimen/dimen_210"
             android:background="@color/backgroundColor" />
 
         <FrameLayout

@@ -42,6 +42,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bingoogolapple.bgabanner.BGABanner;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -73,6 +74,11 @@ public class HotFragment extends BaseFragment {
      */
     private boolean isLatestVideo = false;
 
+    /**
+     * Banner
+     */
+    private BGABanner viewPagerHotBanner;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,10 +97,30 @@ public class HotFragment extends BaseFragment {
         return hotBinding.getRoot();
     }
 
+    /**
+     * 初始化轮播
+     */
+    private void initBanner(View hotHeaderView) {
+        viewPagerHotBanner = (BGABanner) hotHeaderView.findViewById(R.id.viewPager_hotBanner);
+        viewPagerHotBanner.setAdapter(new BGABanner.Adapter<ImageView, HotBanner>() {
+            @Override
+            public void fillBannerItem(BGABanner banner, ImageView itemView, @Nullable HotBanner model, int position) {
+                if (model != null) {
+                    Glide.with(mContext)
+                            .load(model.image)
+                            .placeholder(R.drawable.img_default_banner)
+                            .centerCrop()
+                            .dontAnimate()
+                            .into(itemView);
+                }
+            }
+        });
+    }
+
     private void initAdapter() {
         View hotHeaderView = LayoutInflater.from(mContext).inflate(R.layout.layout_discovery_hot_header, null);
         hotBinding.listViewHotVideo.addHeaderView(hotHeaderView);
-
+        initBanner(hotHeaderView);
         hotAdapter = new CommonListAdapter<HomeEntity>(hotVideos, R.layout.item_home_page_video) {
             @Override
             public void onBindView(HomeEntity homeEntity, ViewHolder holder, int position) {
@@ -341,6 +367,7 @@ public class HotFragment extends BaseFragment {
                                 bannerList.add(hotBanner);
                             }
                         }
+                        viewPagerHotBanner.setData(bannerList, null);
                     }
                 }
             }

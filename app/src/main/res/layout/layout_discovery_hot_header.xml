@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.rockin.widget.BannerViewPager
+    <cn.bingoogolapple.bgabanner.BGABanner
         android:id="@+id/viewPager_hotBanner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="@dimen/dimen_200" />
 
     <include
         layout="@layout/horizontal_line"

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -22,7 +21,6 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -32,6 +30,11 @@ import com.google.gson.reflect.TypeToken;
 import com.penoder.mylibrary.okhttp.CommonJson;
 import com.penoder.mylibrary.okhttp.OkCallBack;
 import com.penoder.mylibrary.okhttp.OkHttpManager;
+import com.penoder.mylibrary.utils.DownloadUtil;
+import com.penoder.mylibrary.utils.FileUtil;
+import com.penoder.mylibrary.utils.LogUtil;
+import com.penoder.mylibrary.utils.TimeUtil;
+import com.penoder.mylibrary.utils.ToastUtil;
 import com.rockin.R;
 import com.rockin.adapter.CommonListAdapter;
 import com.rockin.adapter.CommonViewAdapter;
@@ -41,11 +44,6 @@ import com.rockin.databinding.FragmentHomePageBinding;
 import com.rockin.entity.homepage.HomeEntity;
 import com.rockin.entity.table.Author;
 import com.rockin.entity.table.Video;
-import com.penoder.mylibrary.utils.DownloadUtil;
-import com.penoder.mylibrary.utils.FileUtil;
-import com.penoder.mylibrary.utils.LogUtil;
-import com.penoder.mylibrary.utils.TimeUtil;
-import com.penoder.mylibrary.utils.ToastUtil;
 import com.rockin.view.base.BaseFragment;
 import com.rockin.widget.CircleImageView;
 
@@ -313,33 +311,31 @@ public class HomePageFragment extends BaseFragment {
     TextView txtViewCancelMoreOperate;
 
     private void moreOperate(HomeEntity homeEntity) {
-        if (mDialog == null) {
-            View contentView = View.inflate(mContext, R.layout.layout_popup_more_operate, null);
-            initPopupWindow(contentView);
-            txtViewNoInteresting = (TextView) contentView.findViewById(R.id.txtView_noInteresting);
-            txtViewShieldAuthor = (TextView) contentView.findViewById(R.id.txtView_shieldAuthor);
-            txtViewCacheVideo = (TextView) contentView.findViewById(R.id.txtView_cacheVideo);
-            txtViewCancelMoreOperate = (TextView) contentView.findViewById(R.id.txtView_cancelMoreOperate);
+        View contentView = View.inflate(mContext, R.layout.layout_popup_more_operate, null);
+        initPopupWindow(contentView);
+        txtViewNoInteresting = (TextView) contentView.findViewById(R.id.txtView_noInteresting);
+        txtViewShieldAuthor = (TextView) contentView.findViewById(R.id.txtView_shieldAuthor);
+        txtViewCacheVideo = (TextView) contentView.findViewById(R.id.txtView_cacheVideo);
+        txtViewCancelMoreOperate = (TextView) contentView.findViewById(R.id.txtView_cancelMoreOperate);
 
-            txtViewCancelMoreOperate.setOnClickListener(v -> mDialog.hide());
-            txtViewCacheVideo.setOnClickListener(v -> downLoadVideo(homeEntity));
-            txtViewNoInteresting.setOnClickListener(v -> {
-                mDialog.hide();
-                videoDatas.remove(homeEntity);
-                videoAdapter.notifyDataSetChanged();
-            });
-            txtViewShieldAuthor.setOnClickListener(v -> {
-                mDialog.hide();
-                Iterator iterator = videoDatas.iterator();
-                while (iterator.hasNext()) {
-                    HomeEntity entity = (HomeEntity) iterator.next();
-                    if (entity != null && entity.getAuthor() != null && entity.getAuthor().name.equals(homeEntity.getAuthor() != null ? homeEntity.getAuthor().name : "")) {
-                        iterator.remove();
-                    }
+        txtViewCancelMoreOperate.setOnClickListener(v -> mDialog.dismiss());
+        txtViewCacheVideo.setOnClickListener(v -> downLoadVideo(homeEntity));
+        txtViewNoInteresting.setOnClickListener(v -> {
+            mDialog.dismiss();
+            videoDatas.remove(homeEntity);
+            videoAdapter.notifyDataSetChanged();
+        });
+        txtViewShieldAuthor.setOnClickListener(v -> {
+            mDialog.dismiss();
+            Iterator iterator = videoDatas.iterator();
+            while (iterator.hasNext()) {
+                HomeEntity entity = (HomeEntity) iterator.next();
+                if (entity != null && entity.getAuthor() != null && entity.getAuthor().name.equals(homeEntity.getAuthor() != null ? homeEntity.getAuthor().name : "")) {
+                    iterator.remove();
                 }
-                videoAdapter.notifyDataSetChanged();
-            });
-        }
+            }
+            videoAdapter.notifyDataSetChanged();
+        });
         mDialog.show();
     }
 
@@ -487,7 +483,7 @@ public class HomePageFragment extends BaseFragment {
                     .create();
         }
         downLoadDialoog.show();
-        mDialog.hide();
+        mDialog.dismiss();
         if (homeEntity == null || homeEntity.getVideo() == null || TextUtils.isEmpty(homeEntity.getVideo().playUrl)) {
             ToastUtil.showShortToast(mContext, "获取视频数据失败，暂无法下载");
             return;

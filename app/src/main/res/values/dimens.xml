@@ -63,5 +63,7 @@
     <dimen name="dimen_96">96dp</dimen>
     <dimen name="dimen_100">100dp</dimen>
     <dimen name="dimen_180">180dp</dimen>
+    <dimen name="dimen_200">200dp</dimen>
+    <dimen name="dimen_210">210dp</dimen>
     <dimen name="dimen_240">240dp</dimen>
 </resources>
