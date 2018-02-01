@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.penoder.mylibrary.banner.BGABanner;
 import com.penoder.mylibrary.utils.LogUtil;
 import com.penoder.mylibrary.utils.TimeUtil;
 import com.rockin.R;
@@ -42,7 +43,6 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bingoogolapple.bgabanner.BGABanner;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;

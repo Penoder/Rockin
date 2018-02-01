@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <cn.bingoogolapple.bgabanner.BGABanner
+    <com.penoder.mylibrary.banner.BGABanner
         android:id="@+id/viewPager_hotBanner"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_200" />

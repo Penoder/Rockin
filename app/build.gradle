@@ -62,7 +62,6 @@ dependencies {
     // 5.0 新特性：RecyclerView 依赖
     compile 'com.android.support:recyclerview-v7:25.3.1'
 
-    compile 'cn.bingoogolapple:bga-banner:2.2.4@aar'
     //
     compile project(':mylibrary')
 
