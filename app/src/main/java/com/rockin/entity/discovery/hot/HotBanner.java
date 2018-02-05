@@ -16,4 +16,9 @@ public class HotBanner {
      * Banner 详情的 WebUrl
      */
     public String actionUrl;
+
+    /**
+     * 标题
+     */
+    public String title;
 }

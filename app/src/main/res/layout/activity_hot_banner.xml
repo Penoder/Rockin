@@ -14,8 +14,35 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/dimen_64"
+                android:paddingRight="@dimen/dimen_64"
+                android:text="@{viewModel.actionTitle}"
+                android:textColor="@color/commonTextBlack"
+                android:textSize="@dimen/title_size" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_44"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dimen_12"
+                android:src="@drawable/icon_arrows_left_black"
+                app:clickCommand="@{viewModel.onBackCommand}" />
+
+        </FrameLayout>
+
+        <include layout="@layout/horizontal_line" />
+
         <WebView
-            app:render="@{viewModel.actionUrl}"
+            android:id="@+id/webView_hotBanner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

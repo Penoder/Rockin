@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,6 +107,7 @@ public class HotFragment extends BaseFragment {
                 Glide.with(mContext).load(((HotBanner) model).image).placeholder(R.drawable.img_default_banner).centerCrop().dontAnimate().into((ImageView) itemView);
                 itemView.setOnClickListener(v -> {
                     Intent intent = new Intent(mContext, HotBannerActivity.class);
+                    intent.putExtra("ACTION_TITLE", bannerList.get(position).title);
                     intent.putExtra("ACTION_URL", bannerList.get(position).actionUrl);
                     startActivity(intent);
                 });
@@ -349,19 +349,24 @@ public class HotFragment extends BaseFragment {
                             HotEntity.ItemEntity.DataEntity.ItemDataEntity.BannerEntity bannerEntity = cardEntity.getData();
                             if (bannerEntity != null) {
                                 String actionUrl = bannerEntity.getActionUrl();
+                                String bannerTitle = "";
                                 if (!TextUtils.isEmpty(actionUrl)) {
+                                    bannerTitle = actionUrl.substring(actionUrl.indexOf("title=") + 6, actionUrl.indexOf("url=http") - 1);
                                     actionUrl = actionUrl.substring(actionUrl.indexOf("url=http") + 4);
                                 }
                                 // 需要 URLDecode 解码 http://blog.csdn.net/afgasdg/article/details/40304817
                                 actionUrl = actionUrl.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
+                                bannerTitle = bannerTitle.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
                                 try {
                                     actionUrl = URLDecoder.decode(actionUrl, "UTF-8");
+                                    bannerTitle = URLDecoder.decode(bannerTitle, "UTF-8");
                                 } catch (UnsupportedEncodingException e) {
                                     e.printStackTrace();
                                 }
                                 HotBanner hotBanner = new HotBanner();
                                 hotBanner.image = bannerEntity.getImage();
                                 hotBanner.actionUrl = actionUrl;
+                                hotBanner.title = bannerTitle;
                                 bannerList.add(hotBanner);
                             }
                         }
