@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,17 +103,14 @@ public class HotFragment extends BaseFragment {
      */
     private void initBanner(View hotHeaderView) {
         viewPagerHotBanner = (BGABanner) hotHeaderView.findViewById(R.id.viewPager_hotBanner);
-        viewPagerHotBanner.setAdapter(new BGABanner.Adapter<ImageView, HotBanner>() {
-            @Override
-            public void fillBannerItem(BGABanner banner, ImageView itemView, @Nullable HotBanner model, int position) {
-                if (model != null) {
-                    Glide.with(mContext)
-                            .load(model.image)
-                            .placeholder(R.drawable.img_default_banner)
-                            .centerCrop()
-                            .dontAnimate()
-                            .into(itemView);
-                }
+        viewPagerHotBanner.setAdapter((banner, itemView, model, position) -> {
+            if (model != null) {
+                Glide.with(mContext).load(((HotBanner) model).image).placeholder(R.drawable.img_default_banner).centerCrop().dontAnimate().into((ImageView) itemView);
+                itemView.setOnClickListener(v -> {
+                    Intent intent = new Intent(mContext, HotBannerActivity.class);
+                    intent.putExtra("ACTION_URL", bannerList.get(position).actionUrl);
+                    startActivity(intent);
+                });
             }
         });
     }
