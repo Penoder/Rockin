@@ -57,6 +57,9 @@
         <activity
             android:name=".view.found.hot.HotBannerActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.found.hot.RankActivity"
+            android:screenOrientation="portrait" />
 
 
         <receiver android:name=".broadcast.NetWorkChangeReceiver">

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.rockin.view.found.hot.RankActivity" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/eyepetizer"
+                android:textColor="@color/commonTextBlack"
+                android:textSize="@dimen/large_title_size"
+                android:textStyle="italic|bold" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_44"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dimen_12"
+                android:src="@drawable/icon_arrows_left_black"
+                app:clickCommand="@{viewModel.onBackCommand}" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtView_weekRank"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dimen_2"
+                android:paddingTop="@dimen/dimen_10"
+                android:text="@string/weekRank"
+                android:textColor="@drawable/selector_discovery_tab_txt_color"
+                android:textSize="@dimen/small_size"
+                android:textStyle="bold"
+                app:clickCommand="@{viewModel.onWeekRankCommand}" />
+
+            <TextView
+                android:id="@+id/txtView_monthRank"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dimen_2"
+                android:paddingTop="@dimen/dimen_10"
+                android:text="@string/monthRank"
+                android:textColor="@drawable/selector_discovery_tab_txt_color"
+                android:textSize="@dimen/small_size"
+                android:textStyle="bold"
+                app:clickCommand="@{viewModel.onMonthRankCommand}" />
+
+            <TextView
+                android:id="@+id/txtView_totalRank"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dimen_2"
+                android:paddingTop="@dimen/dimen_10"
+                android:text="@string/totalRank"
+                android:textColor="@drawable/selector_discovery_tab_txt_color"
+                android:textSize="@dimen/small_size"
+                android:textStyle="bold"
+                app:clickCommand="@{viewModel.onTotalRankCommand}" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgView_selectedRank"
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_tab_selected"
+            android:paddingBottom="@dimen/dimen_4" />
+
+        <include layout="@layout/horizontal_line" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager_rank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:onPageScrolledCommand="@{viewModel.onRankScrollCommand}"
+            app:onPageSelectedCommand="@{viewModel.onRankSelectedCommand}" />
+
+    </LinearLayout>
+</layout>

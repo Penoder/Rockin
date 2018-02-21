@@ -102,6 +102,15 @@ public class HotFragment extends BaseFragment {
      */
     private void initBanner(View hotHeaderView) {
         viewPagerHotBanner = (BGABanner) hotHeaderView.findViewById(R.id.viewPager_hotBanner);
+        ImageView imgViewWeekRank = (ImageView) hotHeaderView.findViewById(R.id.imgView_weekRank);
+        ImageView imgViewMonthRank = (ImageView) hotHeaderView.findViewById(R.id.imgView_monthRank);
+        ImageView imgViewTotalRank = (ImageView) hotHeaderView.findViewById(R.id.imgView_totalRank);
+        ImageView imgViewAllRank = (ImageView) hotHeaderView.findViewById(R.id.imgView_allRank);
+        imgViewWeekRank.setOnClickListener(v -> jumpToRank(1));
+        imgViewMonthRank.setOnClickListener(v -> jumpToRank(2));
+        imgViewTotalRank.setOnClickListener(v -> jumpToRank(3));
+        imgViewAllRank.setOnClickListener(v -> jumpToRank(1));
+
         viewPagerHotBanner.setAdapter((banner, itemView, model, position) -> {
             if (model != null) {
                 Glide.with(mContext).load(((HotBanner) model).image).placeholder(R.drawable.img_default_banner).centerCrop().dontAnimate().into((ImageView) itemView);
@@ -113,6 +122,18 @@ public class HotFragment extends BaseFragment {
                 });
             }
         });
+    }
+
+    /**
+     * 跳转到排行页面，i表示排行的分类
+     * 1. 表示周排行、 2. 表示月排行、 3. 表示总排行
+     *
+     * @param i
+     */
+    private void jumpToRank(int i) {
+        Intent intent = new Intent(mContext, RankActivity.class);
+        intent.putExtra("RANK_TYPE", i);
+        startActivity(intent);
     }
 
     private void initAdapter() {
@@ -153,7 +174,7 @@ public class HotFragment extends BaseFragment {
                     }
                     txtViewSubTitle.setText(homeEntity.getAuthor().name + " / " + TimeUtil.secondToTime(homeEntity.getVideo().duration));
                     // 后面根据视频的时间戳与现在的时间戳比较得到多少时间前发布的
-                    txtViewPublishTime.setText("*分钟前");
+                    txtViewPublishTime.setText(TimeUtil.compareTime(homeEntity.getVideo().date * 1000));
 
                     frameFeedImg.setOnClickListener(v -> jumpToPlayer(homeEntity));
                     linearJumpAuthor.setOnClickListener(v -> jumpToAuthor());

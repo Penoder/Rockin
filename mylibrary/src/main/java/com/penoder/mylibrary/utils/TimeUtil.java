@@ -3,7 +3,8 @@ package com.penoder.mylibrary.utils;
 import java.text.SimpleDateFormat;
 
 /**
- * Created by Penoder on 2017/8/26.
+ * @author Penoder
+ * @date 2017/8/26.
  */
 public class TimeUtil {
 
@@ -82,7 +83,35 @@ public class TimeUtil {
         } else {
             hms = h + "'" + m + "'" + hms;
         }
-
         return hms;
+    }
+
+    /**
+     * 传递时间戳与当前的时间进行比较，然后返回出
+     * 比较后的时间是多少分钟、小时之前等等
+     *
+     * @param unixTime
+     * @return
+     */
+    public static String compareTime(long unixTime) {
+        String compareTime = "";
+        long currentTime = System.currentTimeMillis();
+        long difference = currentTime - unixTime;
+        long temp = 0;
+        int dayAfter = (int) (difference / (60 * 60 * 24));
+        temp = difference % (60 * 60 * 24);
+        int hourAfter = (int) (temp / (60 * 60));
+        temp = temp % (60 * 60);
+        int minAfter = (int) (temp / 60);
+        if (dayAfter > 0) {
+            compareTime = dayAfter + "天前";
+        } else if (hourAfter > 0) {
+            compareTime = hourAfter + "小时前";
+        } else if (minAfter > 0) {
+            compareTime = minAfter + "分钟前";
+        } else {
+            compareTime = "刚刚";
+        }
+        return compareTime;
     }
 }

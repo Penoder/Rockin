@@ -97,6 +97,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/imgView_weekRank"
                 android:layout_width="@dimen/dimen_180"
                 android:layout_height="@dimen/dimen_180"
                 android:layout_margin="@dimen/dimen_10"
@@ -104,6 +105,7 @@
                 android:src="@drawable/img_rank_weekly" />
 
             <ImageView
+                android:id="@+id/imgView_monthRank"
                 android:layout_width="@dimen/dimen_180"
                 android:layout_height="@dimen/dimen_180"
                 android:layout_margin="@dimen/dimen_10"
@@ -111,6 +113,7 @@
                 android:src="@drawable/img_rank_month" />
 
             <ImageView
+                android:id="@+id/imgView_totalRank"
                 android:layout_width="@dimen/dimen_180"
                 android:layout_height="@dimen/dimen_180"
                 android:layout_margin="@dimen/dimen_10"
@@ -118,6 +121,7 @@
                 android:src="@drawable/img_rank_all" />
 
             <ImageView
+                android:id="@+id/imgView_allRank"
                 android:layout_width="@dimen/dimen_180"
                 android:layout_height="@dimen/dimen_180"
                 android:layout_margin="@dimen/dimen_10"

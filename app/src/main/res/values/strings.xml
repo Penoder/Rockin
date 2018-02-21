@@ -55,4 +55,8 @@
     <string name="all_category">全部分类</string>
     <string name="all_rank">全部排行</string>
     <string name="all_topic">全部专题</string>
+    <string name="eyepetizer">Eyepetizer</string>
+    <string name="weekRank">周排行</string>
+    <string name="monthRank">月排行</string>
+    <string name="totalRank">总排行</string>
 </resources>
