@@ -174,7 +174,7 @@ public class HotFragment extends BaseFragment {
                     }
                     txtViewSubTitle.setText(homeEntity.getAuthor().name + " / " + TimeUtil.secondToTime(homeEntity.getVideo().duration));
                     // 后面根据视频的时间戳与现在的时间戳比较得到多少时间前发布的
-                    txtViewPublishTime.setText(TimeUtil.compareTime(homeEntity.getVideo().date * 1000));
+                    txtViewPublishTime.setText(TimeUtil.compareTime(homeEntity.getVideo().releaseTime));
 
                     frameFeedImg.setOnClickListener(v -> jumpToPlayer(homeEntity));
                     linearJumpAuthor.setOnClickListener(v -> jumpToAuthor());

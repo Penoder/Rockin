@@ -1,5 +1,7 @@
 package com.penoder.mylibrary.utils;
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 
 /**
@@ -94,11 +96,12 @@ public class TimeUtil {
      * @return
      */
     public static String compareTime(long unixTime) {
-        String compareTime = "";
+        String compareTime;
         long currentTime = System.currentTimeMillis();
-        long difference = currentTime - unixTime;
+        int difference = (int) ((currentTime - unixTime) / 1000);
+        Log.i("Pen:TimeUtil", "Rocoder：compareTime：" + currentTime + " -- " + unixTime + " -- " + difference);
         long temp = 0;
-        int dayAfter = (int) (difference / (60 * 60 * 24));
+        int dayAfter = difference / (60 * 60 * 24);
         temp = difference % (60 * 60 * 24);
         int hourAfter = (int) (temp / (60 * 60));
         temp = temp % (60 * 60);
