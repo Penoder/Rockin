@@ -26,6 +26,12 @@ public class LogUtil {
         }
     }
 
+    public static void e(String msg) {
+        if (IS_DEBUG) {
+            Log.e(TAG, TextUtils.isEmpty(msg) ? "" : msg);
+        }
+    }
+
     public static void d(String TAG, String msg) {
         if (IS_DEBUG) {
             Log.d(TAG, TextUtils.isEmpty(msg) ? "" : msg);
@@ -38,4 +44,9 @@ public class LogUtil {
         }
     }
 
+    public static void e(String TAG, String msg) {
+        if (IS_DEBUG) {
+            Log.e(TAG, TextUtils.isEmpty(msg) ? "" : msg);
+        }
+    }
 }
