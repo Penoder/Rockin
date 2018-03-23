@@ -38,6 +38,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
 
+    compile 'com.android.support:design:25.3.1'
+
     // 图片框架 原先用的是Fresco,现替换成Glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
 

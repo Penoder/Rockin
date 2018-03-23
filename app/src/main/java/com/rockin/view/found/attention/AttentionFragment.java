@@ -13,6 +13,8 @@ import com.rockin.databinding.FragmentFoundAttentionBinding;
 import com.rockin.view.base.BaseFragment;
 
 /**
+ * 关注模块
+ *
  * @author Penoder
  * @date 2018/1/21.
  */
