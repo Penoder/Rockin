@@ -372,18 +372,22 @@ public class HotFragment extends BaseFragment {
                                 String actionUrl = bannerEntity.getActionUrl();
                                 String bannerTitle = "";
                                 if (!TextUtils.isEmpty(actionUrl)) {
-                                    bannerTitle = actionUrl.substring(actionUrl.indexOf("title=") + 6, actionUrl.indexOf("url=http") - 1);
-                                    actionUrl = actionUrl.substring(actionUrl.indexOf("url=http") + 4);
+                                    if (actionUrl.contains("title=") && actionUrl.contains("url=http")) {
+                                        bannerTitle = actionUrl.substring(actionUrl.indexOf("title=") + 6, actionUrl.indexOf("url=http") - 1);
+                                        bannerTitle = bannerTitle.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
+                                    } if (actionUrl.contains("url=http")) {
+                                        actionUrl = actionUrl.substring(actionUrl.indexOf("url=http") + 4);
+                                        // 需要 URLDecode 解码 http://blog.csdn.net/afgasdg/article/details/40304817
+                                        actionUrl = actionUrl.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
+                                    }
                                 }
-                                // 需要 URLDecode 解码 http://blog.csdn.net/afgasdg/article/details/40304817
-                                actionUrl = actionUrl.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
-                                bannerTitle = bannerTitle.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
                                 try {
                                     actionUrl = URLDecoder.decode(actionUrl, "UTF-8");
                                     bannerTitle = URLDecoder.decode(bannerTitle, "UTF-8");
                                 } catch (UnsupportedEncodingException e) {
                                     e.printStackTrace();
                                 }
+                                LogUtil.e("actionUrl: " + actionUrl);
                                 HotBanner hotBanner = new HotBanner();
                                 hotBanner.image = bannerEntity.getImage();
                                 hotBanner.actionUrl = actionUrl;
