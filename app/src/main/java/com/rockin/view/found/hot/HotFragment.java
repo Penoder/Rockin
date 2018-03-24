@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.penoder.mylibrary.banner.BGABanner;
+import com.penoder.mylibrary.mvvm.command.ReplyCommand;
 import com.penoder.mylibrary.utils.LogUtil;
 import com.penoder.mylibrary.utils.TimeUtil;
 import com.rockin.R;
@@ -79,12 +80,16 @@ public class HotFragment extends BaseFragment {
      */
     private BGABanner viewPagerHotBanner;
 
+    private static final int PAGE_SIZE = 36;
+
+    private int pageNum = 0;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
         mHandler = new MyHandler(this);
-        loadVideo(0, 50);
+        loadVideo(pageNum);
     }
 
     @Nullable
@@ -187,9 +192,9 @@ public class HotFragment extends BaseFragment {
     /**
      * 发现页加载的视频数据需要 40 条，并且是从 最新发布之后的 40 条
      */
-    private void loadVideo(int pageNum, int pageSize) {
+    private void loadVideo(int pageNum) {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(EyeApi.DISCOVERY_HOT + "?start=" + pageNum + "&num=" + pageSize).build();
+        Request request = new Request.Builder().url(EyeApi.DISCOVERY_HOT + "?start=" + (pageNum * PAGE_SIZE) + "&num=" + PAGE_SIZE).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -246,6 +251,22 @@ public class HotFragment extends BaseFragment {
     }
 
     /**
+     * 刷新事件
+     */
+    public ReplyCommand onRefreshCommand = new ReplyCommand(() -> {
+        pageNum = 0;
+        loadVideo(pageNum);
+    });
+
+    /**
+     * 加载事件
+     */
+    public ReplyCommand onLoadingCommand = new ReplyCommand(() -> {
+        pageNum++;
+        loadVideo(pageNum);
+    });
+
+    /**
      * 解析Json数据，
      * 解析得到的 Banner 地址，url 字段前面要 URL 解码，后面需要经过 Native/UTF-8解码
      */
@@ -266,7 +287,9 @@ public class HotFragment extends BaseFragment {
             return;
         }
         List<HotEntity.ItemEntity> itemList = hotEntity.getItemList();
-        hotVideos.clear();
+        if (pageNum == 0) {
+            hotVideos.clear();
+        }
         for (int i = 0; i < itemList.size(); i++) {
             HotEntity.ItemEntity itemEntity = itemList.get(i);
             HomeEntity homeEntity = new HomeEntity();
@@ -375,7 +398,8 @@ public class HotFragment extends BaseFragment {
                                     if (actionUrl.contains("title=") && actionUrl.contains("url=http")) {
                                         bannerTitle = actionUrl.substring(actionUrl.indexOf("title=") + 6, actionUrl.indexOf("url=http") - 1);
                                         bannerTitle = bannerTitle.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
-                                    } if (actionUrl.contains("url=http")) {
+                                    }
+                                    if (actionUrl.contains("url=http")) {
                                         actionUrl = actionUrl.substring(actionUrl.indexOf("url=http") + 4);
                                         // 需要 URLDecode 解码 http://blog.csdn.net/afgasdg/article/details/40304817
                                         actionUrl = actionUrl.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
@@ -411,6 +435,12 @@ public class HotFragment extends BaseFragment {
                 hotVideos.add(homeEntity);
             }
             hotAdapter.notifyDataSetChanged();
+        }
+
+        if (pageNum == 0) {
+            hotBinding.refreshHot.finishRefresh();
+        } else {
+            hotBinding.refreshHot.finishLoadmore();
         }
     }
 }

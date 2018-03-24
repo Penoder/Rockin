@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.penoder.mylibrary.mvvm.command.ReplyCommand;
 import com.rockin.R;
 import com.rockin.databinding.FragmentFoundAttentionBinding;
 import com.rockin.view.base.BaseFragment;
@@ -38,4 +39,19 @@ public class AttentionFragment extends BaseFragment {
         attentionBinding.executePendingBindings();
         return attentionBinding.getRoot();
     }
+
+    /**
+     * 刷新事件
+     */
+    public ReplyCommand onRefreshCommand = new ReplyCommand(() -> {
+
+    });
+
+    /**
+     * 加载事件
+     */
+    public ReplyCommand onLoadingCommand = new ReplyCommand(() -> {
+
+    });
+
 }

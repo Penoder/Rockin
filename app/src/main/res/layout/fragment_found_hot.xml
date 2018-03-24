@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,13 +9,22 @@
             type="com.rockin.view.found.hot.HotFragment" />
     </data>
 
-    <ListView
-        android:id="@+id/listView_hotVideo"
+    <com.penoder.mylibrary.refresh.PenoderRefreshLayout
+        android:id="@+id/refresh_hot"
         android:layout_width="match_parent"
-        android:cacheColorHint="@color/transparent"
-        android:listSelector="@color/transparent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:scrollbars="none" />
+        app:onLoadingCommand="@{viewModel.onLoadingCommand}"
+        app:onRefreshCommand="@{viewModel.onRefreshCommand}">
+
+        <ListView
+            android:id="@+id/listView_hotVideo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@color/transparent"
+            android:listSelector="@color/transparent"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+    </com.penoder.mylibrary.refresh.PenoderRefreshLayout>
 
 </layout>
