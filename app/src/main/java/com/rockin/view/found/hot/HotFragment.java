@@ -315,9 +315,9 @@ public class HotFragment extends BaseFragment {
                 int authorId = videoEntity.getAuthor() != null ? videoEntity.getAuthor().getId() : -1;      // 视频的作者ID，与 author 表进行关联的外键
 
                 Video video = new Video(videoId, title, slogan, description, category, feed, blurred, homepage, playUrl, duration, webUrl, releaseTime, date, type, collectCount, sharedCount, authorId);
-                if (isLatestVideo) {
+//                if (isLatestVideo) {
                     homeEntity.setVideo(video);
-                }
+//                }
                 // --------------------------- 以上为需要插入到 video 表中的数据--------------------------- //
 
                 /**
@@ -337,9 +337,9 @@ public class HotFragment extends BaseFragment {
                     int sharedNum = (int) (Math.random() * 1500 + 500);     // 作者被分享的次数， 同样随机生成 500 - 2000
 
                     Author author = new Author(aId, icon, name, descriptionAuthor, link, latestReleaseTime, videoNum, attentionNum, collectNum, sharedNum);
-                    if (isLatestVideo) {
+//                    if (isLatestVideo) {
                         homeEntity.setAuthor(author);
-                    }
+//                    }
                 }
 
                 /**
@@ -374,13 +374,13 @@ public class HotFragment extends BaseFragment {
                             }
                         }
                         PlayInfo playInfo = new PlayInfo(videoId, height, width, name, playType, aliyun, qcloud, ucloud);
-                        if (isLatestVideo) {
+//                        if (isLatestVideo) {
                             if ("normal".equals(playType)) {
                                 homeEntity.setNormalPlayInfo(playInfo);
                             } else {
                                 homeEntity.setHighPlayInfo(playInfo);
                             }
-                        }
+//                        }
                     }
                 }
                 // 热门 广告位轮播
@@ -434,10 +434,11 @@ public class HotFragment extends BaseFragment {
             if (isLatestVideo) {
                 hotVideos.add(homeEntity);
             }
-            hotAdapter.notifyDataSetChanged();
         }
 
+        hotAdapter.notifyDataSetChanged();
         if (pageNum == 0) {
+            isLatestVideo = false;
             hotBinding.refreshHot.finishRefresh();
         } else {
             hotBinding.refreshHot.finishLoadmore();
