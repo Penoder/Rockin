@@ -266,6 +266,15 @@ public class HotFragment extends BaseFragment {
         loadVideo(pageNum);
     });
 
+
+    private void method() {
+        if (pageNum == 0) {
+            hotBinding.refreshHot.finishRefresh();
+        } else {
+            hotBinding.refreshHot.finishLoadmore();
+        }
+    }
+
     /**
      * 解析Json数据，
      * 解析得到的 Banner 地址，url 字段前面要 URL 解码，后面需要经过 Native/UTF-8解码
@@ -288,6 +297,7 @@ public class HotFragment extends BaseFragment {
         }
         List<HotEntity.ItemEntity> itemList = hotEntity.getItemList();
         if (pageNum == 0) {
+            isLatestVideo = false;
             hotVideos.clear();
         }
         for (int i = 0; i < itemList.size(); i++) {
@@ -438,7 +448,6 @@ public class HotFragment extends BaseFragment {
 
         hotAdapter.notifyDataSetChanged();
         if (pageNum == 0) {
-            isLatestVideo = false;
             hotBinding.refreshHot.finishRefresh();
         } else {
             hotBinding.refreshHot.finishLoadmore();

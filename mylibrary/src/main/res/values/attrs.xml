@@ -137,7 +137,7 @@
 
     <declare-styleable name="SwipeRefreshLayout">
         <!-- require RelayCommand -->
-        <attr name="onRefreshCommand" format="reference" />
+        <attr name="onFlushCommand" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="WebView">
@@ -145,173 +145,177 @@
         <attr name="render" format="string" />
     </declare-styleable>
 
-
+    <!-- 轮播控件的自定义属性. -->
     <declare-styleable name="BGABanner">
         <!-- 指示点容器背景 -->
-        <attr name="banner_pointContainerBackground" format="reference|color"/>
+        <attr name="banner_pointContainerBackground" format="reference|color" />
         <!-- 指示点背景 -->
-        <attr name="banner_pointDrawable" format="reference"/>
+        <attr name="banner_pointDrawable" format="reference" />
         <!-- 指示点容器左右内间距 -->
-        <attr name="banner_pointContainerLeftRightPadding" format="dimension"/>
+        <attr name="banner_pointContainerLeftRightPadding" format="dimension" />
         <!-- 指示点上下外间距 -->
-        <attr name="banner_pointTopBottomMargin" format="dimension"/>
+        <attr name="banner_pointTopBottomMargin" format="dimension" />
         <!-- 指示点左右外间距 -->
-        <attr name="banner_pointLeftRightMargin" format="dimension"/>
+        <attr name="banner_pointLeftRightMargin" format="dimension" />
         <!-- 指示器的位置 -->
         <attr name="banner_indicatorGravity">
-            <flag name="top" value="0x30"/>
-            <flag name="bottom" value="0x50"/>
-            <flag name="left" value="0x03"/>
-            <flag name="right" value="0x05"/>
-            <flag name="center_horizontal" value="0x01"/>
+            <flag name="top" value="0x30" />
+            <flag name="bottom" value="0x50" />
+            <flag name="left" value="0x03" />
+            <flag name="right" value="0x05" />
+            <flag name="center_horizontal" value="0x01" />
         </attr>
         <!-- 是否开启自动轮播 -->
-        <attr name="banner_pointAutoPlayAble" format="boolean"/>
+        <attr name="banner_pointAutoPlayAble" format="boolean" />
         <!-- 自动轮播的时间间隔 -->
-        <attr name="banner_pointAutoPlayInterval" format="integer"/>
+        <attr name="banner_pointAutoPlayInterval" format="integer" />
         <!-- 页码切换过程的时间长度 -->
-        <attr name="banner_pageChangeDuration" format="integer"/>
+        <attr name="banner_pageChangeDuration" format="integer" />
         <!-- 页面切换的动画效果 -->
         <attr name="banner_transitionEffect" format="enum">
-            <enum name="defaultEffect" value="0"/>
-            <enum name="alpha" value="1"/>
-            <enum name="rotate" value="2"/>
-            <enum name="cube" value="3"/>
-            <enum name="flip" value="4"/>
-            <enum name="accordion" value="5"/>
-            <enum name="zoomFade" value="6"/>
-            <enum name="fade" value="7"/>
-            <enum name="zoomCenter" value="8"/>
-            <enum name="zoomStack" value="9"/>
-            <enum name="stack" value="10"/>
-            <enum name="depth" value="11"/>
-            <enum name="zoom" value="12"/>
+            <enum name="defaultEffect" value="0" />
+            <enum name="alpha" value="1" />
+            <enum name="rotate" value="2" />
+            <enum name="cube" value="3" />
+            <enum name="flip" value="4" />
+            <enum name="accordion" value="5" />
+            <enum name="zoomFade" value="6" />
+            <enum name="fade" value="7" />
+            <enum name="zoomCenter" value="8" />
+            <enum name="zoomStack" value="9" />
+            <enum name="stack" value="10" />
+            <enum name="depth" value="11" />
+            <enum name="zoom" value="12" />
         </attr>
         <!-- 提示文案的文字颜色 -->
-        <attr name="banner_tipTextColor" format="reference|color"/>
+        <attr name="banner_tipTextColor" format="reference|color" />
         <!-- 提示文案的文字大小 -->
-        <attr name="banner_tipTextSize" format="dimension"/>
+        <attr name="banner_tipTextSize" format="dimension" />
         <!-- 加载网络数据时覆盖在 BGABanner 最上层的占位图 -->
-        <attr name="banner_placeholderDrawable" format="reference"/>
+        <attr name="banner_placeholderDrawable" format="reference" />
         <!-- 是否是数字指示器 -->
-        <attr name="banner_isNumberIndicator" format="boolean"/>
+        <attr name="banner_isNumberIndicator" format="boolean" />
         <!-- 数字指示器文字颜色 -->
-        <attr name="banner_numberIndicatorTextColor" format="reference|color"/>
+        <attr name="banner_numberIndicatorTextColor" format="reference|color" />
         <!-- 数字指示器文字大小 -->
-        <attr name="banner_numberIndicatorTextSize" format="dimension"/>
+        <attr name="banner_numberIndicatorTextSize" format="dimension" />
         <!-- 数字指示器背景 -->
-        <attr name="banner_numberIndicatorBackground" format="reference"/>
+        <attr name="banner_numberIndicatorBackground" format="reference" />
         <!-- 当只有一页数据时是否显示指示器，默认值为 false -->
-        <attr name="banner_isNeedShowIndicatorOnOnlyOnePage" format="boolean"/>
+        <attr name="banner_isNeedShowIndicatorOnOnlyOnePage" format="boolean" />
         <!-- 自动轮播区域距离 BGABanner 底部的距离 -->
-        <attr name="banner_contentBottomMargin" format="dimension"/>
+        <attr name="banner_contentBottomMargin" format="dimension" />
         <!-- 宽高比例，如果大于 0，则会根据宽度来计算高度，否则使用 android:layout_height 指定的高度 -->
-        <attr name="banner_aspectRatio" format="float"/>
+        <attr name="banner_aspectRatio" format="float" />
         <!-- 占位图和资源图片缩放模式 -->
-        <attr name="android:scaleType"/>
+        <attr name="android:scaleType" />
     </declare-styleable>
 
 
     <!-- 以下是刷新控件的属性. -->
-    <attr name="srlDrawableSize" format="dimension"/><!--图片尺寸-->
-    <attr name="srlDrawableArrowSize" format="dimension"/><!--箭头图片尺寸-->
-    <attr name="srlDrawableProgressSize" format="dimension"/><!--箭头图片尺寸-->
-    <attr name="srlDrawableMarginRight" format="dimension"/><!--图片和文字的间距-->
-    <attr name="srlTextSizeTitle" format="dimension"/><!--标题字体-->
-    <attr name="srlTextSizeTime" format="dimension"/><!--时间字体-->
-    <attr name="srlFinishDuration" format="integer"/><!--完成时停留时间-->
-    <attr name="srlPrimaryColor" format="color"/><!--主要颜色-->
-    <attr name="srlAccentColor" format="color"/><!--强调颜色-->
-    <attr name="srlDrawableArrow" format="reference"/><!--箭头图片-->
-    <attr name="srlDrawableProgress" format="reference"/><!--转动图片-->
-    <attr name="srlEnableHorizontalDrag" format="boolean"/><!--支持水平拖动-->
+    <attr name="srlDrawableSize" format="dimension" /><!--图片尺寸-->
+    <attr name="srlDrawableArrowSize" format="dimension" /><!--箭头图片尺寸-->
+    <attr name="srlDrawableProgressSize" format="dimension" /><!--箭头图片尺寸-->
+    <attr name="srlDrawableMarginRight" format="dimension" /><!--图片和文字的间距-->
+    <attr name="srlTextSizeTitle" format="dimension" /><!--标题字体-->
+    <attr name="srlTextSizeTime" format="dimension" /><!--时间字体-->
+    <attr name="srlFinishDuration" format="integer" /><!--完成时停留时间-->
+    <attr name="srlPrimaryColor" format="color" /><!--主要颜色-->
+    <attr name="srlAccentColor" format="color" /><!--强调颜色-->
+    <attr name="srlDrawableArrow" format="reference" /><!--箭头图片-->
+    <attr name="srlDrawableProgress" format="reference" /><!--转动图片-->
+    <attr name="srlEnableHorizontalDrag" format="boolean" /><!--支持水平拖动-->
 
     <attr name="srlClassicsSpinnerStyle" format="enum">
-        <enum name="Translate" value="0"/><!--平行移动-->
-        <enum name="Scale" value="1"/><!--拉伸形变-->
-        <enum name="FixedBehind" value="2"/><!--固定在背后-->
+        <enum name="Translate" value="0" /><!--平行移动-->
+        <enum name="Scale" value="1" /><!--拉伸形变-->
+        <enum name="FixedBehind" value="2" /><!--固定在背后-->
     </attr>
 
     <attr name="layout_srlSpinnerStyle" format="enum">
-        <enum name="Translate" value="0"/><!--平行移动-->
-        <enum name="Scale" value="1"/><!--拉伸形变-->
-        <enum name="FixedBehind" value="2"/><!--固定在背后-->
-        <enum name="FixedFront" value="3"/><!--固定在前面-->
-        <enum name="MatchLayout" value="4"/><!--填满布局-->
+        <enum name="Translate" value="0" /><!--平行移动-->
+        <enum name="Scale" value="1" /><!--拉伸形变-->
+        <enum name="FixedBehind" value="2" /><!--固定在背后-->
+        <enum name="FixedFront" value="3" /><!--固定在前面-->
+        <enum name="MatchLayout" value="4" /><!--填满布局-->
     </attr>
 
     <declare-styleable name="PenoderRefreshLayout">
-        <attr name="srlPrimaryColor"/>
-        <attr name="srlAccentColor"/>
-        <attr name="srlReboundDuration" format="integer"/>
-        <attr name="srlHeaderHeight" format="dimension"/>
-        <attr name="srlFooterHeight" format="dimension"/>
-        <attr name="srlDragRate" format="float"/>
-        <attr name="srlHeaderMaxDragRate" format="float"/>
-        <attr name="srlFooterMaxDragRate" format="float"/>
-        <attr name="srlEnableRefresh" format="boolean"/>
-        <attr name="srlEnableLoadmore" format="boolean"/>
-        <attr name="srlEnableHeaderTranslationContent" format="boolean"/>
-        <attr name="srlEnableFooterTranslationContent" format="boolean"/>
-        <attr name="srlEnablePreviewInEditMode" format="boolean"/>
-        <attr name="srlEnableAutoLoadmore" format="boolean"/>
-        <attr name="srlEnableOverScrollBounce" format="boolean"/>
-        <attr name="srlEnablePureScrollMode" format="boolean"/>
-        <attr name="srlEnableNestedScrolling" format="boolean"/>
-        <attr name="srlEnableScrollContentWhenLoaded" format="boolean"/>
-        <attr name="srlEnableLoadmoreWhenContentNotFull" format="boolean"/>
-        <attr name="srlDisableContentWhenRefresh" format="boolean"/>
-        <attr name="srlDisableContentWhenLoading" format="boolean"/>
-        <attr name="srlFixedHeaderViewId" format="reference"/>
-        <attr name="srlFixedFooterViewId" format="reference"/>
+        <attr name="srlPrimaryColor" />
+        <attr name="srlAccentColor" />
+        <attr name="srlReboundDuration" format="integer" />
+        <attr name="srlHeaderHeight" format="dimension" />
+        <attr name="srlFooterHeight" format="dimension" />
+        <attr name="srlDragRate" format="float" />
+        <attr name="srlHeaderMaxDragRate" format="float" />
+        <attr name="srlFooterMaxDragRate" format="float" />
+        <attr name="srlEnableRefresh" format="boolean" />
+        <attr name="srlEnableLoadmore" format="boolean" />
+        <attr name="srlEnableHeaderTranslationContent" format="boolean" />
+        <attr name="srlEnableFooterTranslationContent" format="boolean" />
+        <attr name="srlEnablePreviewInEditMode" format="boolean" />
+        <attr name="srlEnableAutoLoadmore" format="boolean" />
+        <attr name="srlEnableOverScrollBounce" format="boolean" />
+        <attr name="srlEnablePureScrollMode" format="boolean" />
+        <attr name="srlEnableNestedScrolling" format="boolean" />
+        <attr name="srlEnableScrollContentWhenLoaded" format="boolean" />
+        <attr name="srlEnableLoadmoreWhenContentNotFull" format="boolean" />
+        <attr name="srlDisableContentWhenRefresh" format="boolean" />
+        <attr name="srlDisableContentWhenLoading" format="boolean" />
+        <attr name="srlFixedHeaderViewId" format="reference" />
+        <attr name="srlFixedFooterViewId" format="reference" />
+
+        <!-- MVVM ViewBinding 中定义的属性. -->
+        <attr name="onRefreshCommand" format="reference" />
+        <attr name="onLoadingCommand" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="SmartRefreshLayout_Layout">
-        <attr name="layout_srlSpinnerStyle"/>
-        <attr name="layout_srlBackgroundColor" format="color"/>
+        <attr name="layout_srlSpinnerStyle" />
+        <attr name="layout_srlBackgroundColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="BezierRadarHeader">
-        <attr name="srlPrimaryColor"/>
-        <attr name="srlAccentColor"/>
-        <attr name="srlEnableHorizontalDrag"/>
+        <attr name="srlPrimaryColor" />
+        <attr name="srlAccentColor" />
+        <attr name="srlEnableHorizontalDrag" />
     </declare-styleable>
 
     <declare-styleable name="BallPulseFooter">
-        <attr name="srlClassicsSpinnerStyle"/>
-        <attr name="srlPrimaryColor"/>
-        <attr name="srlAccentColor"/>
+        <attr name="srlClassicsSpinnerStyle" />
+        <attr name="srlPrimaryColor" />
+        <attr name="srlAccentColor" />
     </declare-styleable>
 
     <declare-styleable name="ClassicsHeader">
-        <attr name="srlClassicsSpinnerStyle"/>
-        <attr name="srlPrimaryColor"/>
-        <attr name="srlAccentColor"/>
-        <attr name="srlFinishDuration"/>
-        <attr name="srlDrawableArrow"/>
-        <attr name="srlDrawableProgress"/>
-        <attr name="srlDrawableMarginRight"/>
-        <attr name="srlDrawableSize"/>
-        <attr name="srlDrawableArrowSize"/>
-        <attr name="srlDrawableProgressSize"/>
-        <attr name="srlTextSizeTitle"/>
-        <attr name="srlTextSizeTime"/>
-        <attr name="srlTextTimeMarginTop" format="dimension"/>
-        <attr name="srlEnableLastTime" format="boolean"/>
+        <attr name="srlClassicsSpinnerStyle" />
+        <attr name="srlPrimaryColor" />
+        <attr name="srlAccentColor" />
+        <attr name="srlFinishDuration" />
+        <attr name="srlDrawableArrow" />
+        <attr name="srlDrawableProgress" />
+        <attr name="srlDrawableMarginRight" />
+        <attr name="srlDrawableSize" />
+        <attr name="srlDrawableArrowSize" />
+        <attr name="srlDrawableProgressSize" />
+        <attr name="srlTextSizeTitle" />
+        <attr name="srlTextSizeTime" />
+        <attr name="srlTextTimeMarginTop" format="dimension" />
+        <attr name="srlEnableLastTime" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="ClassicsFooter">
-        <attr name="srlClassicsSpinnerStyle"/>
-        <attr name="srlPrimaryColor"/>
-        <attr name="srlAccentColor"/>
-        <attr name="srlFinishDuration"/>
-        <attr name="srlTextSizeTitle"/>
-        <attr name="srlDrawableArrow"/>
-        <attr name="srlDrawableProgress"/>
-        <attr name="srlDrawableMarginRight"/>
-        <attr name="srlDrawableSize"/>
-        <attr name="srlDrawableArrowSize"/>
-        <attr name="srlDrawableProgressSize"/>
+        <attr name="srlClassicsSpinnerStyle" />
+        <attr name="srlPrimaryColor" />
+        <attr name="srlAccentColor" />
+        <attr name="srlFinishDuration" />
+        <attr name="srlTextSizeTitle" />
+        <attr name="srlDrawableArrow" />
+        <attr name="srlDrawableProgress" />
+        <attr name="srlDrawableMarginRight" />
+        <attr name="srlDrawableSize" />
+        <attr name="srlDrawableArrowSize" />
+        <attr name="srlDrawableProgressSize" />
     </declare-styleable>
 
 </resources>

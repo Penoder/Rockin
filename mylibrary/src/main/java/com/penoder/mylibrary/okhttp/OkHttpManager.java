@@ -114,9 +114,9 @@ public class OkHttpManager {
      */
     public OkHttpManager sign() {
         if (bodyBuilder != null) {  // post
-            addParam("SIGN", "不能说的秘密");
+            addParam("SIGN", "AC0CC624B8BC080C7310055AA97EB873");
         } else {    // get
-            mUrl = mUrl + (mUrl.contains("?") ? "&" : "?") + "SIGN=不能说的秘密";
+            mUrl = mUrl + (mUrl.contains("?") ? "&" : "?") + "SIGN=AC0CC624B8BC080C7310055AA97EB873";
         }
         return this;
     }

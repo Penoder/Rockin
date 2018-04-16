@@ -10,13 +10,13 @@ import com.penoder.mylibrary.mvvm.command.ReplyCommand;
  * @date 16-4-26
  */
 public class ViewBindingAdapter {
-    @BindingAdapter({"onRefreshCommand"})
-    public static void onRefreshCommand(SwipeRefreshLayout swipeRefreshLayout, final ReplyCommand onRefreshCommand) {
+    @BindingAdapter({"onFlushCommand"})
+    public static void onFlushCommand(SwipeRefreshLayout swipeRefreshLayout, final ReplyCommand onFlushCommand) {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (onRefreshCommand != null) {
-                    onRefreshCommand.execute();
+                if (onFlushCommand != null) {
+                    onFlushCommand.execute();
                 }
             }
         });
